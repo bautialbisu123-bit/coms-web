@@ -47,96 +47,88 @@
   };
   if (sky) { addEventListener('scroll', paintSky, { passive: true }); addEventListener('resize', () => { lastP = -1; paintSky(); }); paintSky(); }
 
-  /* ---------- portada con videos: pasan uno tras otro con fundido.
-     data-src lleva la lista separada por comas. Si ninguno carga, queda el muro de fotos ---------- */
-  const hv = $('[data-hero-video]'), hero4 = $('.hero4');
-  const clips = hv ? (hv.dataset.src || '').split(',').map(s => s.trim()).filter(Boolean) : [];
-  if (clips.length && hero4) {
-    const btn = $('.hero4__vbtn', hero4);
-    const MAX = +(hv.dataset.max || 9);   // segundos máximos de cada clip antes de pasar al siguiente
-    const mk = () => {
-      const v = document.createElement('video');
-      v.muted = true; v.playsInline = true; v.preload = 'auto'; v.loop = clips.length === 1;
-      v.setAttribute('muted', ''); v.setAttribute('playsinline', '');
-      hv.appendChild(v); return v;
-    };
-    // dos reproductores: uno se ve mientras el otro carga el clip que sigue
-    const vids = clips.length > 1 ? [mk(), mk()] : [mk()];
-    let front = 0, idx = 0, userPaused = calm, onScreen = true, busy = false, started = false;
-    const active = () => vids[front];
-    const play = v => { if (!userPaused && onScreen) v.play().catch(() => {}); };
-    const setBtn = () => {
-      const p = active().paused;
-      btn.classList.toggle('is-paused', p); btn.setAttribute('aria-label', p ? 'Reproducir el video' : 'Pausar el video');
-    };
-    // texto debajo del cuadro: "título|subtítulo" por clip, separados por "||"
-    const caps = (hv.dataset.caps || '').split('||').map(s => s.split('|'));
-    const capK = $('.hero4__capk'), capT = $('.hero4__capt'), bars = $('.hero4__bars');
-    if (bars) bars.innerHTML = clips.map(() => '<i></i>').join('');
-    const setCap = k => {
-      const [a = '', b = ''] = caps[k] || [];
-      if (capK) capK.textContent = a;
-      if (capT) capT.textContent = b;
-      if (bars) [...bars.children].forEach((x, j) => {
-        x.classList.toggle('is-done', j < k); x.classList.remove('is-on');
-        if (j === k) { void x.offsetWidth; x.style.setProperty('--dur', Math.min(MAX, active().duration || MAX) + 's'); x.classList.add('is-on'); }
-      });
-    };
-    const load = (v, k) => { v.dataset.k = k % clips.length; v.src = clips[k % clips.length]; v.load(); };
-    const next = () => {
-      if (busy || vids.length < 2) return;
-      const b = vids[1 - front];
-      if (b.readyState < 2) return;   // el siguiente todavía no cargó: sigue el actual
-      busy = true;
-      const a = active();
-      b.currentTime = 0; play(b);
-      b.classList.add('is-on'); a.classList.remove('is-on');
-      front = 1 - front; idx = +b.dataset.k;
-      setTimeout(() => { a.pause(); load(a, idx + 1); busy = false; }, 1300);   // después del fundido, prepara el que sigue
-      setBtn(); setCap(idx);
-    };
-    vids.forEach(v => {
-      v.addEventListener('loadeddata', () => {
-        if (!started && v === vids[0]) {
-          started = true; hero4.classList.add('has-video'); btn.hidden = false;
-          v.classList.add('is-on'); play(v); setBtn(); setCap(0);
-        }
-      });
-      v.addEventListener('timeupdate', () => { if (v === active() && v.currentTime >= MAX) next(); });
-      v.addEventListener('ended', () => { if (v === active()) next(); });
-      v.addEventListener('play', setBtn); v.addEventListener('pause', setBtn);
-      v.addEventListener('error', () => {
-        // un clip que no carga se saca de la lista; si no queda ninguno, vuelve el muro de fotos
-        const bad = clips[+v.dataset.k];
-        clips.splice(clips.indexOf(bad), 1);
-        if (!clips.length) { hero4.classList.remove('has-video'); btn.hidden = true; vids.forEach(x => x.remove()); return; }
-        if (!started && v === vids[0]) load(v, 0); else load(v, idx + 1);
-      });
-    });
-    load(vids[0], 0);
-    if (vids[1]) load(vids[1], 1);
-    btn.addEventListener('click', () => { userPaused = !active().paused; userPaused ? active().pause() : active().play(); });
-    // fuera de pantalla no se reproduce (ahorra batería y datos)
-    new IntersectionObserver(([e]) => { onScreen = e.isIntersecting; if (!onScreen) active().pause(); else play(active()); }).observe(hero4);
-    // el fondo de la portada toma los colores del video: se dibuja chiquito en un canvas y el CSS lo difumina
-    const amb = $('.hero4__amb'), ctx = amb && amb.getContext('2d');
-    if (ctx && !calm) {
-      amb.width = 32; amb.height = 40;
-      let last = 0;
-      const draw = now => {
-        if (now - last > 90 && onScreen && !document.hidden && hero4.classList.contains('has-video')) {
-          last = now;
-          const v = active();
-          if (v.readyState >= 2) { ctx.globalAlpha = .18; try { ctx.drawImage(v, 0, 0, 32, 40); } catch (e) {} }
-        }
-        requestAnimationFrame(draw);
-      };
-      requestAnimationFrame(draw);
-    }
-  }
   /* ---------- muro de fotos: cada columna se duplica para que el loop no se corte ---------- */
   $$('.wall__track').forEach(t => { [...t.children].forEach(img => t.appendChild(img.cloneNode(true))); });
 
+  /* ---------- el muro con los videos de los congresos ----------
+     Pocos reproductores (cada clip dos veces, desfasado) y cada cuadro del muro dibuja uno en un canvas
+     con su propio encuadre, centrado en la persona. Si los videos no cargan, quedan las fotos. */
+  const wv = $('[data-wall-video]'), hero4 = $('.hero4');
+  const wclips = wv ? (wv.dataset.src || '').split(',').map(s => s.trim()).filter(Boolean) : [];
+  if (wclips.length && hero4 && !calm) {
+    const btn = $('.hero4__vbtn', hero4);
+    // dónde está la persona en cada clip (x y, de 0 a 1), para que ningún encuadre la deje afuera
+    const focus = (wv.dataset.focus || '').split(',').map(s => s.trim().split(/\s+/).map(Number));
+    const players = [];
+    wclips.forEach((src, k) => [0, .5].forEach(off => {
+      const v = document.createElement('video');
+      v.muted = true; v.loop = true; v.playsInline = true; v.preload = 'auto';
+      v.setAttribute('muted', ''); v.setAttribute('playsinline', '');
+      v.dataset.off = off; v.dataset.k = k; v.src = src;
+      wv.appendChild(v); players.push(v);
+    }));
+    const tiles = [];
+    let live = false, paused = false, onScreen = true, pending = players.length, last = 0;
+    const size = () => tiles.forEach(t => {
+      const d = Math.min(devicePixelRatio || 1, 1.5);
+      t.c.width = Math.max(1, Math.round(t.c.offsetWidth * d)); t.c.height = Math.max(1, Math.round(t.c.offsetHeight * d));
+    });
+    const draw = now => {
+      if (onScreen && !paused && !document.hidden && now - last > 33) {
+        last = now;
+        for (const t of tiles) {
+          const v = t.v;
+          if (v.readyState < 2 || !v.videoWidth) continue;
+          const vw = v.videoWidth, vh = v.videoHeight, cw = t.c.width, ch = t.c.height;
+          const s = Math.max(cw / vw, ch / vh) * t.z, sw = cw / s, sh = ch / s;
+          const [fx = .5, fy = .45] = focus[+v.dataset.k] || [];
+          const sx = Math.min(vw - sw, Math.max(0, (fx + t.jx) * vw - sw / 2));
+          const sy = Math.min(vh - sh, Math.max(0, (fy + t.jy) * vh - sh / 2));
+          t.ctx.drawImage(v, sx, sy, sw, sh, 0, 0, cw, ch);
+        }
+      }
+      requestAnimationFrame(draw);
+    };
+    const start = () => {
+      if (live || !players.length) return;
+      live = true;
+      // los cuadros vecinos (arriba, abajo y al costado) muestran clips distintos, con zoom y encuadre propios.
+      // Cada columna repite su secuencia de 4 cuadros igual que las fotos, para que el loop no salte.
+      const byClip = {};
+      players.forEach(v => { (byClip[v.dataset.k] = byClip[v.dataset.k] || []).push(v); });
+      const keys = Object.keys(byClip), SEQ = [0, 1, 0, 2];
+      $$('.wall__track').forEach((track, col) => {
+        $$('img', track).forEach((img, p) => {
+          const q = p % 4, k = keys[(SEQ[q] + col) % keys.length], vs = byClip[k];
+          const c = document.createElement('canvas');
+          c.className = 'wall__v'; c.setAttribute('aria-hidden', 'true');
+          const n = q * 4 + col;
+          tiles.push({ c, ctx: c.getContext('2d'), v: vs[(q + col) % vs.length], z: 1 + ((n * 37) % 26) / 100, jx: (((n * 53) % 17) - 8) / 100, jy: (((n * 29) % 13) - 6) / 100 });
+          img.after(c); img.classList.add('is-off');
+        });
+      });
+      size(); hero4.classList.add('has-video'); btn.hidden = false;
+      players.forEach(v => { if (v.duration) v.currentTime = v.duration * +v.dataset.off; v.play().catch(() => {}); });
+      requestAnimationFrame(draw);
+    };
+    players.slice().forEach(v => {
+      v.addEventListener('loadeddata', () => { if (--pending <= 0) start(); }, { once: true });
+      v.addEventListener('error', () => { players.splice(players.indexOf(v), 1); v.remove(); if (--pending <= 0) start(); }, { once: true });
+    });
+    setTimeout(() => { if (!live && players.some(v => v.readyState >= 2)) { players.splice(0, players.length, ...players.filter(v => v.readyState >= 2)); start(); } }, 6000);
+    addEventListener('resize', size);
+    const setPaused = p => {
+      paused = p; hero4.classList.toggle('is-paused', p);
+      players.forEach(v => p ? v.pause() : v.play().catch(() => {}));
+      btn.classList.toggle('is-paused', p); btn.setAttribute('aria-label', p ? 'Reproducir los videos' : 'Pausar los videos');
+    };
+    btn.addEventListener('click', () => setPaused(!paused));
+    // fuera de pantalla no se reproducen (ahorra batería y datos)
+    new IntersectionObserver(([e]) => {
+      onScreen = e.isIntersecting;
+      if (live && !paused) players.forEach(v => onScreen ? v.play().catch(() => {}) : v.pause());
+    }).observe(hero4);
+  }
   /* ---------- equipo: tarjetas que se dan vuelta ---------- */
   const flips = $$('.flip');
   flips.forEach(f => {

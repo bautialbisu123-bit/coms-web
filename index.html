@@ -114,18 +114,13 @@
           <img src="assets/img/nov-9.jpg" alt=""><img src="assets/img/equipo-armijos.jpg" alt="" style="object-position:40% 28%"><img src="assets/img/nov-11.jpg" alt="" style="object-position:50% 34%"><img src="assets/img/equipo-orquera.jpg" alt="" style="object-position:50% 20%">
         </div></div>
       </div>
-      <!-- videos de los congresos: pasan uno tras otro dentro del cuadro y el fondo toma sus colores.
-           data-src: lista de archivos; data-caps: "título|subtítulo" por clip, separados por "||". Sin archivos, queda el muro de fotos -->
-      <canvas class="hero4__amb" aria-hidden="true"></canvas>
       <span class="hero4__shade" aria-hidden="true"></span>
-      <figure class="hero4__film">
-        <div class="hero4__video" data-hero-video data-max="9"
-             data-src="assets/video/coms-armijos-rio.mp4, assets/video/coms-orquera-faso.mp4, assets/video/coms-panel-italiano.mp4"
-             data-caps="Dra. Karla Armijos|40° Congreso Panamericano de ORL · Río de Janeiro||Dra. Lourdes Orquera|78° Congreso Aniversario FASO · Mar del Plata||Hospital Italiano|Curso de Trastornos Respiratorios del Sueño en Niños"
-             aria-hidden="true"></div>
-        <figcaption class="hero4__cap" aria-live="polite"><span class="hero4__capk"></span><span class="hero4__capt"></span><span class="hero4__bars" aria-hidden="true"></span></figcaption>
-        <button class="hero4__vbtn" type="button" aria-label="Pausar el video" hidden><span class="hero4__vico"></span></button>
-      </figure>
+      <!-- los videos de los congresos se ven dentro de los cuadros del muro (si no cargan, quedan las fotos).
+           data-focus: dónde está la persona en cada clip (x y, de 0 a 1) -->
+      <div data-wall-video hidden
+           data-src="assets/video/coms-armijos-rio.mp4, assets/video/coms-orquera-faso.mp4, assets/video/coms-panel-italiano.mp4"
+           data-focus="0.62 0.42, 0.33 0.42, 0.45 0.72"></div>
+      <button class="hero4__vbtn" type="button" aria-label="Pausar los videos" hidden><span class="hero4__vico"></span></button>
       <div class="wrap hero4__in" data-hero-out>
         <p class="tag" data-hero><span class="tag__dot"></span>COMS · Centro de Otorrinolaringología y Medicina del Sueño</p>
         <h1 class="hero4__title" id="hero-title">
