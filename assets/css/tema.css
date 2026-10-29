@@ -445,3 +445,38 @@ body { background: transparent; }
 .sign4__time { display: flex; align-items: center; gap: 10px; margin: 26px 0 0; font-size: 11px; font-weight: 600; letter-spacing: .24em; text-transform: uppercase; color: var(--dark-text-2); }
 .sign4__time i { width: 6px; height: 6px; border-radius: 50%; background: #ffd58a; box-shadow: 0 0 14px 3px rgba(255, 196, 120, calc(var(--p) * .8)); }
 .sign4__hz { position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(255, 226, 184, .75), transparent); transform: scaleX(calc(.2 + var(--p) * .8)); }
+/* ---------- portada con videos de los congresos (reemplaza al muro de fotos cuando cargan) ---------- */
+.hero4__film { display: none; position: absolute; z-index: 1; margin: 0; right: max(var(--gutter), calc((100vw - var(--max)) / 2)); top: 50%; translate: 0 -46%; width: clamp(300px, 29vw, 430px); }
+.hero4.has-video .hero4__film { display: block; animation: filmIn 1.4s var(--ease) both; }
+@keyframes filmIn { from { opacity: 0; transform: translateY(26px) scale(.97); } }
+.hero4__video { position: relative; aspect-ratio: 4 / 5; border-radius: 28px; overflow: hidden; background: #0d1b3c; box-shadow: 0 40px 100px rgba(2, 6, 20, .55), 0 0 0 1px rgba(255, 255, 255, .1); }
+.hero4__video::after { content: ""; position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(180deg, rgba(8, 18, 44, 0) 70%, rgba(8, 18, 44, .35)); pointer-events: none; }
+.hero4__video video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: scale(1.06); transition: opacity 1.2s ease, transform 7s linear; }
+.hero4__video video.is-on { opacity: 1; transform: scale(1); }
+.hero4__cap { display: grid; grid-template-columns: 1fr auto; column-gap: 16px; row-gap: 2px; margin-top: 18px; padding: 0 4px; }
+.hero4__capk { font-family: var(--f-serif); font-size: 22px; line-height: 1.1; color: #fff; }
+.hero4__capt { grid-column: 1; font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--dark-text-2); }
+.hero4__bars { grid-column: 2; grid-row: 1 / span 2; align-self: center; display: flex; gap: 6px; }
+.hero4__bars i { position: relative; width: 26px; height: 2px; border-radius: 2px; background: rgba(255, 255, 255, .2); overflow: hidden; }
+.hero4__bars i::after { content: ""; position: absolute; inset: 0; background: #9fc1ff; transform-origin: 0 50%; transform: scaleX(0); }
+.hero4__bars i.is-done::after { transform: scaleX(1); }
+.hero4__bars i.is-on::after { animation: capBar var(--dur, 6s) linear forwards; }
+@keyframes capBar { to { transform: scaleX(1); } }
+.hero4__vbtn { position: absolute; z-index: 2; top: 14px; right: 14px; width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center; background: rgba(8, 18, 44, .5); border: 1px solid rgba(255, 255, 255, .22); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); transition: background .3s; }
+.hero4__vbtn:hover { background: rgba(130, 170, 245, .4); }
+.hero4__vico { position: relative; width: 11px; height: 12px; border-left: 3px solid #fff; border-right: 3px solid #fff; }
+.hero4__vbtn.is-paused .hero4__vico { width: 0; height: 0; border: 0; border-left: 11px solid #fff; border-top: 7px solid transparent; border-bottom: 7px solid transparent; margin-left: 3px; }
+/* el fondo toma los colores del video que se ve */
+.hero4__amb { position: absolute; z-index: -2; inset: -12%; width: 124%; height: 124%; filter: blur(60px) saturate(1.5) brightness(.95); opacity: 0; transition: opacity 1.6s ease; }
+.hero4.has-video .hero4__amb { opacity: 1; }
+.hero4.has-video .wall { opacity: 0; visibility: hidden; transition: opacity .8s, visibility 0s .8s; }
+.hero4.has-video .hero4__shade { background: linear-gradient(90deg, rgba(7, 15, 38, .93) 0%, rgba(7, 15, 38, .66) 45%, rgba(7, 15, 38, .18) 100%), linear-gradient(0deg, rgba(7, 15, 38, .85), rgba(7, 15, 38, 0) 35%); }
+.hero4:not(.is-vis) .hero4__bars i.is-on::after { animation-play-state: paused; }
+@media (max-width: 1100px) { .hero4__film { width: clamp(260px, 26vw, 330px); } }
+@media (max-width: 900px) {
+  .hero4.has-video { flex-direction: column; align-items: stretch; justify-content: flex-end; padding-top: 100px; }
+  .hero4__film { position: relative; right: auto; top: auto; translate: none; order: -1; width: min(70vw, 300px); margin: 0 auto 34px; }
+  .hero4.has-video .hero4__shade { background: linear-gradient(0deg, rgba(7, 15, 38, .96) 0%, rgba(7, 15, 38, .75) 55%, rgba(7, 15, 38, .5) 100%); }
+  .hero4__capk { font-size: 19px; }
+  .hero4__capt { font-size: 10.5px; letter-spacing: .06em; }
+}
