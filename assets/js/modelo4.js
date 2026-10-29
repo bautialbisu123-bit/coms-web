@@ -55,7 +55,8 @@
      con su propio encuadre, centrado en la persona. Si los videos no cargan, quedan las fotos. */
   const wv = $('[data-wall-video]'), hero4 = $('.hero4');
   const wclips = wv ? (wv.dataset.src || '').split(',').map(s => s.trim()).filter(Boolean) : [];
-  if (wclips.length && hero4 && !calm) {
+  // también con "menos movimiento" activado: los videos son la portada (se pueden pausar con el botón)
+  if (wclips.length && hero4) {
     const btn = $('.hero4__vbtn', hero4);
     // dónde está la persona en cada clip (x y, de 0 a 1), para que ningún encuadre la deje afuera
     const focus = (wv.dataset.focus || '').split(',').map(s => s.trim().split(/\s+/).map(Number));
