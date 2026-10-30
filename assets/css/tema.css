@@ -103,6 +103,7 @@ body { background: transparent; }
 /* ---------- equipo: tarjetas que se dan vuelta ---------- */
 .flip__hint { display: flex; align-items: center; gap: 10px; margin: 0 0 20px; font-size: 12px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--dark-text-2); }
 .flip__hint svg { animation: giro 6s linear infinite; }
+.flip__swipe { display: none; }
 .flips { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(14px, 1.8vw, 24px); }
 .flip { perspective: 1600px; height: clamp(560px, 46vw, 660px); }
 .flip__in { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 1s var(--ease); }
@@ -358,12 +359,20 @@ body { background: transparent; }
   .split__pics { min-height: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
   .split__ph { position: relative; inset: auto; width: auto; transform: none !important; }
   .split__ph--1 { grid-column: 1 / -1; aspect-ratio: 4 / 3; }
-  .flips { grid-template-columns: 1fr; gap: 16px; }
-  .flip { height: 600px; }
+  /* equipo: en el celular las tres tarjetas se deslizan de costado y se asoma la siguiente */
+  .flips { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; margin: 0 calc(-1 * var(--gutter)); padding: 6px var(--gutter) 10px; scroll-padding-left: var(--gutter); }
+  .flips::-webkit-scrollbar { display: none; }
+  .flip { flex: 0 0 84%; height: 590px; scroll-snap-align: start; }
+  .flip__hint { flex-wrap: wrap; row-gap: 4px; }
+  .flip__swipe { display: block; flex-basis: 100%; padding-left: 26px; }
   .tr__cols { grid-template-columns: 1fr; }
   .tr__who { width: 100%; }
   .tr__who button { flex: 1 1 auto; }
-  .cf__stage { height: 600px; }
+  /* especialidades: la tarjeta del frente con todo su texto a la vista; las de los costados, solo el dibujo */
+  .cf__stage { height: 700px; }
+  .cf__art { height: 28%; }
+  .cf__txt { transition: opacity .4s; }
+  .cf__card:not(.is-active) .cf__txt { opacity: 0; }
   .venn { grid-template-columns: 1fr; }
   .venn__fig { max-width: 420px; justify-self: center; width: 100%; }
   .chk { grid-template-columns: 1fr; }
@@ -389,7 +398,14 @@ body { background: transparent; }
   .lb__nav--p { left: 18px; right: auto; } .lb__nav--n { left: 76px; right: auto; }
   .route { height: 120px; }
   .route__pin { font-size: 20px; }
-  .route__mid { font-size: 10px; letter-spacing: .08em; }
+  /* el cartel de la videollamada sube hasta el arco, así no tapa los nombres de las sedes */
+  .route__mid { top: 30px; padding: 6px 12px; font-size: 9.5px; letter-spacing: .08em; }
+  /* sedes: sin huecos vacíos entre los datos y el botón */
+  .office { min-height: 0; }
+  .office .btn { margin-top: 6px; }
+  /* menos aire arriba y abajo de cada sección, y la barra de abajo un poco más fina */
+  :root { --sec: 68px; }
+  .dock a { min-height: 44px; font-size: 13px; }
   .ct4__top .big { font-size: clamp(70px, 22vw, 120px); }
 }
 @media (prefers-reduced-motion: reduce) {
