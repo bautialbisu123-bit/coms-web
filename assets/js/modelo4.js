@@ -20,8 +20,9 @@
   // [avance, color de arriba, color de abajo]
   const STOPS = [[0, '#050c22', '#0b1940'], [.35, '#081537', '#13285a'], [.65, '#0f2350', '#2a4683'], [.85, '#284a8c', '#7d95c4'], [1, '#7f9fd3', '#e8d9cf']].map(([p, a, b]) => [p, hex(a), hex(b)]);
   const STOPS_DARK = [[0, '#050c22', '#0b1940'], [.4, '#071331', '#112450'], [.75, '#0b1c44', '#1c3468'], [1, '#132a5c', '#3a4f86']].map(([p, a, b]) => [p, hex(a), hex(b)]);
-  // en modo claro el cielo es de día: celeste pálido que termina cálido, como un amanecer suave
-  const STOPS_LIGHT = [[0, '#d6e1f2', '#e4ebf7'], [.5, '#dae4f3', '#e9eff8'], [.85, '#e3e7f1', '#f1ebe4'], [1, '#ece4da', '#f5e9db']].map(([p, a, b]) => [p, hex(a), hex(b)]);
+  // en modo claro el cielo es de día: un celeste grisáceo apagado (no blanco, para que no encandile)
+  // que termina apenas cálido, como un amanecer suave
+  const STOPS_LIGHT = [[0, '#cbd6e8', '#d8e0ed'], [.5, '#ced8e8', '#dbe2ee'], [.85, '#d5dae5', '#e2ddd6'], [1, '#dbd3c9', '#e5d9cc']].map(([p, a, b]) => [p, hex(a), hex(b)]);
   const skyAt = p => {
     const S = root.dataset.theme === 'dark' ? STOPS_DARK : STOPS_LIGHT;
     let i = 0; while (i < S.length - 2 && p > S[i + 1][0]) i++;

@@ -9,7 +9,7 @@
    y buscador de preguntas.
    ============================================================ */
 :root {
-  --bg: #f3f6fb; --bg-2: #e7edf6; --surface: #ffffff;
+  --bg: #e9eef5; --bg-2: #dde4ee; --surface: #f6f8fb;
   --text: #0a1733; --text-2: #536079; --line: rgba(10, 23, 51, .12);
   --accent: #2f68d8; --accent-2: #8fb3f3; --accent-ink: #1c4b9e; --on-accent: #ffffff;
   --dark: #08122c; --dark-2: #111f42; --dark-text: #eef2fa; --dark-text-2: #9fadc9; --dark-line: rgba(200, 215, 245, .13);
@@ -485,10 +485,11 @@ body { background: transparent; }
 /* el cambio de modo: un círculo que se abre desde el botón (en navegadores que lo soportan) */
 ::view-transition-old(root), ::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
 /* ---------- modo claro completo: las 7 secciones claras (en oscuro, todas oscuras).
-   Las secciones que eran de noche redefinen sus colores; lo que va sobre fotos o videos queda igual ---------- */
-:root:not([data-theme="dark"]) { --nav-bg: rgba(255, 255, 255, .82); --nav-line: rgba(10, 23, 51, .08); --nav-hover: rgba(10, 23, 51, .06); }
+   Las secciones que eran de noche redefinen sus colores; lo que va sobre fotos queda igual.
+   Los claros son grises azulados apagados, no blanco puro: así el fondo no encandila y las fotos resaltan ---------- */
+:root:not([data-theme="dark"]) { --nav-bg: rgba(244, 247, 251, .86); --nav-line: rgba(10, 23, 51, .08); --nav-hover: rgba(10, 23, 51, .06); }
 :root:not([data-theme="dark"]) .pn--dark, :root:not([data-theme="dark"]) .hero4 {
-  --bg: #fbfcfe; --bg-2: #e9eef7; --surface: #ffffff;
+  --bg: #edf1f6; --bg-2: #dfe6f0; --surface: #f7f9fc;
   --text: #0a1733; --text-2: #536079; --line: rgba(10, 23, 51, .12);
   --dark-text: #0a1733; --dark-text-2: #536079; --dark-line: rgba(10, 23, 51, .12);
   --accent: #2f68d8; --accent-2: #8fb3f3; --accent-ink: #1c4b9e; --on-accent: #ffffff;
@@ -508,13 +509,15 @@ body { background: transparent; }
 :root:not([data-theme="dark"]) .tema:hover { background: rgba(10, 23, 51, .06); border-color: rgba(10, 23, 51, .3); }
 
 /* portada: el muro de carruseles con un velo claro */
-:root:not([data-theme="dark"]) .hero4__shade { background: linear-gradient(90deg, rgba(243, 246, 251, .97) 0%, rgba(243, 246, 251, .9) 34%, rgba(243, 246, 251, .18) 70%, rgba(243, 246, 251, .4) 100%), linear-gradient(0deg, rgba(243, 246, 251, .95), rgba(243, 246, 251, 0) 30%); }
-:root:not([data-theme="dark"]) .wall__track img { filter: saturate(.95); }
-:root:not([data-theme="dark"]) .wall__cs { background: #dfe6f2; }
-:root:not([data-theme="dark"]) .tag { background: rgba(255, 255, 255, .75); border-color: rgba(10, 23, 51, .1); }
+/* el velo claro queda solo detrás del texto: sobre las fotos no hay velo, así no se ven lavadas */
+:root:not([data-theme="dark"]) .hero4__shade { background: linear-gradient(90deg, rgba(228, 234, 243, .97) 0%, rgba(228, 234, 243, .88) 33%, rgba(228, 234, 243, 0) 60%), linear-gradient(0deg, rgba(228, 234, 243, .92), rgba(228, 234, 243, 0) 22%); }
+/* las fotos, un punto más bajas de brillo y con algo más de contraste para que no encandilen */
+:root:not([data-theme="dark"]) .wall__track img { filter: saturate(.92) brightness(.93) contrast(1.05); }
+:root:not([data-theme="dark"]) .wall__cs { background: #c9d3e3; }
+:root:not([data-theme="dark"]) .tag { background: rgba(255, 255, 255, .55); border-color: rgba(10, 23, 51, .1); }
 :root:not([data-theme="dark"]) .tag__dot { background: #2f68d8; }
 :root:not([data-theme="dark"]) .hero4__l2 { color: #1c4b9e; }
-:root:not([data-theme="dark"]) .hero4__facts div { background: rgba(255, 255, 255, .75); border-color: rgba(10, 23, 51, .1); }
+:root:not([data-theme="dark"]) .hero4__facts div { background: rgba(255, 255, 255, .55); border-color: rgba(10, 23, 51, .1); }
 :root:not([data-theme="dark"]) .hero4__down { border-color: rgba(10, 23, 51, .35); }
 :root:not([data-theme="dark"]) .hero4__down span { background: #0a1733; }
 :root:not([data-theme="dark"]) .hero4__vbtn { background: rgba(255, 255, 255, .8); border-color: rgba(10, 23, 51, .15); }
@@ -522,7 +525,7 @@ body { background: transparent; }
 :root:not([data-theme="dark"]) .hero4__vbtn.is-paused .hero4__vico { border-left-color: #0a1733; border-top-color: transparent; border-bottom-color: transparent; }
 
 /* equipo: el dorso de la tarjeta pasa a blanco */
-:root:not([data-theme="dark"]) .flip__back { background: #ffffff; border-color: rgba(10, 23, 51, .1); box-shadow: 0 24px 60px rgba(10, 23, 51, .1); }
+:root:not([data-theme="dark"]) .flip__back { background: var(--surface); border-color: rgba(10, 23, 51, .1); box-shadow: 0 24px 60px rgba(10, 23, 51, .1); }
 :root:not([data-theme="dark"]) .flip__back .flip__area { color: #1c4b9e; }
 :root:not([data-theme="dark"]) .flip__close { color: #0a1733; border-color: rgba(10, 23, 51, .18); }
 :root:not([data-theme="dark"]) .flip__close:hover { background: rgba(10, 23, 51, .06); }
@@ -533,10 +536,10 @@ body { background: transparent; }
 :root:not([data-theme="dark"]) .stp__dot { background: #ffffff; }
 :root:not([data-theme="dark"]) .stp__b[aria-selected="true"] .stp__dot { background: #2f68d8; border-color: #2f68d8; box-shadow: 0 0 0 8px rgba(47, 104, 216, .14); }
 :root:not([data-theme="dark"]) .stp__b[aria-selected="true"] .stp__w, :root:not([data-theme="dark"]) .stp__b:hover .stp__w { color: #0a1733; }
-:root:not([data-theme="dark"]) .stp__p { background: #ffffff; box-shadow: 0 20px 50px rgba(10, 23, 51, .05); }
+:root:not([data-theme="dark"]) .stp__p { background: var(--surface); box-shadow: 0 20px 50px rgba(10, 23, 51, .05); }
 :root:not([data-theme="dark"]) .stp__big { color: #2f68d8; }
 :root:not([data-theme="dark"]) .stp__p a { color: #1c4b9e; }
-:root:not([data-theme="dark"]) .tool4 { background: #ffffff; }
+:root:not([data-theme="dark"]) .tool4 { background: var(--surface); }
 :root:not([data-theme="dark"]) .tool4__ico { background: rgba(47, 104, 216, .1); color: #1c4b9e; }
 :root:not([data-theme="dark"]) .tool4:hover .tool4__ico { background: #2f68d8; color: #ffffff; }
 
@@ -545,19 +548,19 @@ body { background: transparent; }
 :root:not([data-theme="dark"]) .route__flow { stroke: #2f68d8; }
 :root:not([data-theme="dark"]) .route__dot { fill: #2f68d8; filter: drop-shadow(0 0 6px rgba(47, 104, 216, .6)); }
 :root:not([data-theme="dark"]) .route__pin i { background: #2f68d8; }
-:root:not([data-theme="dark"]) .route__mid { background: #ffffff; }
-:root:not([data-theme="dark"]) .pn--dark .office:not(.is-hl) { background: #ffffff; }
-:root:not([data-theme="dark"]) .pn--dark .ct4__faq details { background: #ffffff; }
+:root:not([data-theme="dark"]) .route__mid { background: var(--surface); }
+:root:not([data-theme="dark"]) .pn--dark .office:not(.is-hl) { background: var(--surface); }
+:root:not([data-theme="dark"]) .pn--dark .ct4__faq details { background: var(--surface); }
 :root:not([data-theme="dark"]) .pn--dark .ct4__faq .qa__a a { color: #1c4b9e; }
 :root:not([data-theme="dark"]) .pn--dark .ct4__faq summary::after { background-color: #e9eef7; }
 
 /* pie */
-:root:not([data-theme="dark"]) .foot { background: #eaf0f8; color: #536079; --dark-text: #0a1733; --dark-text-2: #536079; --dark-line: rgba(10, 23, 51, .12); }
+:root:not([data-theme="dark"]) .foot { background: #e1e7f0; color: #536079; --dark-text: #0a1733; --dark-text-2: #536079; --dark-line: rgba(10, 23, 51, .12); }
 :root:not([data-theme="dark"]) .sign4__word span { background: linear-gradient(180deg, #0a1733 30%, rgba(10, 23, 51, .35) 100%); -webkit-background-clip: text; background-clip: text; }
 :root:not([data-theme="dark"]) .sign4__sub em { color: #1c4b9e; }
 :root:not([data-theme="dark"]) .sign4__mark .iso-blanco { fill: #0a1733; }
 :root:not([data-theme="dark"]) .sign4__glow { background: radial-gradient(50% 62% at 50% 100%, rgba(255, 196, 140, .45), rgba(143, 179, 243, .18) 46%, rgba(234, 240, 248, 0) 76%); }
 
 @media (max-width: 900px) {
-  :root:not([data-theme="dark"]) .hero4__shade { background: linear-gradient(0deg, rgba(243, 246, 251, .98) 0%, rgba(243, 246, 251, .9) 50%, rgba(243, 246, 251, .5) 100%); }
+  :root:not([data-theme="dark"]) .hero4__shade { background: linear-gradient(0deg, rgba(228, 234, 243, .97) 0%, rgba(228, 234, 243, .86) 50%, rgba(228, 234, 243, .3) 100%); }
 }
