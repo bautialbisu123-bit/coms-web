@@ -19,7 +19,7 @@
   <link rel="preload" href="assets/fonts/instrument-serif-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="assets/css/motor.css?v=11">
-  <link rel="stylesheet" href="assets/css/tema.css?v=14">
+  <link rel="stylesheet" href="assets/css/tema.css?v=15">
   <style>html{background:#070f26}</style>
   <script>(function(d){d.className=d.className.replace('no-js','js');try{if(sessionStorage.getItem('coms-m4-intro'))d.classList.add('seen')}catch(e){}var s=null;try{s=localStorage.getItem('coms-tema')}catch(e){}d.dataset.theme=(s==='dark'||s==='light')?s:(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')})(document.documentElement);if('scrollRestoration' in history)history.scrollRestoration='manual';</script>
 </head>
@@ -95,26 +95,29 @@
   </div>
 
   <main id="main">
-    <!-- ============ PORTADA: muro de carruseles con las fotos del curso del Hospital Italiano ============ -->
+    <!-- ============ PORTADA: fotos grandes de fondo que pasan de a una (curso del Hospital Italiano) ============ -->
     <section class="hero4" id="inicio" aria-labelledby="hero-title">
-      <!-- cada cuadro del muro es un carrusel: arranca con la foto que tiene acá y va pasando las demás.
-           style="object-position": qué parte de la foto queda a la vista en el cuadro -->
-      <div class="wall" aria-hidden="true" data-mouse="-22">
-        <div class="wall__col"><div class="wall__track">
-          <img src="assets/img/curso-1.jpg" alt=""><img src="assets/img/curso-5.jpg" alt="" style="object-position:50% 50%"><img src="assets/img/curso-3.jpg" alt="" style="object-position:50% 56%"><img src="assets/img/curso-7.jpg" alt="">
-        </div></div>
-        <div class="wall__col wall__col--down"><div class="wall__track">
-          <img src="assets/img/curso-4.jpg" alt=""><img src="assets/img/curso-2.jpg" alt=""><img src="assets/img/curso-6.jpg" alt="" style="object-position:50% 46%"><img src="assets/img/curso-1.jpg" alt="">
-        </div></div>
-        <div class="wall__col"><div class="wall__track">
-          <img src="assets/img/curso-6.jpg" alt="" style="object-position:50% 46%"><img src="assets/img/curso-3.jpg" alt="" style="object-position:50% 56%"><img src="assets/img/curso-1.jpg" alt=""><img src="assets/img/curso-5.jpg" alt="" style="object-position:50% 50%">
-        </div></div>
-        <div class="wall__col wall__col--down"><div class="wall__track">
-          <img src="assets/img/curso-2.jpg" alt=""><img src="assets/img/curso-7.jpg" alt=""><img src="assets/img/curso-4.jpg" alt=""><img src="assets/img/curso-6.jpg" alt="" style="object-position:50% 46%">
-        </div></div>
+      <!-- la primera foto se carga de entrada; las demás (data-src) se van cargando de a una, antes de que les toque.
+           style="object-position": qué parte de la foto queda a la vista (en la compu manda el alto; en el celular, el ancho) -->
+      <div class="slides" data-slides data-mouse="-14" aria-hidden="true">
+        <img class="is-on" src="assets/img/curso-4.jpg" alt="" style="object-position:50% 30%">
+        <img data-src="assets/img/curso-5.jpg" alt="" style="object-position:52% 30%">
+        <img data-src="assets/img/curso-3.jpg" alt="" style="object-position:50% 45%">
+        <img data-src="assets/img/curso-2.jpg" alt="" style="object-position:55% 45%">
+        <img data-src="assets/img/curso-1.jpg" alt="" style="object-position:50% 48%">
+        <img data-src="assets/img/curso-6.jpg" alt="" style="object-position:62% 45%">
+        <img data-src="assets/img/curso-7.jpg" alt="" style="object-position:72% 50%">
       </div>
       <span class="hero4__shade" aria-hidden="true"></span>
-      <button class="hero4__vbtn" type="button" aria-label="Pausar las fotos" hidden><span class="hero4__vico"></span></button>
+      <!-- qué foto se ve, una barrita por foto (la arma el script) y el botón de pausa -->
+      <div class="slides__ctl" data-hero>
+        <p class="slides__cap">Curso de Trastornos Respiratorios del Sueño · Hospital Italiano</p>
+        <div class="slides__row">
+          <span class="slides__n"><b>01</b> / 07</span>
+          <div class="slides__bars" role="group" aria-label="Elegir foto"></div>
+          <button class="hero4__vbtn" type="button" aria-label="Pausar las fotos"><span class="hero4__vico"></span></button>
+        </div>
+      </div>
       <div class="wrap hero4__in" data-hero-out>
         <p class="tag" data-hero><span class="tag__dot"></span>COMS · Centro de Otorrinolaringología y Medicina del Sueño</p>
         <h1 class="hero4__title" id="hero-title">
@@ -547,6 +550,6 @@
   <script src="assets/js/vendor/ScrollTrigger.min.js" defer></script>
   <script src="assets/js/vendor/lenis.min.js" defer></script>
   <script src="assets/js/motor.js?v=11" defer></script>
-  <script src="assets/js/modelo4.js?v=13" defer></script>
+  <script src="assets/js/modelo4.js?v=14" defer></script>
 </body>
 </html>

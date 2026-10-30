@@ -1,5 +1,5 @@
 /* COMS · modelo 4 — interacciones propias (se carga después de motor.js).
-   El cielo y el reloj, el muro de fotos, las tarjetas que se dan vuelta, la trayectoria,
+   El cielo, las fotos de fondo de la portada, las tarjetas que se dan vuelta, la trayectoria,
    el carrusel 3D, los círculos, la autoevaluación, los pasos, el celular, la galería
    y el buscador de preguntas. Cada bloque se fija si existe en la página. */
 (() => {
@@ -79,74 +79,40 @@
     });
     setUI();
   }
-  /* ---------- muro de fotos: cada columna se duplica para que el loop no se corte ---------- */
-  $$('.wall__track').forEach(t => { [...t.children].forEach(img => t.appendChild(img.cloneNode(true))); });
-
-  /* ---------- el muro como carruseles: las fotos del curso del Hospital Italiano ----------
-     Cada cuadro pasa sus fotos una tras otra (entra la nueva desde la derecha), desfasado de los demás,
-     y nunca muestra la misma foto que el cuadro de arriba, de abajo o de los costados.
-     El cuadro y su copia del loop cambian juntos, para que el muro no salte al dar la vuelta.
-     Con "menos movimiento" las fotos se funden en lugar de deslizarse (eso lo resuelve el CSS). */
-  const hero4 = $('.hero4'), wallTracks = $$('.wall__track');
-  if (hero4 && wallTracks.length) {
-    const btn = $('.hero4__vbtn', hero4);
-    const ROWS = 4, DWELL = 6400, SLIDE = 1300;
-    // las fotos distintas del muro, con el encuadre que trae cada una
-    const photos = [];
-    wallTracks.forEach(t => $$('img', t).forEach(img => {
-      const src = img.getAttribute('src');
-      if (!photos.some(p => p.src === src)) photos.push({ src, pos: img.style.objectPosition });
-    }));
-    const grid = wallTracks.map(() => []), tiles = [];
-    wallTracks.forEach((track, col) => {
-      $$('img', track).forEach((img, p) => {
-        const q = p % ROWS;
-        let t = grid[col][q];
-        if (!t) {
-          t = grid[col][q] = { col, q, k: photos.findIndex(ph => ph.src === img.getAttribute('src')), boxes: [], at: 0 };
-          tiles.push(t);
-        }
-        const box = document.createElement('div'), nxt = document.createElement('img');
-        box.className = 'wall__cs';
-        nxt.alt = ''; nxt.className = 'is-wait';
-        img.replaceWith(box); img.classList.add('is-cur'); box.append(img, nxt);
-        t.boxes.push(box);
-      });
-    });
-    const neighbours = t => [grid[t.col][(t.q + 1) % ROWS], grid[t.col][(t.q + ROWS - 1) % ROWS], grid[t.col - 1]?.[t.q], grid[t.col + 1]?.[t.q]]
-      .filter(Boolean).map(x => x.k);
-    const advance = t => {
-      const busy = neighbours(t);
-      for (let d = 1; d < photos.length; d++) {
-        const c = (t.k + d) % photos.length;
-        if (!busy.includes(c)) { t.k = c; break; }
-      }
-      const ph = photos[t.k];
-      t.boxes.forEach(box => {
-        const cur = $('.is-cur', box), nxt = $('.is-wait', box);
-        nxt.src = ph.src; nxt.style.objectPosition = ph.pos;
-        (nxt.decode ? nxt.decode().catch(() => {}) : Promise.resolve()).then(() => {
-          nxt.classList.replace('is-wait', 'is-cur');
-          cur.classList.replace('is-cur', 'is-gone');
-          setTimeout(() => cur.classList.replace('is-gone', 'is-wait'), SLIDE);
-        });
+  /* ---------- portada: fotos grandes de fondo que pasan de a una ----------
+     La barrita de la foto que se ve se llena (es una animación de CSS) y al llenarse pasa a la siguiente.
+     Cada foto se carga recién cuando se está viendo la anterior, así la portada abre rápido.
+     Con el botón se pausa; fuera de pantalla la barrita se detiene sola. */
+  const hero4 = $('.hero4'), slides = $('[data-slides]');
+  if (hero4 && slides) {
+    const imgs = $$('img', slides), bars = $('.slides__bars', hero4), num = $('.slides__n b', hero4), btn = $('.hero4__vbtn', hero4);
+    bars.innerHTML = imgs.map((im, i) => `<button type="button" aria-label="Foto ${i + 1} de ${imgs.length}"><i></i></button>`).join('');
+    const tabs = $$('button', bars);
+    const load = im => { if (im.dataset.src) { im.src = im.dataset.src; im.removeAttribute('data-src'); } };
+    let cur = 0, paused = false;
+    const show = i => {
+      cur = (i + imgs.length) % imgs.length;
+      const im = imgs[cur];
+      load(im);
+      (im.decode ? im.decode().catch(() => {}) : Promise.resolve()).then(() => {
+        imgs.forEach((x, k) => x.classList.toggle('is-on', k === cur));
+        tabs.forEach(t => t.removeAttribute('aria-current'));
+        void bars.offsetWidth; // para que la barrita vuelva a empezar de cero
+        tabs[cur].setAttribute('aria-current', 'true');
+        num.textContent = pad(cur + 1);
+        load(imgs[(cur + 1) % imgs.length]); // la que sigue ya se va cargando
       });
     };
-    let paused = false, onScreen = true;
-    const t0 = performance.now();
-    tiles.forEach(t => { t.at = t0 + 1200 + ((t.q * wallTracks.length + t.col) * 1637) % DWELL; });
-    setInterval(() => {
-      // en pausa, fuera de pantalla o con la pestaña oculta el reloj de cada cuadro se corre, así al volver no cambian todos juntos
-      if (paused || !onScreen || document.hidden) { tiles.forEach(t => { t.at += 250; }); return; }
-      const now = performance.now();
-      tiles.forEach(t => { if (now >= t.at) { t.at = now + DWELL; advance(t); } });
-    }, 250);
-    btn.hidden = false;
+    tabs.forEach((t, k) => {
+      t.addEventListener('click', () => show(k));
+      $('i', t).addEventListener('animationend', () => { if (k === cur) show(cur + 1); });
+    });
     btn.addEventListener('click', () => {
       paused = !paused; hero4.classList.toggle('is-paused', paused);
       btn.classList.toggle('is-paused', paused); btn.setAttribute('aria-label', paused ? 'Reanudar las fotos' : 'Pausar las fotos');
     });
-    new IntersectionObserver(([e]) => { onScreen = e.isIntersecting; }).observe(hero4);
+    new IntersectionObserver(([e]) => hero4.classList.toggle('is-away', !e.isIntersecting)).observe(hero4);
+    show(0);
   }
   /* ---------- equipo: tarjetas que se dan vuelta ---------- */
   const flips = $$('.flip');

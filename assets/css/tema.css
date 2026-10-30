@@ -3,7 +3,7 @@
    Lo distintivo: el fondo es un cielo que va del anochecer al amanecer
    mientras bajás (de las 23:00 a las 07:00).
    Las secciones flotan como paneles sobre ese cielo. Títulos en serif.
-   Componentes: muro de fotos en movimiento, tarjetas que se dan vuelta,
+   Componentes: fotos grandes de fondo que pasan de a una, tarjetas que se dan vuelta,
    carrusel 3D, círculos que se cruzan, autoevaluación de señales, pasos
    que avanzan solos, un celular con las herramientas, galería con visor
    y buscador de preguntas.
@@ -50,18 +50,28 @@ body { background: transparent; }
 .pn--light { background: var(--bg); }
 .pn--dark { background: rgba(8, 18, 44, .88); color: var(--dark-text); border: 1px solid rgba(200, 215, 245, .08); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
 
-/* ---------- portada: muro de fotos ---------- */
+/* ---------- portada ---------- */
 .hero4 { position: relative; isolation: isolate; min-height: 100svh; display: flex; align-items: center; padding: 130px 0 90px; overflow: hidden; color: var(--dark-text); }
-.wall { position: absolute; z-index: -2; top: -20%; bottom: -20%; right: -6%; width: 64%; display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; transform: rotate(-7deg); }
-.wall__col { overflow: hidden; }
-.wall__track { display: flex; flex-direction: column; gap: 14px; animation: subir 46s linear infinite; }
-.wall__col--down .wall__track { animation-name: bajar; animation-duration: 54s; }
-.wall__col:nth-child(3) .wall__track { animation-duration: 38s; }
-.wall__track img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; border-radius: 18px; filter: saturate(.85) brightness(.82); }
-@keyframes subir { from { transform: translateY(0); } to { transform: translateY(calc(-50% - 7px)); } }
-@keyframes bajar { from { transform: translateY(calc(-50% - 7px)); } to { transform: translateY(0); } }
-.hero4:not(.is-vis) .wall__track { animation-play-state: paused; }
-.hero4__shade { position: absolute; inset: 0; z-index: -1; pointer-events: none; background: linear-gradient(90deg, rgba(7, 15, 38, .97) 0%, rgba(7, 15, 38, .9) 34%, rgba(7, 15, 38, .25) 70%, rgba(7, 15, 38, .45) 100%), linear-gradient(0deg, rgba(7, 15, 38, .9), rgba(7, 15, 38, 0) 30%); }
+/* las fotos grandes, de a una: ocupan la parte derecha (en el celular, toda) y se funden hacia el texto
+   con una máscara, así no hace falta un velo encima y la foto se ve limpia. Pasan fundiéndose, con un zoom lento */
+.slides { position: absolute; z-index: -2; top: -24px; bottom: -24px; right: -24px; width: calc(60% + 24px); overflow: hidden; background: #0d1b3c; -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 38%); mask-image: linear-gradient(90deg, transparent 0, #000 38%); }
+.slides img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: scale(1.1); filter: saturate(.9) brightness(.86); transition: opacity 1.6s var(--ease), transform 8s linear; }
+.slides img.is-on { opacity: 1; transform: scale(1); }
+.hero4__shade { position: absolute; inset: 0; z-index: -1; pointer-events: none; background: linear-gradient(0deg, rgba(7, 15, 38, .75), rgba(7, 15, 38, 0) 28%); }
+/* abajo a la derecha, en un recuadro de vidrio: el pie de foto, una barrita por foto y la pausa
+   (separado del borde para no quedar debajo del botón de WhatsApp) */
+.slides__ctl { position: absolute; z-index: 1; right: 104px; bottom: 104px; display: grid; justify-items: end; gap: 8px; padding: 12px 12px 12px 18px; border-radius: 20px; background: rgba(8, 18, 44, .5); border: 1px solid rgba(255, 255, 255, .12); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+.slides__cap { margin: 0; font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: rgba(238, 242, 250, .75); }
+.slides__row { display: flex; align-items: center; gap: 14px; }
+.slides__n { font-family: var(--f-serif); font-size: 19px; line-height: 1; font-variant-numeric: tabular-nums; color: rgba(238, 242, 250, .55); }
+.slides__n b { font-weight: 400; color: #fff; }
+.slides__bars { display: flex; gap: 6px; }
+.slides__bars button { --bar: #ffffff; --track: rgba(255, 255, 255, .28); width: 26px; padding: 12px 0; }
+/* la barrita se llena en 6,5 s; al terminar, el script pasa a la foto siguiente */
+.slides__bars i { display: block; height: 2px; border-radius: 2px; background: linear-gradient(var(--bar), var(--bar)) 0 0 / 0% 100% no-repeat, var(--track); }
+.slides__bars button[aria-current="true"] i { animation: fotoBar 6.5s linear forwards; }
+.hero4.is-paused .slides__bars i, .hero4.is-away .slides__bars i { animation-play-state: paused; }
+@keyframes fotoBar { to { background-size: 100% 100%; } }
 .hero4__in { position: relative; }
 .tag { display: inline-flex; align-items: center; gap: 10px; margin: 0 0 30px; padding: 9px 16px 9px 12px; border-radius: 999px; background: rgba(255, 255, 255, .06); border: 1px solid rgba(255, 255, 255, .12); font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--dark-text-2); }
 .tag__dot { width: 8px; height: 8px; border-radius: 50%; background: #82aaf5; animation: latido 2.6s infinite; }
@@ -336,14 +346,18 @@ body { background: transparent; }
 
 /* ============ responsive ============ */
 @media (max-width: 1180px) {
-  .wall { width: 72%; right: -16%; }
   .flip { height: 620px; }
   .flips { gap: 12px; }
 }
 @media (max-width: 900px) {
-  .hero4 { align-items: flex-end; padding: 120px 0 80px; }
-  .wall { width: 140%; right: -30%; top: -10%; bottom: -10%; grid-template-columns: repeat(4, 1fr); opacity: .8; }
-  .hero4__shade { background: linear-gradient(0deg, rgba(7, 15, 38, .98) 0%, rgba(7, 15, 38, .88) 50%, rgba(7, 15, 38, .45) 100%); }
+  /* en el celular la foto es una franja arriba, sin velo, que se funde hacia abajo; el texto va debajo */
+  .hero4 { align-items: flex-start; padding: calc(50svh - 30px) 0 60px; }
+  .slides { top: 0; bottom: auto; right: 0; width: auto; left: 0; height: 50svh; -webkit-mask-image: linear-gradient(180deg, #000 60%, transparent); mask-image: linear-gradient(180deg, #000 60%, transparent); }
+  /* el recuadro va al pie de la franja, donde la foto se funde, para no tapar las caras */
+  .slides__ctl { top: calc(50svh - 94px); right: 16px; bottom: auto; padding: 6px 6px 6px 14px; }
+  .slides__cap { display: none; }
+  .slides__bars button { width: 16px; }
+  .hero4__shade { display: none; }
   .hero4__title { font-size: clamp(60px, 17vw, 100px); }
   .hero4__cta .btn { flex: 1 1 100%; justify-content: space-between; }
   .hero4__down { display: none; }
@@ -388,7 +402,7 @@ body { background: transparent; }
   .ct4__top .big { font-size: clamp(70px, 22vw, 120px); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .wall__track { animation-duration: 120s; }
+  .slides img { transform: none; transition: opacity 1.6s var(--ease); }
   .venn__c, .venn__core { animation: none; }
   .sky4__stars { animation: none; }
 }
@@ -433,24 +447,11 @@ body { background: transparent; }
 .sign4__time { display: flex; align-items: center; gap: 10px; margin: 26px 0 0; font-size: 11px; font-weight: 600; letter-spacing: .24em; text-transform: uppercase; color: var(--dark-text-2); }
 .sign4__time i { width: 6px; height: 6px; border-radius: 50%; background: #ffd58a; box-shadow: 0 0 14px 3px rgba(255, 196, 120, calc(var(--p) * .8)); }
 .sign4__hz { position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(255, 226, 184, .75), transparent); transform: scaleX(calc(.2 + var(--p) * .8)); }
-/* ---------- el muro de la portada: cada cuadro es un carrusel con las fotos del curso ----------
-   la foto nueva entra desde la derecha con un leve zoom que se va soltando; la anterior se corre y se apaga */
-.wall__cs { position: relative; isolation: isolate; overflow: hidden; aspect-ratio: 3 / 4; border-radius: 18px; background: #0d1b3c; }
-.wall__cs img { position: absolute; inset: 0; width: 100%; height: 100%; aspect-ratio: auto; border-radius: 0; transition: translate 1.2s cubic-bezier(.77, 0, .18, 1), opacity 1.2s cubic-bezier(.77, 0, .18, 1), scale 7s linear; }
-.wall__cs img.is-cur { z-index: 2; translate: 0 0; scale: 1; }
-.wall__cs img.is-gone { z-index: 1; translate: -32% 0; opacity: .3; }
-.wall__cs img.is-wait { z-index: 0; translate: 100% 0; scale: 1.1; transition: none; }
-@media (prefers-reduced-motion: reduce) {
-  .wall__cs img { translate: none !important; scale: none !important; transition: opacity 1.2s ease; }
-  .wall__cs img.is-wait { opacity: 0; }
-  .wall__cs img.is-gone { opacity: 1; }
-}
-.hero4.is-paused .wall__track { animation-play-state: paused; }
-.hero4__vbtn { position: absolute; z-index: 2; right: clamp(16px, 2.4vw, 30px); bottom: 110px; width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center; background: rgba(8, 18, 44, .55); border: 1px solid rgba(255, 255, 255, .22); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); transition: background .3s; }
+/* ---------- el botón de pausa de las fotos de la portada (va dentro del recuadro de abajo) ---------- */
+.hero4__vbtn { flex: none; width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center; background: rgba(8, 18, 44, .55); border: 1px solid rgba(255, 255, 255, .22); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); transition: background .3s; }
 .hero4__vbtn:hover { background: rgba(130, 170, 245, .4); }
 .hero4__vico { position: relative; width: 11px; height: 12px; border-left: 3px solid #fff; border-right: 3px solid #fff; }
 .hero4__vbtn.is-paused .hero4__vico { width: 0; height: 0; border: 0; border-left: 11px solid #fff; border-top: 7px solid transparent; border-bottom: 7px solid transparent; margin-left: 3px; }
-@media (max-width: 900px) { .hero4__vbtn { bottom: 22px; right: 14px; } }
 /* ---------- modo oscuro (botón de la barra). El sitio ya es mayormente noche: lo que cambia son los
    paneles claros, y el cielo del fondo no llega a aclarar del todo ---------- */
 .tema { flex: none; position: relative; width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center; color: var(--dark-text); border: 1px solid rgba(255, 255, 255, .18); transition: background .3s, border-color .3s, transform .5s var(--ease); }
@@ -508,12 +509,17 @@ body { background: transparent; }
 :root:not([data-theme="dark"]) .tema { color: #0a1733; border-color: rgba(10, 23, 51, .15); }
 :root:not([data-theme="dark"]) .tema:hover { background: rgba(10, 23, 51, .06); border-color: rgba(10, 23, 51, .3); }
 
-/* portada: el muro de carruseles con un velo claro */
-/* el velo claro queda solo detrás del texto: sobre las fotos no hay velo, así no se ven lavadas */
-:root:not([data-theme="dark"]) .hero4__shade { background: linear-gradient(90deg, rgba(228, 234, 243, .97) 0%, rgba(228, 234, 243, .88) 33%, rgba(228, 234, 243, 0) 60%), linear-gradient(0deg, rgba(228, 234, 243, .92), rgba(228, 234, 243, 0) 22%); }
+/* portada: las fotos de fondo y el recuadro de abajo, en claro */
+/* sobre las fotos no hay velo (se funden con la máscara), así no se ven lavadas; solo un degradé abajo */
+:root:not([data-theme="dark"]) .hero4__shade { background: linear-gradient(0deg, rgba(228, 234, 243, .85), rgba(228, 234, 243, 0) 24%); }
 /* las fotos, un punto más bajas de brillo y con algo más de contraste para que no encandilen */
-:root:not([data-theme="dark"]) .wall__track img { filter: saturate(.92) brightness(.93) contrast(1.05); }
-:root:not([data-theme="dark"]) .wall__cs { background: #c9d3e3; }
+:root:not([data-theme="dark"]) .slides { background: #c9d3e3; }
+:root:not([data-theme="dark"]) .slides img { filter: saturate(.92) brightness(.93) contrast(1.05); }
+:root:not([data-theme="dark"]) .slides__ctl { background: rgba(244, 247, 251, .82); border-color: rgba(10, 23, 51, .08); }
+:root:not([data-theme="dark"]) .slides__cap { color: #536079; }
+:root:not([data-theme="dark"]) .slides__n { color: rgba(10, 23, 51, .45); }
+:root:not([data-theme="dark"]) .slides__n b { color: #0a1733; }
+:root:not([data-theme="dark"]) .slides__bars button { --bar: #2f68d8; --track: rgba(10, 23, 51, .16); }
 :root:not([data-theme="dark"]) .tag { background: rgba(255, 255, 255, .55); border-color: rgba(10, 23, 51, .1); }
 :root:not([data-theme="dark"]) .tag__dot { background: #2f68d8; }
 :root:not([data-theme="dark"]) .hero4__l2 { color: #1c4b9e; }
@@ -560,7 +566,3 @@ body { background: transparent; }
 :root:not([data-theme="dark"]) .sign4__sub em { color: #1c4b9e; }
 :root:not([data-theme="dark"]) .sign4__mark .iso-blanco { fill: #0a1733; }
 :root:not([data-theme="dark"]) .sign4__glow { background: radial-gradient(50% 62% at 50% 100%, rgba(255, 196, 140, .45), rgba(143, 179, 243, .18) 46%, rgba(234, 240, 248, 0) 76%); }
-
-@media (max-width: 900px) {
-  :root:not([data-theme="dark"]) .hero4__shade { background: linear-gradient(0deg, rgba(228, 234, 243, .97) 0%, rgba(228, 234, 243, .86) 50%, rgba(228, 234, 243, .3) 100%); }
-}
