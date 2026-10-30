@@ -58,20 +58,6 @@ body { background: transparent; }
 .slides img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: scale(1.1); filter: saturate(.9) brightness(.86); transition: opacity 1.6s var(--ease), transform 8s linear; }
 .slides img.is-on { opacity: 1; transform: scale(1); }
 .hero4__shade { position: absolute; inset: 0; z-index: -1; pointer-events: none; background: linear-gradient(0deg, rgba(7, 15, 38, .75), rgba(7, 15, 38, 0) 28%); }
-/* abajo a la derecha, en un recuadro de vidrio: el pie de foto, una barrita por foto y la pausa
-   (separado del borde para no quedar debajo del botón de WhatsApp) */
-.slides__ctl { position: absolute; z-index: 1; right: 104px; bottom: 104px; display: grid; justify-items: end; gap: 8px; padding: 12px 12px 12px 18px; border-radius: 20px; background: rgba(8, 18, 44, .5); border: 1px solid rgba(255, 255, 255, .12); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
-.slides__cap { margin: 0; font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: rgba(238, 242, 250, .75); }
-.slides__row { display: flex; align-items: center; gap: 14px; }
-.slides__n { font-family: var(--f-serif); font-size: 19px; line-height: 1; font-variant-numeric: tabular-nums; color: rgba(238, 242, 250, .55); }
-.slides__n b { font-weight: 400; color: #fff; }
-.slides__bars { display: flex; gap: 6px; }
-.slides__bars button { --bar: #ffffff; --track: rgba(255, 255, 255, .28); width: 26px; padding: 12px 0; }
-/* la barrita se llena en 6,5 s; al terminar, el script pasa a la foto siguiente */
-.slides__bars i { display: block; height: 2px; border-radius: 2px; background: linear-gradient(var(--bar), var(--bar)) 0 0 / 0% 100% no-repeat, var(--track); }
-.slides__bars button[aria-current="true"] i { animation: fotoBar 6.5s linear forwards; }
-.hero4.is-paused .slides__bars i, .hero4.is-away .slides__bars i { animation-play-state: paused; }
-@keyframes fotoBar { to { background-size: 100% 100%; } }
 .hero4__in { position: relative; }
 .tag { display: inline-flex; align-items: center; gap: 10px; margin: 0 0 30px; padding: 9px 16px 9px 12px; border-radius: 999px; background: rgba(255, 255, 255, .06); border: 1px solid rgba(255, 255, 255, .12); font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--dark-text-2); }
 .tag__dot { width: 8px; height: 8px; border-radius: 50%; background: #82aaf5; animation: latido 2.6s infinite; }
@@ -353,10 +339,6 @@ body { background: transparent; }
   /* en el celular la foto es una franja arriba, sin velo, que se funde hacia abajo; el texto va debajo */
   .hero4 { align-items: flex-start; padding: calc(50svh - 30px) 0 60px; }
   .slides { top: 0; bottom: auto; right: 0; width: auto; left: 0; height: 50svh; -webkit-mask-image: linear-gradient(180deg, #000 60%, transparent); mask-image: linear-gradient(180deg, #000 60%, transparent); }
-  /* el recuadro va al pie de la franja, donde la foto se funde, para no tapar las caras */
-  .slides__ctl { top: calc(50svh - 94px); right: 16px; bottom: auto; padding: 6px 6px 6px 14px; }
-  .slides__cap { display: none; }
-  .slides__bars button { width: 16px; }
   .hero4__shade { display: none; }
   .hero4__title { font-size: clamp(60px, 17vw, 100px); }
   .hero4__cta .btn { flex: 1 1 100%; justify-content: space-between; }
@@ -447,11 +429,6 @@ body { background: transparent; }
 .sign4__time { display: flex; align-items: center; gap: 10px; margin: 26px 0 0; font-size: 11px; font-weight: 600; letter-spacing: .24em; text-transform: uppercase; color: var(--dark-text-2); }
 .sign4__time i { width: 6px; height: 6px; border-radius: 50%; background: #ffd58a; box-shadow: 0 0 14px 3px rgba(255, 196, 120, calc(var(--p) * .8)); }
 .sign4__hz { position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(255, 226, 184, .75), transparent); transform: scaleX(calc(.2 + var(--p) * .8)); }
-/* ---------- el botón de pausa de las fotos de la portada (va dentro del recuadro de abajo) ---------- */
-.hero4__vbtn { flex: none; width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center; background: rgba(8, 18, 44, .55); border: 1px solid rgba(255, 255, 255, .22); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); transition: background .3s; }
-.hero4__vbtn:hover { background: rgba(130, 170, 245, .4); }
-.hero4__vico { position: relative; width: 11px; height: 12px; border-left: 3px solid #fff; border-right: 3px solid #fff; }
-.hero4__vbtn.is-paused .hero4__vico { width: 0; height: 0; border: 0; border-left: 11px solid #fff; border-top: 7px solid transparent; border-bottom: 7px solid transparent; margin-left: 3px; }
 /* ---------- modo oscuro (botón de la barra). El sitio ya es mayormente noche: lo que cambia son los
    paneles claros, y el cielo del fondo no llega a aclarar del todo ---------- */
 .tema { flex: none; position: relative; width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center; color: var(--dark-text); border: 1px solid rgba(255, 255, 255, .18); transition: background .3s, border-color .3s, transform .5s var(--ease); }
@@ -509,26 +486,18 @@ body { background: transparent; }
 :root:not([data-theme="dark"]) .tema { color: #0a1733; border-color: rgba(10, 23, 51, .15); }
 :root:not([data-theme="dark"]) .tema:hover { background: rgba(10, 23, 51, .06); border-color: rgba(10, 23, 51, .3); }
 
-/* portada: las fotos de fondo y el recuadro de abajo, en claro */
+/* portada: las fotos de fondo, en claro */
 /* sobre las fotos no hay velo (se funden con la máscara), así no se ven lavadas; solo un degradé abajo */
 :root:not([data-theme="dark"]) .hero4__shade { background: linear-gradient(0deg, rgba(228, 234, 243, .85), rgba(228, 234, 243, 0) 24%); }
 /* las fotos, un punto más bajas de brillo y con algo más de contraste para que no encandilen */
 :root:not([data-theme="dark"]) .slides { background: #c9d3e3; }
 :root:not([data-theme="dark"]) .slides img { filter: saturate(.92) brightness(.93) contrast(1.05); }
-:root:not([data-theme="dark"]) .slides__ctl { background: rgba(244, 247, 251, .82); border-color: rgba(10, 23, 51, .08); }
-:root:not([data-theme="dark"]) .slides__cap { color: #536079; }
-:root:not([data-theme="dark"]) .slides__n { color: rgba(10, 23, 51, .45); }
-:root:not([data-theme="dark"]) .slides__n b { color: #0a1733; }
-:root:not([data-theme="dark"]) .slides__bars button { --bar: #2f68d8; --track: rgba(10, 23, 51, .16); }
 :root:not([data-theme="dark"]) .tag { background: rgba(255, 255, 255, .55); border-color: rgba(10, 23, 51, .1); }
 :root:not([data-theme="dark"]) .tag__dot { background: #2f68d8; }
 :root:not([data-theme="dark"]) .hero4__l2 { color: #1c4b9e; }
 :root:not([data-theme="dark"]) .hero4__facts div { background: rgba(255, 255, 255, .55); border-color: rgba(10, 23, 51, .1); }
 :root:not([data-theme="dark"]) .hero4__down { border-color: rgba(10, 23, 51, .35); }
 :root:not([data-theme="dark"]) .hero4__down span { background: #0a1733; }
-:root:not([data-theme="dark"]) .hero4__vbtn { background: rgba(255, 255, 255, .8); border-color: rgba(10, 23, 51, .15); }
-:root:not([data-theme="dark"]) .hero4__vico { border-color: #0a1733; }
-:root:not([data-theme="dark"]) .hero4__vbtn.is-paused .hero4__vico { border-left-color: #0a1733; border-top-color: transparent; border-bottom-color: transparent; }
 
 /* equipo: el dorso de la tarjeta pasa a blanco */
 :root:not([data-theme="dark"]) .flip__back { background: var(--surface); border-color: rgba(10, 23, 51, .1); box-shadow: 0 24px 60px rgba(10, 23, 51, .1); }

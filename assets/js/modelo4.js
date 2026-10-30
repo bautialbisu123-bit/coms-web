@@ -80,39 +80,25 @@
     setUI();
   }
   /* ---------- portada: fotos grandes de fondo que pasan de a una ----------
-     La barrita de la foto que se ve se llena (es una animación de CSS) y al llenarse pasa a la siguiente.
-     Cada foto se carga recién cuando se está viendo la anterior, así la portada abre rápido.
-     Con el botón se pausa; fuera de pantalla la barrita se detiene sola. */
+     Pasan solas cada 6,5 s. Cada foto se carga recién cuando se está viendo la anterior, así la portada
+     abre rápido. Fuera de pantalla o con la pestaña oculta no avanzan. */
   const hero4 = $('.hero4'), slides = $('[data-slides]');
   if (hero4 && slides) {
-    const imgs = $$('img', slides), bars = $('.slides__bars', hero4), num = $('.slides__n b', hero4), btn = $('.hero4__vbtn', hero4);
-    bars.innerHTML = imgs.map((im, i) => `<button type="button" aria-label="Foto ${i + 1} de ${imgs.length}"><i></i></button>`).join('');
-    const tabs = $$('button', bars);
+    const imgs = $$('img', slides), DWELL = 6500;
     const load = im => { if (im.dataset.src) { im.src = im.dataset.src; im.removeAttribute('data-src'); } };
-    let cur = 0, paused = false;
+    let cur = 0, onScreen = true;
     const show = i => {
-      cur = (i + imgs.length) % imgs.length;
-      const im = imgs[cur];
+      const k = (i + imgs.length) % imgs.length, im = imgs[k];
       load(im);
       (im.decode ? im.decode().catch(() => {}) : Promise.resolve()).then(() => {
-        imgs.forEach((x, k) => x.classList.toggle('is-on', k === cur));
-        tabs.forEach(t => t.removeAttribute('aria-current'));
-        void bars.offsetWidth; // para que la barrita vuelva a empezar de cero
-        tabs[cur].setAttribute('aria-current', 'true');
-        num.textContent = pad(cur + 1);
+        cur = k;
+        imgs.forEach((x, j) => x.classList.toggle('is-on', j === cur));
         load(imgs[(cur + 1) % imgs.length]); // la que sigue ya se va cargando
       });
     };
-    tabs.forEach((t, k) => {
-      t.addEventListener('click', () => show(k));
-      $('i', t).addEventListener('animationend', () => { if (k === cur) show(cur + 1); });
-    });
-    btn.addEventListener('click', () => {
-      paused = !paused; hero4.classList.toggle('is-paused', paused);
-      btn.classList.toggle('is-paused', paused); btn.setAttribute('aria-label', paused ? 'Reanudar las fotos' : 'Pausar las fotos');
-    });
-    new IntersectionObserver(([e]) => hero4.classList.toggle('is-away', !e.isIntersecting)).observe(hero4);
-    show(0);
+    load(imgs[1]);
+    setInterval(() => { if (onScreen && !document.hidden) show(cur + 1); }, DWELL);
+    new IntersectionObserver(([e]) => { onScreen = e.isIntersecting; }).observe(hero4);
   }
   /* ---------- equipo: tarjetas que se dan vuelta ---------- */
   const flips = $$('.flip');
