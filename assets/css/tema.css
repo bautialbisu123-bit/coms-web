@@ -359,10 +359,11 @@ body { background: transparent; }
   .split__pics { min-height: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
   .split__ph { position: relative; inset: auto; width: auto; transform: none !important; }
   .split__ph--1 { grid-column: 1 / -1; aspect-ratio: 4 / 3; }
-  /* equipo: en el celular las tres tarjetas se deslizan de costado y se asoma la siguiente */
-  .flips { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; margin: 0 calc(-1 * var(--gutter)); padding: 6px var(--gutter) 10px; scroll-padding-left: var(--gutter); }
+  /* equipo: en el celular las tres tarjetas se deslizan de costado; la que se ve queda centrada
+     y de las vecinas se asoma un poco a cada lado */
+  .flips { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; margin: 0 calc(-1 * var(--gutter)); padding: 6px 9vw 10px; }
   .flips::-webkit-scrollbar { display: none; }
-  .flip { flex: 0 0 84%; height: 590px; scroll-snap-align: start; }
+  .flip { flex: 0 0 82vw; height: 590px; scroll-snap-align: center; }
   .flip__hint { flex-wrap: wrap; row-gap: 4px; }
   .flip__swipe { display: block; flex-basis: 100%; padding-left: 26px; }
   .tr__cols { grid-template-columns: 1fr; }
