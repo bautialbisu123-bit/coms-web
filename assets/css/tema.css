@@ -116,6 +116,9 @@ body { background: transparent; }
 .flip { perspective: 1600px; height: clamp(560px, 46vw, 660px); }
 .flip__in { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 1s var(--ease); }
 .flip.is-flipped .flip__in { transform: rotateY(180deg); }
+/* la cara que queda de espaldas no recibe clics (si no, la foto tapaba los botones del perfil) */
+.flip.is-flipped .flip__front { pointer-events: none; }
+.flip:not(.is-flipped) .flip__back { pointer-events: none; }
 .flip__front, .flip__back { position: absolute; inset: 0; border-radius: var(--r); overflow: hidden; -webkit-backface-visibility: hidden; backface-visibility: hidden; }
 .flip__front { display: block; width: 100%; text-align: left; color: #fff; background: #0f1c3d; }
 .flip__front img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 1.4s var(--ease), filter .6s; }
