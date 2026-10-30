@@ -81,85 +81,71 @@
   /* ---------- muro de fotos: cada columna se duplica para que el loop no se corte ---------- */
   $$('.wall__track').forEach(t => { [...t.children].forEach(img => t.appendChild(img.cloneNode(true))); });
 
-  /* ---------- el muro con los videos de los congresos ----------
-     Pocos reproductores (cada clip dos veces, desfasado) y cada cuadro del muro dibuja uno en un canvas
-     con su propio encuadre, centrado en la persona. Si los videos no cargan, quedan las fotos. */
-  const wv = $('[data-wall-video]'), hero4 = $('.hero4');
-  const wclips = wv ? (wv.dataset.src || '').split(',').map(s => s.trim()).filter(Boolean) : [];
-  // también con "menos movimiento" activado: los videos son la portada (se pueden pausar con el botón)
-  if (wclips.length && hero4) {
+  /* ---------- el muro como carruseles: las fotos del curso del Hospital Italiano ----------
+     Cada cuadro pasa sus fotos una tras otra (entra la nueva desde la derecha), desfasado de los demás,
+     y nunca muestra la misma foto que el cuadro de arriba, de abajo o de los costados.
+     El cuadro y su copia del loop cambian juntos, para que el muro no salte al dar la vuelta.
+     Con "menos movimiento" las fotos se funden en lugar de deslizarse (eso lo resuelve el CSS). */
+  const hero4 = $('.hero4'), wallTracks = $$('.wall__track');
+  if (hero4 && wallTracks.length) {
     const btn = $('.hero4__vbtn', hero4);
-    // dónde está la persona en cada clip (x y, de 0 a 1), para que ningún encuadre la deje afuera
-    const focus = (wv.dataset.focus || '').split(',').map(s => s.trim().split(/\s+/).map(Number));
-    const players = [];
-    wclips.forEach((src, k) => [0, .5].forEach(off => {
-      const v = document.createElement('video');
-      v.muted = true; v.loop = true; v.playsInline = true; v.preload = 'auto';
-      v.setAttribute('muted', ''); v.setAttribute('playsinline', '');
-      v.dataset.off = off; v.dataset.k = k; v.src = src;
-      wv.appendChild(v); players.push(v);
+    const ROWS = 4, DWELL = 6400, SLIDE = 1300;
+    // las fotos distintas del muro, con el encuadre que trae cada una
+    const photos = [];
+    wallTracks.forEach(t => $$('img', t).forEach(img => {
+      const src = img.getAttribute('src');
+      if (!photos.some(p => p.src === src)) photos.push({ src, pos: img.style.objectPosition });
     }));
-    const tiles = [];
-    let live = false, paused = false, onScreen = true, pending = players.length, last = 0;
-    const size = () => tiles.forEach(t => {
-      const d = Math.min(devicePixelRatio || 1, 1.5);
-      t.c.width = Math.max(1, Math.round(t.c.offsetWidth * d)); t.c.height = Math.max(1, Math.round(t.c.offsetHeight * d));
-    });
-    const draw = now => {
-      if (onScreen && !paused && !document.hidden && now - last > 33) {
-        last = now;
-        for (const t of tiles) {
-          const v = t.v;
-          if (v.readyState < 2 || !v.videoWidth) continue;
-          const vw = v.videoWidth, vh = v.videoHeight, cw = t.c.width, ch = t.c.height;
-          const s = Math.max(cw / vw, ch / vh) * t.z, sw = cw / s, sh = ch / s;
-          const [fx = .5, fy = .45] = focus[+v.dataset.k] || [];
-          const sx = Math.min(vw - sw, Math.max(0, (fx + t.jx) * vw - sw / 2));
-          const sy = Math.min(vh - sh, Math.max(0, (fy + t.jy) * vh - sh / 2));
-          t.ctx.drawImage(v, sx, sy, sw, sh, 0, 0, cw, ch);
+    const grid = wallTracks.map(() => []), tiles = [];
+    wallTracks.forEach((track, col) => {
+      $$('img', track).forEach((img, p) => {
+        const q = p % ROWS;
+        let t = grid[col][q];
+        if (!t) {
+          t = grid[col][q] = { col, q, k: photos.findIndex(ph => ph.src === img.getAttribute('src')), boxes: [], at: 0 };
+          tiles.push(t);
         }
+        const box = document.createElement('div'), nxt = document.createElement('img');
+        box.className = 'wall__cs';
+        nxt.alt = ''; nxt.className = 'is-wait';
+        img.replaceWith(box); img.classList.add('is-cur'); box.append(img, nxt);
+        t.boxes.push(box);
+      });
+    });
+    const neighbours = t => [grid[t.col][(t.q + 1) % ROWS], grid[t.col][(t.q + ROWS - 1) % ROWS], grid[t.col - 1]?.[t.q], grid[t.col + 1]?.[t.q]]
+      .filter(Boolean).map(x => x.k);
+    const advance = t => {
+      const busy = neighbours(t);
+      for (let d = 1; d < photos.length; d++) {
+        const c = (t.k + d) % photos.length;
+        if (!busy.includes(c)) { t.k = c; break; }
       }
-      requestAnimationFrame(draw);
-    };
-    const start = () => {
-      if (live || !players.length) return;
-      live = true;
-      // los cuadros vecinos (arriba, abajo y al costado) muestran clips distintos, con zoom y encuadre propios.
-      // Cada columna repite su secuencia de 4 cuadros igual que las fotos, para que el loop no salte.
-      const byClip = {};
-      players.forEach(v => { (byClip[v.dataset.k] = byClip[v.dataset.k] || []).push(v); });
-      const keys = Object.keys(byClip), SEQ = [0, 1, 0, 2];
-      $$('.wall__track').forEach((track, col) => {
-        $$('img', track).forEach((img, p) => {
-          const q = p % 4, k = keys[(SEQ[q] + col) % keys.length], vs = byClip[k];
-          const c = document.createElement('canvas');
-          c.className = 'wall__v'; c.setAttribute('aria-hidden', 'true');
-          const n = q * 4 + col;
-          tiles.push({ c, ctx: c.getContext('2d'), v: vs[(q + col) % vs.length], z: 1 + ((n * 37) % 26) / 100, jx: (((n * 53) % 17) - 8) / 100, jy: (((n * 29) % 13) - 6) / 100 });
-          img.after(c); img.classList.add('is-off');
+      const ph = photos[t.k];
+      t.boxes.forEach(box => {
+        const cur = $('.is-cur', box), nxt = $('.is-wait', box);
+        nxt.src = ph.src; nxt.style.objectPosition = ph.pos;
+        (nxt.decode ? nxt.decode().catch(() => {}) : Promise.resolve()).then(() => {
+          nxt.classList.replace('is-wait', 'is-cur');
+          cur.classList.replace('is-cur', 'is-gone');
+          setTimeout(() => cur.classList.replace('is-gone', 'is-wait'), SLIDE);
         });
       });
-      size(); hero4.classList.add('has-video'); btn.hidden = false;
-      players.forEach(v => { if (v.duration) v.currentTime = v.duration * +v.dataset.off; v.play().catch(() => {}); });
-      requestAnimationFrame(draw);
     };
-    players.slice().forEach(v => {
-      v.addEventListener('loadeddata', () => { if (--pending <= 0) start(); }, { once: true });
-      v.addEventListener('error', () => { players.splice(players.indexOf(v), 1); v.remove(); if (--pending <= 0) start(); }, { once: true });
+    let paused = false, onScreen = true;
+    const t0 = performance.now();
+    tiles.forEach(t => { t.at = t0 + 1200 + ((t.q * wallTracks.length + t.col) * 1637) % DWELL; });
+    setInterval(() => {
+      // en pausa, fuera de pantalla o con la pestaña oculta el reloj de cada cuadro se corre, así al volver no cambian todos juntos
+      if (paused || !onScreen || document.hidden) { tiles.forEach(t => { t.at += 250; }); return; }
+      const now = performance.now();
+      tiles.forEach(t => { if (now >= t.at) { t.at = now + DWELL; advance(t); } });
+    }, 250);
+    btn.hidden = false;
+    btn.addEventListener('click', () => {
+      paused = !paused; hero4.classList.toggle('is-paused', paused);
+      btn.classList.toggle('is-paused', paused); btn.setAttribute('aria-label', paused ? 'Reanudar las fotos' : 'Pausar las fotos');
     });
-    setTimeout(() => { if (!live && players.some(v => v.readyState >= 2)) { players.splice(0, players.length, ...players.filter(v => v.readyState >= 2)); start(); } }, 6000);
-    addEventListener('resize', size);
-    const setPaused = p => {
-      paused = p; hero4.classList.toggle('is-paused', p);
-      players.forEach(v => p ? v.pause() : v.play().catch(() => {}));
-      btn.classList.toggle('is-paused', p); btn.setAttribute('aria-label', p ? 'Reproducir los videos' : 'Pausar los videos');
-    };
-    btn.addEventListener('click', () => setPaused(!paused));
-    // fuera de pantalla no se reproducen (ahorra batería y datos)
-    new IntersectionObserver(([e]) => {
-      onScreen = e.isIntersecting;
-      if (live && !paused) players.forEach(v => onScreen ? v.play().catch(() => {}) : v.pause());
-    }).observe(hero4);
+    new IntersectionObserver(([e]) => { onScreen = e.isIntersecting; }).observe(hero4);
   }
   /* ---------- equipo: tarjetas que se dan vuelta ---------- */
   const flips = $$('.flip');

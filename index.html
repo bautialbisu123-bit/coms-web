@@ -19,7 +19,7 @@
   <link rel="preload" href="assets/fonts/instrument-serif-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="assets/css/motor.css?v=11">
-  <link rel="stylesheet" href="assets/css/tema.css?v=11">
+  <link rel="stylesheet" href="assets/css/tema.css?v=12">
   <style>html{background:#070f26}</style>
   <script>(function(d){d.className=d.className.replace('no-js','js');try{if(sessionStorage.getItem('coms-m4-intro'))d.classList.add('seen')}catch(e){}var s=null;try{s=localStorage.getItem('coms-tema')}catch(e){}d.dataset.theme=(s==='dark'||s==='light')?s:(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')})(document.documentElement);if('scrollRestoration' in history)history.scrollRestoration='manual';</script>
 </head>
@@ -100,29 +100,26 @@
   </div>
 
   <main id="main">
-    <!-- ============ PORTADA: muro de fotos en movimiento ============ -->
+    <!-- ============ PORTADA: muro de carruseles con las fotos del curso del Hospital Italiano ============ -->
     <section class="hero4" id="inicio" aria-labelledby="hero-title">
+      <!-- cada cuadro del muro es un carrusel: arranca con la foto que tiene acá y va pasando las demás.
+           style="object-position": qué parte de la foto queda a la vista en el cuadro -->
       <div class="wall" aria-hidden="true" data-mouse="-22">
         <div class="wall__col"><div class="wall__track">
-          <img src="assets/img/equipo-armijos.jpg" alt="" style="object-position:40% 28%"><img src="assets/img/flot-1.jpg" alt=""><img src="assets/img/nov-8.jpg" alt=""><img src="assets/img/nov-5.jpg" alt="">
+          <img src="assets/img/curso-1.jpg" alt=""><img src="assets/img/curso-5.jpg" alt="" style="object-position:50% 50%"><img src="assets/img/curso-3.jpg" alt="" style="object-position:50% 56%"><img src="assets/img/curso-7.jpg" alt="">
         </div></div>
         <div class="wall__col wall__col--down"><div class="wall__track">
-          <img src="assets/img/nov-11.jpg" alt="" style="object-position:50% 34%"><img src="assets/img/equipo-orquera.jpg" alt="" style="object-position:50% 20%"><img src="assets/img/flot-3.jpg" alt=""><img src="assets/img/nov-4.jpg" alt="">
+          <img src="assets/img/curso-4.jpg" alt=""><img src="assets/img/curso-2.jpg" alt=""><img src="assets/img/curso-6.jpg" alt="" style="object-position:50% 46%"><img src="assets/img/curso-1.jpg" alt="">
         </div></div>
         <div class="wall__col"><div class="wall__track">
-          <img src="assets/img/flot-2.jpg" alt=""><img src="assets/img/nov-7.jpg" alt=""><img src="assets/img/equipo-sartori.jpg" alt="" style="object-position:50% 30%"><img src="assets/img/flot-4.jpg" alt="">
+          <img src="assets/img/curso-6.jpg" alt="" style="object-position:50% 46%"><img src="assets/img/curso-3.jpg" alt="" style="object-position:50% 56%"><img src="assets/img/curso-1.jpg" alt=""><img src="assets/img/curso-5.jpg" alt="" style="object-position:50% 50%">
         </div></div>
         <div class="wall__col wall__col--down"><div class="wall__track">
-          <img src="assets/img/nov-9.jpg" alt=""><img src="assets/img/equipo-armijos.jpg" alt="" style="object-position:40% 28%"><img src="assets/img/nov-11.jpg" alt="" style="object-position:50% 34%"><img src="assets/img/equipo-orquera.jpg" alt="" style="object-position:50% 20%">
+          <img src="assets/img/curso-2.jpg" alt=""><img src="assets/img/curso-7.jpg" alt=""><img src="assets/img/curso-4.jpg" alt=""><img src="assets/img/curso-6.jpg" alt="" style="object-position:50% 46%">
         </div></div>
       </div>
       <span class="hero4__shade" aria-hidden="true"></span>
-      <!-- los videos de los congresos se ven dentro de los cuadros del muro (si no cargan, quedan las fotos).
-           data-focus: dónde está la persona en cada clip (x y, de 0 a 1) -->
-      <div data-wall-video hidden
-           data-src="assets/video/coms-armijos-rio.mp4?v=2, assets/video/coms-orquera-faso.mp4?v=2, assets/video/coms-panel-italiano.mp4?v=2"
-           data-focus="0.62 0.42, 0.33 0.42, 0.45 0.72"></div>
-      <button class="hero4__vbtn" type="button" aria-label="Pausar los videos" hidden><span class="hero4__vico"></span></button>
+      <button class="hero4__vbtn" type="button" aria-label="Pausar las fotos" hidden><span class="hero4__vico"></span></button>
       <div class="wrap hero4__in" data-hero-out>
         <p class="tag" data-hero><span class="tag__dot"></span>COMS · Centro de Otorrinolaringología y Medicina del Sueño</p>
         <h1 class="hero4__title" id="hero-title">
@@ -555,6 +552,6 @@
   <script src="assets/js/vendor/ScrollTrigger.min.js" defer></script>
   <script src="assets/js/vendor/lenis.min.js" defer></script>
   <script src="assets/js/motor.js?v=11" defer></script>
-  <script src="assets/js/modelo4.js?v=11" defer></script>
+  <script src="assets/js/modelo4.js?v=12" defer></script>
 </body>
 </html>
