@@ -55,8 +55,17 @@ body { background: transparent; }
 /* las fotos grandes, de a una: ocupan la parte derecha (en el celular, toda) y se funden hacia el texto
    con una máscara, así no hace falta un velo encima y la foto se ve limpia. Pasan fundiéndose, con un zoom lento */
 .slides { position: absolute; z-index: -2; top: -24px; bottom: -24px; right: -24px; width: calc(60% + 24px); overflow: hidden; background: #0d1b3c; -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 38%); mask-image: linear-gradient(90deg, transparent 0, #000 38%); }
-.slides img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: scale(1.1); filter: saturate(.9) brightness(.86); transition: opacity 1.6s var(--ease), transform 8s linear; }
-.slides img.is-on { opacity: 1; transform: scale(1); }
+/* cada foto entra apenas desenfocada y se aclara mientras aparece (--f: el tono de la foto según el modo) */
+.slides img { --f: saturate(.9) brightness(.86); position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: scale(1.1); filter: var(--f) blur(10px); transition: opacity 1.6s var(--ease), transform 8s linear, filter 2s var(--ease); }
+.slides img.is-on { opacity: 1; transform: scale(1); filter: var(--f) blur(0); }
+/* la línea que respira, entre los botones y los datos: tenue, avanza un ciclo cada 5 s y se infla y desinfla apenas */
+/* lo tenue va en el color y no en opacity, porque la entrada de la portada le pone opacity 1 */
+.breath { display: block; width: min(620px, 100%); height: 28px; margin: 18px 0 0; overflow: hidden; color: rgba(130, 170, 245, .5); -webkit-mask-image: linear-gradient(90deg, transparent, #000 14%, #000 72%, transparent); mask-image: linear-gradient(90deg, transparent, #000 14%, #000 72%, transparent); }
+.breath g { transform-box: fill-box; transform-origin: 50% 50%; animation: alienta 10s ease-in-out infinite alternate; }
+.breath path { fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; vector-effect: non-scaling-stroke; animation: respira 20s linear infinite; }
+@keyframes respira { to { transform: translateX(-1200px); } }
+@keyframes alienta { from { transform: scaleY(.55); } to { transform: scaleY(1); } }
+.breath + .hero4__facts { margin-top: 10px; }
 .hero4__shade { position: absolute; inset: 0; z-index: -1; pointer-events: none; background: linear-gradient(0deg, rgba(7, 15, 38, .75), rgba(7, 15, 38, 0) 28%); }
 .hero4__in { position: relative; }
 .tag { display: inline-flex; align-items: center; gap: 10px; margin: 0 0 30px; padding: 9px 16px 9px 12px; border-radius: 999px; background: rgba(255, 255, 255, .06); border: 1px solid rgba(255, 255, 255, .12); font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--dark-text-2); }
@@ -384,7 +393,8 @@ body { background: transparent; }
   .ct4__top .big { font-size: clamp(70px, 22vw, 120px); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .slides img { transform: none; transition: opacity 1.6s var(--ease); }
+  /* con "menos movimiento" se saca el zoom; el enfoque de la foto y la línea que respira quedan (son lentos y suaves) */
+  .slides img, .slides img.is-on { transform: none; transition: opacity 1.6s var(--ease), filter 2s var(--ease); }
   .venn__c, .venn__core { animation: none; }
   .sky4__stars { animation: none; }
 }
@@ -491,7 +501,8 @@ body { background: transparent; }
 :root:not([data-theme="dark"]) .hero4__shade { background: linear-gradient(0deg, rgba(228, 234, 243, .85), rgba(228, 234, 243, 0) 24%); }
 /* las fotos, un punto más bajas de brillo y con algo más de contraste para que no encandilen */
 :root:not([data-theme="dark"]) .slides { background: #c9d3e3; }
-:root:not([data-theme="dark"]) .slides img { filter: saturate(.92) brightness(.93) contrast(1.05); }
+:root:not([data-theme="dark"]) .slides img { --f: saturate(.92) brightness(.93) contrast(1.05); }
+:root:not([data-theme="dark"]) .breath { color: rgba(47, 104, 216, .42); }
 :root:not([data-theme="dark"]) .tag { background: rgba(255, 255, 255, .55); border-color: rgba(10, 23, 51, .1); }
 :root:not([data-theme="dark"]) .tag__dot { background: #2f68d8; }
 :root:not([data-theme="dark"]) .hero4__l2 { color: #1c4b9e; }
