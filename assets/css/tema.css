@@ -1,7 +1,7 @@
 /* ============================================================
    COMS · modelo 4 — "De la noche al despertar"
    Lo distintivo: el fondo es un cielo que va del anochecer al amanecer
-   mientras bajás, con un reloj fijo que marca la hora (23:00 → 07:00).
+   mientras bajás (de las 23:00 a las 07:00).
    Las secciones flotan como paneles sobre ese cielo. Títulos en serif.
    Componentes: muro de fotos en movimiento, tarjetas que se dan vuelta,
    carrusel 3D, círculos que se cruzan, autoevaluación de señales, pasos
@@ -24,29 +24,15 @@ body { background: transparent; }
 .d em, .em { color: var(--accent-ink); }
 .pre__brand { font-size: clamp(80px, 15vw, 240px); }
 .giant { --giant: 30vw; letter-spacing: -.04em; }
-.pn--dark, .hero4, .menu, .foot, .pre, .cf__card, .lb, .clock { --accent: #82aaf5; --accent-2: #b9d1fa; --on-accent: #08122c; }
+.pn--dark, .hero4, .menu, .foot, .pre, .cf__card, .lb { --accent: #82aaf5; --accent-2: #b9d1fa; --on-accent: #08122c; }
 .pn--dark, .hero4 { --bg: var(--dark); --text: var(--dark-text); --text-2: var(--dark-text-2); --line: var(--dark-line); --surface: var(--dark-2); --bg-2: rgba(255, 255, 255, .07); }
 .pn--dark .d em, .pn--dark .em { color: #9fc1ff; }
 .prog { background: linear-gradient(90deg, #2f68d8, #9fc1ff); }
 
-/* ---------- el cielo y el reloj ---------- */
+/* ---------- el cielo ---------- */
 .sky4 { position: fixed; inset: 0; z-index: -1; background: linear-gradient(180deg, var(--sky-a, #070f26), var(--sky-b, #0b1a40)); }
 .sky4__stars { position: absolute; inset: 0; opacity: var(--stars, 1); background-image: radial-gradient(1px 1px at 12% 18%, #fff, transparent), radial-gradient(1px 1px at 28% 72%, #fff, transparent), radial-gradient(1.4px 1.4px at 46% 36%, #fff, transparent), radial-gradient(1px 1px at 63% 12%, #fff, transparent), radial-gradient(1.2px 1.2px at 78% 58%, #fff, transparent), radial-gradient(1px 1px at 88% 28%, #fff, transparent), radial-gradient(1px 1px at 8% 88%, #fff, transparent), radial-gradient(1.3px 1.3px at 54% 90%, #fff, transparent), radial-gradient(1px 1px at 36% 8%, #fff, transparent), radial-gradient(1px 1px at 94% 82%, #fff, transparent); background-size: 520px 520px; animation: estrellas 9s ease-in-out infinite alternate; }
 @keyframes estrellas { from { filter: brightness(.6); } to { filter: brightness(1.2); } }
-/* el reloj: una columna angosta en el margen izquierdo, para no tapar contenido */
-.clock { position: fixed; z-index: 80; left: 10px; top: 50%; translate: 0 -50%; width: 60px; display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 12px 0 14px; border-radius: 999px; background: rgba(8, 18, 44, .72); border: 1px solid rgba(200, 215, 245, .14); color: #fff; backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); box-shadow: 0 14px 40px rgba(2, 6, 20, .3); transition: opacity .6s var(--ease), transform .6s var(--ease); }
-.clock:not(.is-on), .js:not(.ready) .clock { opacity: 0; transform: translateX(-16px); pointer-events: none; }
-.menu-open .clock { opacity: 0; pointer-events: none; }
-.clock__ico { position: relative; width: 36px; height: 36px; border-radius: 50%; background: rgba(255, 255, 255, .06); overflow: hidden; }
-.clock__moon, .clock__sun { position: absolute; left: 50%; top: 50%; width: 16px; height: 16px; margin: -8px 0 0 -8px; border-radius: 50%; transition: transform .2s linear, opacity .2s linear; }
-.clock__moon { background: transparent; box-shadow: inset -5px -2px 0 0 #dbe7ff; transform: translateY(var(--moon-y, 0)) rotate(-20deg); opacity: var(--moon-o, 1); }
-.clock__sun { background: #ffd58a; box-shadow: 0 0 12px rgba(255, 196, 120, .8); transform: translateY(var(--sun-y, 24px)); opacity: var(--sun-o, 0); }
-.clock__txt { display: flex; flex-direction: column; align-items: center; gap: 10px; line-height: 1; }
-.clock__t { font-family: var(--f-serif); font-size: 17px; letter-spacing: -.01em; font-variant-numeric: tabular-nums; }
-.clock__l { writing-mode: vertical-rl; transform: rotate(180deg); font-size: 9.5px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: rgba(238, 242, 250, .66); }
-.clock__bar { order: -1; width: 2px; height: 46px; border-radius: 2px; background: rgba(255, 255, 255, .14); overflow: hidden; display: none; }
-.clock__bar { display: block; order: 3; }
-.clock__bar i { display: block; width: 100%; height: 100%; background: linear-gradient(180deg, #82aaf5, #ffd58a); transform-origin: 50% 0; transform: scaleY(var(--p, 0)); }
 
 /* nav en vidrio oscuro */
 .nav { --text: #eef2fa; --text-2: rgba(238, 242, 250, .72); --bg: #08122c; box-shadow: 0 10px 40px rgba(2, 6, 20, .25); }
@@ -355,7 +341,6 @@ body { background: transparent; }
   .flips { gap: 12px; }
 }
 @media (max-width: 900px) {
-  .clock { display: none; }
   .hero4 { align-items: flex-end; padding: 120px 0 80px; }
   .wall { width: 140%; right: -30%; top: -10%; bottom: -10%; grid-template-columns: repeat(4, 1fr); opacity: .8; }
   .hero4__shade { background: linear-gradient(0deg, rgba(7, 15, 38, .98) 0%, rgba(7, 15, 38, .88) 50%, rgba(7, 15, 38, .45) 100%); }
@@ -515,17 +500,12 @@ body { background: transparent; }
 /* el visor de novedades sigue oscuro */
 :root:not([data-theme="dark"]) .lb { --dark-text: #eef2fa; --dark-text-2: #9fadc9; --dark-line: rgba(200, 215, 245, .13); }
 
-/* barra, botón de tema y reloj */
+/* barra y botón de tema */
 :root:not([data-theme="dark"]) .nav { --text: #0a1733; --text-2: rgba(10, 23, 51, .7); --bg: #ffffff; box-shadow: 0 10px 40px rgba(10, 23, 51, .08); }
 :root:not([data-theme="dark"]) .brand__mk { background: #0a1733; border-color: #0a1733; }
 :root:not([data-theme="dark"]) .brand__s { color: rgba(10, 23, 51, .55); }
 :root:not([data-theme="dark"]) .tema { color: #0a1733; border-color: rgba(10, 23, 51, .15); }
 :root:not([data-theme="dark"]) .tema:hover { background: rgba(10, 23, 51, .06); border-color: rgba(10, 23, 51, .3); }
-:root:not([data-theme="dark"]) .clock { background: rgba(255, 255, 255, .85); border-color: rgba(10, 23, 51, .1); color: #0a1733; box-shadow: 0 14px 40px rgba(10, 23, 51, .12); }
-:root:not([data-theme="dark"]) .clock__ico { background: rgba(10, 23, 51, .06); }
-:root:not([data-theme="dark"]) .clock__l { color: rgba(10, 23, 51, .6); }
-:root:not([data-theme="dark"]) .clock__bar { background: rgba(10, 23, 51, .12); }
-:root:not([data-theme="dark"]) .clock__moon { box-shadow: inset -5px -2px 0 0 #2f68d8; }
 
 /* portada: el muro de carruseles con un velo claro */
 :root:not([data-theme="dark"]) .hero4__shade { background: linear-gradient(90deg, rgba(243, 246, 251, .97) 0%, rgba(243, 246, 251, .9) 34%, rgba(243, 246, 251, .18) 70%, rgba(243, 246, 251, .4) 100%), linear-gradient(0deg, rgba(243, 246, 251, .95), rgba(243, 246, 251, 0) 30%); }
