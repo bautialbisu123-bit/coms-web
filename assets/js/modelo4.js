@@ -19,9 +19,11 @@
   const rgb = c => `rgb(${c[0]},${c[1]},${c[2]})`;
   // [avance, color de arriba, color de abajo]
   const STOPS = [[0, '#050c22', '#0b1940'], [.35, '#081537', '#13285a'], [.65, '#0f2350', '#2a4683'], [.85, '#284a8c', '#7d95c4'], [1, '#7f9fd3', '#e8d9cf']].map(([p, a, b]) => [p, hex(a), hex(b)]);
+  const STOPS_DARK = [[0, '#050c22', '#0b1940'], [.4, '#071331', '#112450'], [.75, '#0b1c44', '#1c3468'], [1, '#132a5c', '#3a4f86']].map(([p, a, b]) => [p, hex(a), hex(b)]);
   const skyAt = p => {
-    let i = 0; while (i < STOPS.length - 2 && p > STOPS[i + 1][0]) i++;
-    const [p0, a0, b0] = STOPS[i], [p1, a1, b1] = STOPS[i + 1], t = Math.min(1, Math.max(0, (p - p0) / (p1 - p0)));
+    const S = root.dataset.theme === 'dark' ? STOPS_DARK : STOPS;
+    let i = 0; while (i < S.length - 2 && p > S[i + 1][0]) i++;
+    const [p0, a0, b0] = S[i], [p1, a1, b1] = S[i + 1], t = Math.min(1, Math.max(0, (p - p0) / (p1 - p0)));
     return [mix(a0, a1, t), mix(b0, b1, t)];
   };
   const phoneTimes = $$('[data-phone-time]');
@@ -47,6 +49,33 @@
   };
   if (sky) { addEventListener('scroll', paintSky, { passive: true }); addEventListener('resize', () => { lastP = -1; paintSky(); }); paintSky(); }
 
+  /* ---------- modo oscuro: botón en la barra; se recuerda la elección en este navegador ---------- */
+  const temaBtn = $('[data-tema]');
+  if (temaBtn) {
+    const setUI = () => {
+      const dark = root.dataset.theme === 'dark';
+      temaBtn.setAttribute('aria-pressed', dark);
+      temaBtn.setAttribute('aria-label', dark ? 'Cambiar a modo claro' : 'Cambiar a modo oscuro');
+    };
+    const apply = dark => {
+      root.dataset.theme = dark ? 'dark' : 'light';
+      try { localStorage.setItem('coms-tema', root.dataset.theme); } catch (e) {}
+      setUI();
+      if (sky) { lastP = -1; paintSky(); }
+    };
+    temaBtn.addEventListener('click', () => {
+      const dark = root.dataset.theme !== 'dark';
+      if (!document.startViewTransition || calm) { apply(dark); return; }
+      const r = temaBtn.getBoundingClientRect(), x = r.left + r.width / 2, y = r.top + r.height / 2;
+      const end = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+      const tr = document.startViewTransition(() => apply(dark));
+      tr.ready.then(() => root.animate(
+        { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${end}px at ${x}px ${y}px)`] },
+        { duration: 800, easing: 'cubic-bezier(.65, 0, .35, 1)', pseudoElement: '::view-transition-new(root)' }
+      )).catch(() => {});
+    });
+    setUI();
+  }
   /* ---------- muro de fotos: cada columna se duplica para que el loop no se corte ---------- */
   $$('.wall__track').forEach(t => { [...t.children].forEach(img => t.appendChild(img.cloneNode(true))); });
 

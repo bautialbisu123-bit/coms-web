@@ -457,3 +457,36 @@ body { background: transparent; }
 .hero4__vico { position: relative; width: 11px; height: 12px; border-left: 3px solid #fff; border-right: 3px solid #fff; }
 .hero4__vbtn.is-paused .hero4__vico { width: 0; height: 0; border: 0; border-left: 11px solid #fff; border-top: 7px solid transparent; border-bottom: 7px solid transparent; margin-left: 3px; }
 @media (max-width: 900px) { .hero4__vbtn { bottom: 22px; right: 14px; } }
+/* ---------- modo oscuro (botón de la barra). El sitio ya es mayormente noche: lo que cambia son los
+   paneles claros, y el cielo del fondo no llega a aclarar del todo ---------- */
+.tema { flex: none; position: relative; width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center; color: var(--dark-text); border: 1px solid rgba(255, 255, 255, .18); transition: background .3s, border-color .3s, transform .5s var(--ease); }
+.tema:hover { background: rgba(255, 255, 255, .1); border-color: rgba(255, 255, 255, .35); }
+.tema:active { transform: scale(.92); }
+.tema svg { overflow: visible; }
+.tema__sol { fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; transform-origin: 12px 12px; transition: transform .6s var(--ease), opacity .3s; }
+.tema__sol circle { fill: currentColor; stroke: none; }
+.tema__luna { fill: currentColor; transform-origin: 12px 12px; transition: transform .6s var(--ease), opacity .3s; }
+/* en modo claro se ofrece la luna; en oscuro, el sol */
+:root:not([data-theme="dark"]) .tema__sol { opacity: 0; transform: rotate(-90deg) scale(.5); }
+:root[data-theme="dark"] .tema__luna { opacity: 0; transform: rotate(90deg) scale(.5); }
+.nav__links + .tema { margin-left: 0; }
+.tema + .nav__cta { margin-left: 8px !important; }
+@media (max-width: 1180px) { .tema { margin-left: auto; } }
+@media (max-width: 900px) { .tema { width: 48px; height: 48px; } .tema + .nav__cta + .burger, .tema ~ .burger { margin-left: 8px; } }
+
+:root[data-theme="dark"] { color-scheme: dark; }
+:root[data-theme="dark"] .pn--light {
+  --bg: #0c1838; --bg-2: rgba(255, 255, 255, .06); --surface: #132249;
+  --text: #eef2fa; --text-2: #a8b4cd; --line: rgba(200, 215, 245, .14);
+  --accent: #82aaf5; --accent-2: #b9d1fa; --accent-ink: #9fc1ff; --on-accent: #08122c;
+  border: 1px solid rgba(200, 215, 245, .08);
+  color: var(--text);
+}
+:root[data-theme="dark"] .pn--light .d em, :root[data-theme="dark"] .pn--light .em { color: #9fc1ff; }
+:root[data-theme="dark"] .chk__res { background: #08122c; border: 1px solid rgba(200, 215, 245, .12); }
+:root[data-theme="dark"] .chk__o[aria-pressed="true"] { box-shadow: 0 16px 34px rgba(0, 0, 0, .35); }
+:root[data-theme="dark"] .cf__card { box-shadow: 0 30px 70px rgba(0, 0, 0, .5), 0 0 0 1px rgba(200, 215, 245, .1); }
+:root[data-theme="dark"] .cf__dots button:not([aria-current="true"]) { background: rgba(255, 255, 255, .22); }
+
+/* el cambio de modo: un círculo que se abre desde el botón (en navegadores que lo soportan) */
+::view-transition-old(root), ::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
