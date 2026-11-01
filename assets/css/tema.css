@@ -301,11 +301,11 @@ body { background: transparent; }
 .stp__n { font-size: 12px; font-weight: 600; letter-spacing: .12em; }
 .stp__w { font-size: 13.5px; text-align: center; transition: color .3s; }
 .stp__b[aria-selected="true"] .stp__w, .stp__b:hover .stp__w { color: #fff; }
-.stp__panels { position: relative; margin-top: 40px; }
-.stp__p { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: clamp(20px, 4vw, 70px); align-items: center; min-height: 230px; padding: clamp(26px, 3.4vw, 54px); border-radius: 28px; background: rgba(255, 255, 255, .045); border: 1px solid var(--dark-line); }
-.stp__big { font-family: var(--f-serif); font-size: clamp(110px, 13vw, 210px); line-height: .8; color: #82aaf5; letter-spacing: -.04em; }
-.stp__p h3 { margin: 0 0 12px; font-family: var(--f-serif); font-weight: 400; font-size: clamp(40px, 4.6vw, 76px); line-height: .95; letter-spacing: -.02em; }
-.stp__p p { margin: 0; max-width: 46ch; font-size: clamp(16px, 1.3vw, 19px); line-height: 1.55; color: var(--dark-text-2); }
+.stp__panels { position: relative; margin-top: 30px; }
+.stp__p { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: clamp(18px, 2.6vw, 44px); align-items: center; min-height: clamp(150px, 11.5vw, 180px); padding: clamp(20px, 2.2vw, 34px) clamp(22px, 2.6vw, 40px); border-radius: 22px; background: rgba(255, 255, 255, .045); border: 1px solid var(--dark-line); }
+.stp__big { font-family: var(--f-serif); font-size: clamp(64px, 7vw, 120px); line-height: .8; color: #82aaf5; letter-spacing: -.04em; }
+.stp__p h3 { margin: 0 0 8px; font-family: var(--f-serif); font-weight: 400; font-size: clamp(30px, 3vw, 48px); line-height: .95; letter-spacing: -.02em; }
+.stp__p p { margin: 0; max-width: 52ch; font-size: clamp(15px, 1.1vw, 17px); line-height: 1.55; color: var(--dark-text-2); }
 .stp__p a { color: #9fc1ff; text-decoration: underline; text-underline-offset: 3px; }
 
 /* ---------- pacientes: el celular ---------- */
@@ -442,7 +442,8 @@ body { background: transparent; }
   .stp__rail { grid-template-columns: repeat(6, minmax(0, 1fr)); }
   .stp__w { display: none; }
   .stp__p { grid-template-columns: 1fr; gap: 10px; }
-  .stp__big { font-size: 90px; }
+  .stp__big { font-size: 60px; }
+  .stp__p { min-height: 210px; align-content: start; }
   .app { grid-template-columns: 1fr; }
   .app__dev { order: 2; }
   .phone { transform: none; }
@@ -500,8 +501,10 @@ body { background: transparent; }
 .tools4 { margin-top: clamp(56px, 7vw, 96px); }
 .tools4__t { margin: 0 0 22px; font-family: var(--f-serif); font-size: clamp(32px, 3.4vw, 54px); line-height: 1; letter-spacing: -.02em; }
 .pn--dark .tools4__t .em { color: #9fc1ff; }
-.tools4__grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
-.tool4 { position: relative; display: flex; flex-direction: column; gap: 6px; min-height: 200px; background: rgba(255, 255, 255, .04); }
+/* arriba, grandes, los dos que más se usan (pedir turno y subir estudios); debajo, los otros cuatro en fila */
+.tools4__grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 12px; }
+.tool4 { position: relative; grid-column: span 3; display: flex; flex-direction: column; gap: 6px; min-height: 200px; background: rgba(255, 255, 255, .04); }
+.tool4--hl { grid-column: span 6; }
 .tool4__ico { width: 52px; height: 52px; margin-bottom: 14px; border-radius: 16px; display: grid; place-items: center; background: rgba(130, 170, 245, .14); color: #9fc1ff; transition: background .4s, color .4s, transform .6s var(--ease); }
 .tool4__ico svg { width: 28px; height: 28px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 .tool4:hover .tool4__ico { background: #82aaf5; color: #08122c; transform: rotate(-6deg); }
@@ -517,9 +520,10 @@ body { background: transparent; }
 .pn--dark .ct4__faq summary::after { background-color: rgba(255, 255, 255, .08); }
 .pn--dark .ct4__faq .tools4__t .em { color: #9fc1ff; }
 
-@media (max-width: 1180px) { .tools4__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 1180px) { .tool4 { grid-column: span 6; } }
 @media (max-width: 900px) {
   .tools4__grid, .ct4__faq .qa__list { grid-template-columns: 1fr; }
+  .tool4, .tool4--hl { grid-column: auto; }
   .tool4 { min-height: 0; display: grid; grid-template-columns: 48px minmax(0, 1fr); column-gap: 14px; align-items: center; padding: 18px 64px 18px 18px; }
   .tool4__ico { grid-row: span 2; width: 48px; height: 48px; margin: 0; }
   .tool4__tt { padding-right: 0; font-size: 23px; }
@@ -701,10 +705,10 @@ body { background: transparent; }
   .photo3 li { min-height: calc(440 * var(--u)); }
   .photo3 h3 { font-size: calc(38 * var(--u)); }
   .photo3 p { font-size: calc(15 * var(--t)); }
-  .stp__big { font-size: calc(210 * var(--u)); }
-  .stp__p { min-height: calc(230 * var(--u)); }
-  .stp__p h3 { font-size: calc(76 * var(--u)); }
-  .stp__p p { font-size: calc(19 * var(--t)); }
+  .stp__big { font-size: calc(120 * var(--u)); }
+  .stp__p { min-height: calc(150 * var(--u)); }
+  .stp__p h3 { font-size: calc(48 * var(--u)); }
+  .stp__p p { font-size: calc(17 * var(--t)); }
   .stp__w { font-size: calc(13.5 * var(--t)); }
   .tools4__t { font-size: calc(54 * var(--u)); }
   .tool4 { min-height: calc(200 * var(--u)); }
@@ -753,4 +757,84 @@ body { background: transparent; }
   .act--sm .act__i { width: calc(38 * var(--t)); height: calc(38 * var(--t)); }
   .act--sm .act__i svg { width: calc(18 * var(--t)); height: calc(18 * var(--t)); }
   .act--sm .act__t strong { font-size: calc(13.5 * var(--t)); }
+}
+
+/* ============ herramientas online: que se note ============ */
+/* pedir turno y subir estudios, grandes y con los colores de sus botones: el turno en azul y los estudios en el
+   color opuesto al fondo. Una luz recorre el borde sin parar. (Va al final para ganarle al modo claro) */
+@property --giro { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
+.tools4__grid .tool4--hl {
+  --hl-bg: linear-gradient(140deg, #3b7bf0, #2f68d8 45%, #1c4b9e); --hl-fg: #fff; --hl-d: rgba(255, 255, 255, .82);
+  --hl-ring: #9fc1ff; --hl-ring2: #fff; --hl-glow: rgba(47, 104, 216, .85);
+  --ic-bg: rgba(255, 255, 255, .16); --ic-fg: #fff; --go-bg: #fff; --go-fg: #1c4b9e;
+  min-height: 250px; padding: clamp(26px, 2.8vw, 40px); color: var(--hl-fg); border-color: transparent;
+  box-shadow: 0 34px 60px -34px var(--hl-glow);
+}
+.tools4__grid .tool4.tool4--hl { background: var(--hl-bg); }
+.tools4__grid .tool4--est {
+  --hl-bg: linear-gradient(140deg, #ffffff, #dde7f7); --hl-fg: #0a1733; --hl-d: rgba(10, 23, 51, .68);
+  --hl-ring: #2f68d8; --hl-ring2: #82aaf5; --hl-glow: rgba(2, 6, 20, .7);
+  --ic-bg: #2f68d8; --ic-fg: #fff; --go-bg: #0a1733; --go-fg: #fff;
+}
+:root:not([data-theme="dark"]) .tools4__grid .tool4--est {
+  --hl-bg: linear-gradient(140deg, #1a3170, #0a1733); --hl-fg: #fff; --hl-d: rgba(238, 242, 250, .75);
+  --hl-ring: #82aaf5; --hl-ring2: #fff; --hl-glow: rgba(10, 23, 51, .55); --go-bg: #fff; --go-fg: #0a1733;
+}
+.tools4__grid .tool4--hl:hover { transform: translateY(-4px); }
+.tools4__grid .tool4--hl::after {
+  content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; border-radius: inherit; padding: 1.5px;
+  background: conic-gradient(from var(--giro), transparent 0 60%, var(--hl-ring) 78%, var(--hl-ring2) 87%, transparent 96%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); mask-composite: exclude;
+  animation: giroBorde 5s linear infinite;
+}
+.tools4__grid .tool4--est::after { animation-delay: -2.5s; }
+@keyframes giroBorde { to { --giro: 360deg; } }
+/* el ícono arriba y el texto abajo, como un cartel */
+.tools4__grid .tool4--hl .tool4__ico, .tools4__grid .tool4--hl.tool4:hover .tool4__ico { width: 76px; height: 76px; margin-bottom: auto; border-radius: 24px; background: var(--ic-bg); color: var(--ic-fg); }
+.tools4__grid .tool4--hl.tool4:hover .tool4__ico { transform: rotate(-6deg) scale(1.05); }
+.tools4__grid .tool4--hl .tool4__ico svg { width: 40px; height: 40px; }
+.tools4__grid .tool4--hl .tool4__tt { margin-top: 26px; font-size: clamp(34px, 3.2vw, 52px); }
+.tools4__grid .tool4--hl .tool4__d { max-width: 42ch; font-size: 15px; color: var(--hl-d); }
+.tools4__grid .tool4--hl .go, .tools4__grid .tool4--hl:hover .go { width: 58px; height: 58px; top: clamp(26px, 2.8vw, 40px); right: clamp(26px, 2.8vw, 40px); background: var(--go-bg); color: var(--go-fg); border-color: var(--go-bg); }
+
+/* cada ícono hace lo suyo: el tilde del turno se dibuja, la flecha de los estudios sube, las líneas de los
+   formularios se escriben, la luna se mece y suelta una "z", y el globo de la opinión escribe */
+.tool4__ico svg * { transform-box: fill-box; transform-origin: center; }
+.ic-check, .ic-ln { stroke-dasharray: 1 2; }
+.ic-check { animation: icTilde 3.6s var(--ease) infinite; }
+@keyframes icTilde { 0%, 10% { stroke-dashoffset: 1; opacity: 1; } 38%, 82% { stroke-dashoffset: 0; opacity: 1; } 96%, 100% { stroke-dashoffset: 0; opacity: 0; } }
+.ic-up { animation: icSube 2.8s var(--ease) infinite; }
+@keyframes icSube { 0% { transform: translateY(6px); opacity: 0; } 14% { opacity: 1; } 32%, 80% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(-6px); opacity: 0; } }
+.ic-ln { animation: icEscribe 4.2s ease-in-out infinite; }
+.ic-ln + .ic-ln { animation-delay: .35s; }
+.ic-ln + .ic-ln + .ic-ln { animation-delay: .7s; }
+@keyframes icEscribe { 0%, 8% { stroke-dashoffset: 1; opacity: 1; } 30%, 80% { stroke-dashoffset: 0; opacity: 1; } 94%, 100% { stroke-dashoffset: 0; opacity: 0; } }
+.ic-moon { animation: icMece 5s ease-in-out infinite; }
+@keyframes icMece { 0%, 100% { transform: rotate(-9deg); } 50% { transform: rotate(7deg); } }
+.ic-z { animation: icZ 2.8s ease-in-out infinite; }
+@keyframes icZ { 0% { opacity: 0; transform: translate(-3px, 4px) scale(.6); } 35% { opacity: 1; } 100% { opacity: 0; transform: translate(3px, -5px) scale(1.15); } }
+.ic-dot { animation: icTipea 1.4s ease-in-out infinite; }
+.ic-dot + .ic-dot { animation-delay: .18s; }
+.ic-dot + .ic-dot + .ic-dot { animation-delay: .36s; }
+@keyframes icTipea { 0%, 60%, 100% { opacity: .35; transform: translateY(0); } 30% { opacity: 1; transform: translateY(-3px); } }
+.s:not(.is-vis) .tool4__ico svg *, .s:not(.is-vis) .tool4--hl::after { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) { .tool4__ico svg *, .tools4__grid .tool4--hl::after { animation: none; } }
+
+/* en el celular van en fila, como las otras, pero más grandes y con sus colores */
+@media (max-width: 900px) {
+  .tools4__grid .tool4--hl { min-height: 0; grid-template-columns: 60px minmax(0, 1fr); padding: 22px 76px 22px 20px; }
+  .tools4__grid .tool4--hl .tool4__ico, .tools4__grid .tool4--hl.tool4:hover .tool4__ico { width: 60px; height: 60px; margin: 0; border-radius: 18px; }
+  .tools4__grid .tool4--hl .tool4__ico svg { width: 32px; height: 32px; }
+  .tools4__grid .tool4--hl .tool4__tt { margin-top: 0; font-size: 28px; }
+  .tools4__grid .tool4--hl .tool4__d { font-size: 14px; }
+  .tools4__grid .tool4--hl .go, .tools4__grid .tool4--hl:hover .go { width: 48px; height: 48px; top: 50%; right: 16px; margin-top: -24px; }
+}
+@media (min-width: 1700px) {
+  .tools4__grid .tool4--hl { min-height: calc(250 * var(--u)); padding: calc(40 * var(--u)); }
+  .tools4__grid .tool4--hl .tool4__ico, .tools4__grid .tool4--hl.tool4:hover .tool4__ico { width: calc(76 * var(--u)); height: calc(76 * var(--u)); border-radius: calc(24 * var(--u)); }
+  .tools4__grid .tool4--hl .tool4__ico svg { width: calc(40 * var(--u)); height: calc(40 * var(--u)); }
+  .tools4__grid .tool4--hl .tool4__tt { font-size: calc(52 * var(--u)); }
+  .tools4__grid .tool4--hl .tool4__d { font-size: calc(15 * var(--t)); }
+  .tools4__grid .tool4--hl .go, .tools4__grid .tool4--hl:hover .go { width: calc(58 * var(--u)); height: calc(58 * var(--u)); top: calc(40 * var(--u)); right: calc(40 * var(--u)); }
 }

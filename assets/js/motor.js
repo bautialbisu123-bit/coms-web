@@ -397,9 +397,10 @@
     G.to(o, { v: +el.dataset.count, duration: 1.8, ease: 'power2.out', scrollTrigger: { trigger: el, start: 'top 90%' }, onUpdate: () => { el.textContent = Math.round(o.v); } });
   });
 
-  // mosaicos y tarjetas en escalera
+  // mosaicos y tarjetas en escalera. El final va explícito y se limpia al terminar: en las tarjetas con transición
+  // de transform en el CSS, el from() tomaba como final la posición de arranque y quedaban 60 px corridas
   $$('[data-stagger]').forEach(w => {
-    G.from(w.children, { y: 60 * D, opacity: 0, duration: 1, stagger: .08, ease: 'power3.out', scrollTrigger: { trigger: w, start: 'top 86%' } });
+    G.fromTo(w.children, { y: 60 * D, opacity: 0 }, { y: 0, opacity: 1, duration: 1, stagger: .08, ease: 'power3.out', clearProps: 'transform,translate,rotate,scale,opacity', scrollTrigger: { trigger: w, start: 'top 86%' } });
   });
 
   // la palabra gigante del pie
