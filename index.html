@@ -19,7 +19,7 @@
   <link rel="preload" href="assets/fonts/instrument-serif-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="assets/css/motor.css?v=11">
-  <link rel="stylesheet" href="assets/css/tema.css?v=25">
+  <link rel="stylesheet" href="assets/css/tema.css?v=26">
   <style>html{background:#070f26}</style>
   <script>(function(d){d.className=d.className.replace('no-js','js');try{if(sessionStorage.getItem('coms-m4-intro'))d.classList.add('seen')}catch(e){}var s=null;try{s=localStorage.getItem('coms-tema')}catch(e){}d.dataset.theme=(s==='dark'||s==='light')?s:(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')})(document.documentElement);if('scrollRestoration' in history)history.scrollRestoration='manual';</script>
 </head>
@@ -38,6 +38,8 @@
     <symbol id="i-flip" viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 14-5.3M20 12a8 8 0 0 1-14 5.3" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M18 3v4h-4M6 21v-4h4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
     <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
     <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M15.5 15.5 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
+    <symbol id="i-cal" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4m-7 8.2 2 2 4-4"/></g></symbol>
+    <symbol id="i-up" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V4M7.5 8.5 12 4l4.5 4.5"/><path d="M4 14v3.5A2.5 2.5 0 0 0 6.5 20h11a2.5 2.5 0 0 0 2.5-2.5V14"/></g></symbol>
   </svg>
 
   <a class="skip" href="#main">Saltar al contenido</a>
@@ -75,7 +77,11 @@
     </nav>
     <button class="tema" type="button" data-tema aria-pressed="false" aria-label="Cambiar a modo oscuro">
       <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><g class="tema__sol"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2M5.4 5.4l1.6 1.6M17 17l1.6 1.6M5.4 18.6 7 17M17 7l1.6-1.6"/></g><path class="tema__luna" d="M20.2 14.6A8.2 8.2 0 0 1 9.4 3.8a8.2 8.2 0 1 0 10.8 10.8z"/></svg>
-    </button>    <a class="btn btn--p btn--sm nav__cta" href="https://otorrinosdelsueno.com/turno"><span>Turno online</span><span class="btn__i"><svg width="14" height="14"><use href="#i-arrow"/></svg></span></a>
+    </button>
+    <div class="nav__cta">
+      <a class="act act--est act--sm" href="https://otorrinosdelsueno.com/estudios"><span class="act__i"><svg><use href="#i-up"/></svg></span><span class="act__t"><strong>Subir estudios</strong></span></a>
+      <a class="act act--turno act--sm" href="https://otorrinosdelsueno.com/turno"><span class="act__i"><svg><use href="#i-cal"/></svg></span><span class="act__t"><strong>Pedir turno</strong></span></a>
+    </div>
     <button class="burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu"><span></span><span></span></button>
   </header>
 
@@ -89,7 +95,8 @@
       <a href="#contacto"><small>06</small>Contacto y preguntas</a>
     </nav>
     <div class="menu__foot">
-      <a class="btn btn--a" href="https://otorrinosdelsueno.com/turno"><span>Pedir turno online</span><span class="btn__i"><svg width="16" height="16"><use href="#i-arrow"/></svg></span></a>
+      <a class="act act--turno" href="https://otorrinosdelsueno.com/turno"><span class="act__i"><svg><use href="#i-cal"/></svg></span><span class="act__t"><strong>Pedir turno online</strong><small>Elegí día y horario</small></span><svg class="act__go" width="16" height="16"><use href="#i-arrow"/></svg></a>
+      <a class="act act--est" href="https://otorrinosdelsueno.com/estudios"><span class="act__i"><svg><use href="#i-up"/></svg></span><span class="act__t"><strong>Subir estudios</strong><small>Antes de tu consulta</small></span><svg class="act__go" width="16" height="16"><use href="#i-arrow"/></svg></a>
       <a class="btn btn--l btn--plain" href="#contacto"><span>Escribir por WhatsApp</span></a>
     </div>
   </div>
@@ -117,8 +124,8 @@
         </h1>
         <p class="hero4__lead" data-hero>Tres médicas otorrinolaringólogas formadas en trastornos respiratorios del sueño, junto a kinesiología y fonoaudiología. Adultos y niños, en Capital, en Tucumán y por videollamada.</p>
         <div class="hero4__cta" data-hero>
-          <a class="btn btn--a" href="https://otorrinosdelsueno.com/turno" data-magnetic=".2"><span>Pedir turno online</span><span class="btn__i"><svg width="16" height="16"><use href="#i-arrow"/></svg></span></a>
-          <a class="btn btn--g btn--plain" href="https://otorrinosdelsueno.com/estudios"><span>Subir estudios</span></a>
+          <a class="act act--turno" href="https://otorrinosdelsueno.com/turno"><span class="act__i"><svg><use href="#i-cal"/></svg></span><span class="act__t"><strong>Pedir turno online</strong><small>Elegí día y horario</small></span><svg class="act__go" width="16" height="16"><use href="#i-arrow"/></svg></a>
+          <a class="act act--est" href="https://otorrinosdelsueno.com/estudios"><span class="act__i"><svg><use href="#i-up"/></svg></span><span class="act__t"><strong>Subir estudios</strong><small>Antes de tu consulta</small></span><svg class="act__go" width="16" height="16"><use href="#i-arrow"/></svg></a>
         </div>
         <!-- una línea que respira: la señal de respiración de un estudio de sueño, a ritmo de reposo (un ciclo cada 5 s) -->
         <svg class="breath" data-hero viewBox="0 0 1200 80" preserveAspectRatio="none" aria-hidden="true" focusable="false">
@@ -529,7 +536,7 @@
     </div>
   </footer>
 
-  <div class="dock" aria-label="Acciones rápidas"><a href="https://otorrinosdelsueno.com/estudios">Subir estudios</a><a href="https://otorrinosdelsueno.com/turno">Turno online</a></div>
+  <div class="dock" aria-label="Acciones rápidas"><a class="dock__est" href="https://otorrinosdelsueno.com/estudios"><svg aria-hidden="true"><use href="#i-up"/></svg>Subir estudios</a><a href="https://otorrinosdelsueno.com/turno"><svg aria-hidden="true"><use href="#i-cal"/></svg>Pedir turno</a></div>
 
   <div class="wa" id="wa">
     <div class="wa__menu" id="waMenu" role="menu" aria-label="Elegí la sede" hidden>
