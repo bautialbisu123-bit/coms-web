@@ -781,14 +781,24 @@ body { background: transparent; }
   --hl-ring: #82aaf5; --hl-ring2: #fff; --hl-glow: rgba(10, 23, 51, .55); --go-bg: #fff; --go-fg: #0a1733;
 }
 .tools4__grid .tool4--hl:hover { transform: translateY(-4px); }
-.tools4__grid .tool4--hl::after {
+/* la luz que recorre el borde: fuerte en las dos grandes, más suave y lenta en las otras cuatro herramientas,
+   y también en el recuadro de cada paso del recorrido. Cada tarjeta arranca en otro punto, así no giran a la par */
+.tool4, .stp__p { --hl-ring: rgba(130, 170, 245, .8); --hl-ring2: #fff; }
+:root:not([data-theme="dark"]) .tool4:not(.tool4--hl), :root:not([data-theme="dark"]) .stp__p { --hl-ring: rgba(47, 104, 216, .6); --hl-ring2: #2f68d8; }
+.stp__p { position: relative; }
+.tool4::after, .stp__p::after {
   content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; border-radius: inherit; padding: 1.5px;
-  background: conic-gradient(from var(--giro), transparent 0 60%, var(--hl-ring) 78%, var(--hl-ring2) 87%, transparent 96%);
+  background: conic-gradient(from var(--giro), transparent 0 50%, var(--hl-ring) 74%, var(--hl-ring2) 86%, transparent 95%);
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor;
   mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); mask-composite: exclude;
-  animation: giroBorde 5s linear infinite;
+  animation: giroBorde 8s linear infinite;
 }
+.tools4__grid .tool4--hl::after, .stp__p::after { padding: 2px; animation-duration: 5s; }
 .tools4__grid .tool4--est::after { animation-delay: -2.5s; }
+.tool4:nth-child(3)::after { animation-delay: -1.6s; }
+.tool4:nth-child(4)::after { animation-delay: -5.6s; }
+.tool4:nth-child(5)::after { animation-delay: -3.2s; }
+.tool4:nth-child(6)::after { animation-delay: -7.2s; }
 @keyframes giroBorde { to { --giro: 360deg; } }
 /* el ícono arriba y el texto abajo, como un cartel */
 .tools4__grid .tool4--hl .tool4__ico, .tools4__grid .tool4--hl.tool4:hover .tool4__ico { width: 76px; height: 76px; margin-bottom: auto; border-radius: 24px; background: var(--ic-bg); color: var(--ic-fg); }
@@ -818,8 +828,8 @@ body { background: transparent; }
 .ic-dot + .ic-dot { animation-delay: .18s; }
 .ic-dot + .ic-dot + .ic-dot { animation-delay: .36s; }
 @keyframes icTipea { 0%, 60%, 100% { opacity: .35; transform: translateY(0); } 30% { opacity: 1; transform: translateY(-3px); } }
-.s:not(.is-vis) .tool4__ico svg *, .s:not(.is-vis) .tool4--hl::after { animation-play-state: paused; }
-@media (prefers-reduced-motion: reduce) { .tool4__ico svg *, .tools4__grid .tool4--hl::after { animation: none; } }
+.s:not(.is-vis) .tool4__ico svg *, .s:not(.is-vis) .tool4::after, .s:not(.is-vis) .stp__p::after { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) { .tool4__ico svg *, .tool4::after, .stp__p::after { animation: none; } }
 
 /* en el celular van en fila, como las otras, pero más grandes y con sus colores */
 @media (max-width: 900px) {
