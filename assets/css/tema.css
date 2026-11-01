@@ -613,15 +613,17 @@ body { background: transparent; }
   .chk__acts .btn { flex: 1 1 100%; justify-content: space-between; }
 }
 @media (max-width: 360px) { .chk { padding: 0; background: none; border: 0; } }
-/* pantallas grandes (1700 px o más): el contenido crece con la pantalla en vez de quedar en una columna
-   angosta al medio. --u es "un píxel del diseño" agrandado: vale 1px a 1700 y crece con el ancho (hasta 1,6 veces);
-   --t crece a la mitad de ese ritmo y es para los textos corridos, que no conviene agrandar tanto */
+/* pantallas grandes (1700 px o más, monitores 2K, 4K y ultra anchos): el contenido ocupa siempre el 80% del ancho
+   en vez de quedar en una columna angosta al medio. --u es "un píxel del diseño" agrandado: vale 1px en una pantalla
+   de 1700 × 850 y crece con la pantalla, siguiendo el lado que menos crece (así en un monitor ultra ancho, que es
+   bajo, las tarjetas no quedan más altas que la pantalla). --t crece a la mitad de ese ritmo: es para los textos corridos */
 @media (min-width: 1700px) {
-  :root { --u: min(calc(80vw / 1360), 1.6176px); --t: calc(.5px + var(--u) / 2); --max: calc(1360 * var(--u)); --gutter: calc(64 * var(--u)); --sec: calc(176 * var(--t)); }
-  .nav { width: min(calc(100% - 24px), calc(1260 * var(--u))); }
+  :root { --u: max(1px, min(calc(80vw / 1360), calc(100svh / 850))); --t: calc(.5px + var(--u) / 2); --max: 80vw; --gutter: calc(64 * var(--u)); --sec: calc(176 * var(--t)); }
+  .nav { width: min(calc(100% - 24px), calc(var(--max) - 100 * var(--u))); }
   .d { font-size: calc(120 * var(--u)); }
   .lead { font-size: calc(19 * var(--t)); }
-  .hero4__title { font-size: clamp(46px, min(calc(132 * var(--u)), calc((79svh - 370px) / 2.7)), calc(132 * var(--u))); }
+  .hero4 { padding-top: calc(64px + 66 * var(--t)); }
+  .hero4__title { font-size: clamp(46px, min(calc(132 * var(--u)), calc((79svh - 370 * var(--t)) / 2.7)), calc(132 * var(--u))); }
   .hero4__lead { font-size: calc(18 * var(--t)); }
   .hero4__facts dt { font-size: calc(22 * var(--t)); }
   .hero4__facts dd { font-size: calc(12.5 * var(--t)); }
@@ -668,4 +670,26 @@ body { background: transparent; }
   .office h3 { font-size: calc(54 * var(--u)); }
   .sign4__word { font-size: calc(230 * var(--u)); }
   .sign4__sub { font-size: calc(28 * var(--u)); }
+}/* en pantallas grandes también crecen la barra, los botones y las etiquetas (si no, al lado de los títulos
+   grandes quedaban diminutos) */
+@media (min-width: 1700px) {
+  .nav { height: calc(66 * var(--t)); padding: 0 calc(9 * var(--t)) 0 calc(22 * var(--t)); }
+  .nav__links a { font-size: calc(14 * var(--t)); padding: calc(9 * var(--t)) calc(14 * var(--t)); }
+  .brand__mk { width: calc(46 * var(--t)); height: calc(46 * var(--t)); }
+  .brand__mk svg { width: calc(32 * var(--t)); }
+  .brand__n { font-size: calc(19 * var(--t)); }
+  .brand__s { font-size: calc(10 * var(--t)); }
+  .tema { width: calc(46 * var(--t)); height: calc(46 * var(--t)); }
+  .tema svg { width: calc(20 * var(--t)); height: calc(20 * var(--t)); }
+  .btn { --h: calc(56 * var(--t)); gap: calc(16 * var(--t)); padding-left: calc(26 * var(--t)); font-size: calc(14.5 * var(--t)); }
+  .btn--sm { --h: calc(46 * var(--t)); gap: calc(12 * var(--t)); padding-left: calc(20 * var(--t)); font-size: calc(13.5 * var(--t)); }
+  .btn--plain { padding: 0 calc(26 * var(--t)); }
+  .btn__i svg { width: calc(16 * var(--t)); height: calc(16 * var(--t)); }
+  .hero4 .tag { font-size: calc(12 * var(--t)); padding: calc(9 * var(--t)) calc(16 * var(--t)) calc(9 * var(--t)) calc(12 * var(--t)); }
+  .hero4__facts div { padding: calc(12 * var(--t)) calc(18 * var(--t)); }
+  .breath { width: min(calc(620 * var(--u)), 100%); height: calc(28 * var(--t)); }
+  .k, .flip__hint { font-size: calc(12 * var(--t)); }
+  .k b { min-width: calc(34 * var(--t)); height: calc(24 * var(--t)); }
+  .wa__btn { width: calc(62 * var(--t)); height: calc(62 * var(--t)); }
+  .wa__ico { width: calc(28 * var(--t)); height: calc(28 * var(--t)); }
 }
