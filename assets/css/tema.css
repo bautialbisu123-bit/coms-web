@@ -480,8 +480,6 @@ body { background: transparent; }
 .sign4__word span { display: inline-block; margin: 0 calc(.03em + var(--p) * .09em); color: transparent; background: linear-gradient(180deg, #ffffff 25%, rgba(238, 242, 250, .4) 100%); -webkit-background-clip: text; background-clip: text; }
 .sign4__sub { margin: 30px 0 0; font-family: var(--f-serif); font-size: clamp(20px, 1.8vw, 28px); line-height: 1.2; color: var(--dark-text); }
 .sign4__sub em { font-style: italic; color: #9fc1ff; }
-.sign4__time { display: flex; align-items: center; gap: 10px; margin: 26px 0 0; font-size: 11px; font-weight: 600; letter-spacing: .24em; text-transform: uppercase; color: var(--dark-text-2); }
-.sign4__time i { width: 6px; height: 6px; border-radius: 50%; background: #ffd58a; box-shadow: 0 0 14px 3px rgba(255, 196, 120, calc(var(--p) * .8)); }
 .sign4__hz { position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(255, 226, 184, .75), transparent); transform: scaleX(calc(.2 + var(--p) * .8)); }
 /* ---------- modo oscuro (botón de la barra). El sitio ya es mayormente noche: lo que cambia son los
    paneles claros, y el cielo del fondo no llega a aclarar del todo ---------- */

@@ -327,7 +327,7 @@
     if (G && ST && !calm) {
       ST.create({ trigger: sign, start: 'top bottom', end: 'bottom bottom', scrub: .8, onUpdate: s => set(s.progress) });
       G.fromTo($$('.sign4__word span', sign), { opacity: 0, yPercent: 30, filter: 'blur(10px)' }, { opacity: 1, yPercent: 0, filter: 'blur(0px)', duration: 1.4, stagger: .1, ease: 'power3.out', scrollTrigger: { trigger: sign, start: 'top 85%' } });
-      G.fromTo($$('.sign4__mark, .sign4__sub, .sign4__time', sign), { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 1.1, stagger: .12, ease: 'power3.out', scrollTrigger: { trigger: sign, start: 'top 80%' } });
+      G.fromTo($$('.sign4__mark, .sign4__sub', sign), { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 1.1, stagger: .12, ease: 'power3.out', scrollTrigger: { trigger: sign, start: 'top 80%' } });
     } else set(1);
   }
 
