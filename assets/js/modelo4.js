@@ -6,7 +6,8 @@
   const $ = (s, c = document) => c.querySelector(s);
   const $$ = (s, c = document) => [...c.querySelectorAll(s)];
   const root = document.documentElement;
-  const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  // las animaciones se muestran siempre, aunque el equipo pida "menos movimiento" (ver motor.js)
+  const calm = false;
   const fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
   const G = window.gsap, ST = window.ScrollTrigger;
   const pad = n => String(n).padStart(2, '0');

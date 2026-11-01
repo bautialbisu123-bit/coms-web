@@ -539,9 +539,4 @@ a:hover .go, .tile:hover .go { transform: rotate(-45deg); background: var(--acce
   .flt__chips { width: 100%; border-radius: 20px; }
   .flt__chips button { flex: 1 1 auto; }
 }
-/* "menos movimiento" aquieta: sin scroll suave, sin cursor ni inclinación, loops más lentos */
-@media (prefers-reduced-motion: reduce) {
-  .mq__star, .hs__rings .giro { animation-duration: 30s; }
-  .wa__btn::before { animation: none; }
-  .js .focus .fw { filter: none; }
-}
+/* en COMS las animaciones se muestran siempre, aunque el equipo pida "menos movimiento" (ver motor.js) */

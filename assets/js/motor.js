@@ -1,11 +1,12 @@
 /* Motor v2 — interacciones y animación de las webs de consultorio (GSAP + ScrollTrigger + Lenis).
    Cada bloque se fija si su parte existe en la página: el mismo archivo sirve a COMS y a Myrna.
-   "Menos movimiento" aquieta (sin scroll suave, sin cursor, sin fijados ni inclinación) pero no apaga. */
+   En COMS las animaciones se muestran siempre, aunque el equipo del visitante pida "menos movimiento"
+   (lo eligió el cliente: con Windows en modo rendimiento la página quedaba quieta). */
 (() => {
   const $ = (s, c = document) => c.querySelector(s);
   const $$ = (s, c = document) => [...c.querySelectorAll(s)];
   const root = document.documentElement;
-  const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const calm = false;
   const fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
   const G = window.gsap, ST = window.ScrollTrigger;
   const anim = !!(G && ST);
@@ -353,7 +354,7 @@
       num && (num.textContent = pad(Math.min(cards.length, Math.round(p * (cards.length - 1)) + 1)));
     };
     setIdx(0);
-    G.matchMedia().add('(min-width: 901px) and (prefers-reduced-motion: no-preference)', () => {
+    G.matchMedia().add('(min-width: 901px)', () => {
       sec.classList.add('hs--on');
       const dist = () => Math.max(0, track.scrollWidth - pin.clientWidth);
       G.to(track, { x: () => -dist(), ease: 'none', scrollTrigger: { trigger: pin, start: 'top top', end: () => '+=' + dist(), pin: true, scrub: .7, invalidateOnRefresh: true, onUpdate: s => setIdx(s.progress) } });
@@ -376,7 +377,7 @@
   // sección fijada: el título se acerca y las imágenes flotan a distintas velocidades
   $$('[data-zoom]').forEach(sec => {
     const pinEl = $('.zoom__pin', sec), t = $('.zoom__t', sec);
-    G.matchMedia().add('(prefers-reduced-motion: no-preference)', () => {
+    G.matchMedia().add('all', () => {
       G.timeline({ scrollTrigger: { trigger: sec, start: 'top top', end: '+=110%', pin: pinEl, scrub: true } }).fromTo(t, { scale: .7 }, { scale: 1, ease: 'none' });
       $$('.flo', sec).forEach(f => {
         const s = +f.dataset.speed || 1;

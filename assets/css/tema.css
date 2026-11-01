@@ -134,7 +134,6 @@ body { background: transparent; }
 .dock svg { flex: none; width: 18px; height: 18px; }
 .dock .dock__est { --act-shine: rgba(47, 104, 216, .25); background: var(--dark-text); color: var(--dark); }
 @media (max-width: 359px) { .dock svg { display: none; } }
-@media (prefers-reduced-motion: reduce) { .act::after, .dock a::after { display: none; } }
 
 /* ---------- manifiesto: texto fijo y fotos que suben ---------- */
 .split__in { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: clamp(32px, 6vw, 110px); align-items: start; }
@@ -301,11 +300,11 @@ body { background: transparent; }
 .stp__n { font-size: 12px; font-weight: 600; letter-spacing: .12em; }
 .stp__w { font-size: 13.5px; text-align: center; transition: color .3s; }
 .stp__b[aria-selected="true"] .stp__w, .stp__b:hover .stp__w { color: #fff; }
-.stp__panels { position: relative; margin-top: 30px; }
-.stp__p { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: clamp(18px, 2.6vw, 44px); align-items: center; min-height: clamp(150px, 11.5vw, 180px); padding: clamp(20px, 2.2vw, 34px) clamp(22px, 2.6vw, 40px); border-radius: 22px; background: rgba(255, 255, 255, .045); border: 1px solid var(--dark-line); }
-.stp__big { font-family: var(--f-serif); font-size: clamp(64px, 7vw, 120px); line-height: .8; color: #82aaf5; letter-spacing: -.04em; }
-.stp__p h3 { margin: 0 0 8px; font-family: var(--f-serif); font-weight: 400; font-size: clamp(30px, 3vw, 48px); line-height: .95; letter-spacing: -.02em; }
-.stp__p p { margin: 0; max-width: 52ch; font-size: clamp(15px, 1.1vw, 17px); line-height: 1.55; color: var(--dark-text-2); }
+.stp__panels { position: relative; margin-top: 24px; }
+.stp__p { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: clamp(14px, 2vw, 32px); align-items: center; min-height: clamp(112px, 9.3vw, 140px); padding: clamp(16px, 1.6vw, 24px) clamp(18px, 2vw, 30px); border-radius: 18px; background: rgba(255, 255, 255, .045); border: 1px solid var(--dark-line); }
+.stp__big { font-family: var(--f-serif); font-size: clamp(48px, 5vw, 84px); line-height: .8; color: #82aaf5; letter-spacing: -.04em; }
+.stp__p h3 { margin: 0 0 6px; font-family: var(--f-serif); font-weight: 400; font-size: clamp(24px, 2.2vw, 36px); line-height: .95; letter-spacing: -.02em; }
+.stp__p p { margin: 0; max-width: 60ch; font-size: clamp(14px, 1vw, 16px); line-height: 1.5; color: var(--dark-text-2); }
 .stp__p a { color: #9fc1ff; text-decoration: underline; text-underline-offset: 3px; }
 
 /* ---------- pacientes: el celular ---------- */
@@ -442,8 +441,8 @@ body { background: transparent; }
   .stp__rail { grid-template-columns: repeat(6, minmax(0, 1fr)); }
   .stp__w { display: none; }
   .stp__p { grid-template-columns: 1fr; gap: 10px; }
-  .stp__big { font-size: 60px; }
-  .stp__p { min-height: 210px; align-content: start; }
+  .stp__big { font-size: 44px; }
+  .stp__p { min-height: 170px; align-content: start; gap: 8px; }
   .app { grid-template-columns: 1fr; }
   .app__dev { order: 2; }
   .phone { transform: none; }
@@ -490,12 +489,6 @@ body { background: transparent; }
   .breath { margin-top: clamp(6px, 1.8svh, 18px); }
 }
 @media (min-width: 901px) and (max-height: 960px) { .hero4__down { display: none; } }
-@media (prefers-reduced-motion: reduce) {
-  /* con "menos movimiento" se saca el zoom; el enfoque de la foto y la línea que respira quedan (son lentos y suaves) */
-  .slides img, .slides img.is-on { transform: none; transition: opacity 1.6s var(--ease), filter 2s var(--ease); }
-  .venn__c, .venn__core { animation: none; }
-  .sky4__stars { animation: none; }
-}
 
 /* ---------- herramientas online (dentro del recorrido) ---------- */
 .tools4 { margin-top: clamp(56px, 7vw, 96px); }
@@ -705,10 +698,10 @@ body { background: transparent; }
   .photo3 li { min-height: calc(440 * var(--u)); }
   .photo3 h3 { font-size: calc(38 * var(--u)); }
   .photo3 p { font-size: calc(15 * var(--t)); }
-  .stp__big { font-size: calc(120 * var(--u)); }
-  .stp__p { min-height: calc(150 * var(--u)); }
-  .stp__p h3 { font-size: calc(48 * var(--u)); }
-  .stp__p p { font-size: calc(17 * var(--t)); }
+  .stp__big { font-size: calc(84 * var(--u)); }
+  .stp__p { min-height: calc(136 * var(--u)); }
+  .stp__p h3 { font-size: calc(36 * var(--u)); }
+  .stp__p p { font-size: calc(16 * var(--t)); }
   .stp__w { font-size: calc(13.5 * var(--t)); }
   .tools4__t { font-size: calc(54 * var(--u)); }
   .tool4 { min-height: calc(200 * var(--u)); }
@@ -829,8 +822,6 @@ body { background: transparent; }
 .ic-dot + .ic-dot + .ic-dot { animation-delay: .36s; }
 @keyframes icTipea { 0%, 60%, 100% { opacity: .35; transform: translateY(0); } 30% { opacity: 1; transform: translateY(-3px); } }
 .s:not(.is-vis) .tool4__ico svg *, .s:not(.is-vis) .tool4::after, .s:not(.is-vis) .stp__p::after { animation-play-state: paused; }
-@media (prefers-reduced-motion: reduce) { .tool4__ico svg *, .tool4::after, .stp__p::after { animation: none; } }
-
 /* en el celular van en fila, como las otras, pero más grandes y con sus colores */
 @media (max-width: 900px) {
   .tools4__grid .tool4--hl { min-height: 0; grid-template-columns: 60px minmax(0, 1fr); padding: 22px 76px 22px 20px; }
