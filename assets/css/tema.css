@@ -54,18 +54,10 @@ body { background: transparent; }
 .hero4 { position: relative; isolation: isolate; min-height: 100svh; display: flex; align-items: center; padding: 130px 0 90px; overflow: hidden; color: var(--dark-text); }
 /* las fotos grandes, de a una: ocupan la parte derecha (en el celular, toda) y se funden hacia el texto
    con una máscara, así no hace falta un velo encima y la foto se ve limpia. Pasan fundiéndose, con un zoom lento */
-.slides { position: absolute; z-index: -2; top: -24px; bottom: -24px; right: -24px; width: calc(60% + 24px); overflow: hidden; background: #0d1b3c; -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 38%); mask-image: linear-gradient(90deg, transparent 0, #000 38%); }
+.slides { position: absolute; z-index: -2; top: -24px; bottom: -24px; right: -24px; width: calc(66% + 24px); overflow: hidden; background: #0d1b3c; -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 24%); mask-image: linear-gradient(90deg, transparent 0, #000 24%); }
 /* cada foto entra apenas desenfocada y se aclara mientras aparece (--f: el tono de la foto según el modo) */
 .slides img { --f: saturate(.9) brightness(.86); position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: scale(1.1); filter: var(--f) blur(10px); transition: opacity 1.6s var(--ease), transform 8s linear, filter 2s var(--ease); }
 .slides img.is-on { opacity: 1; transform: scale(1); filter: var(--f) blur(0); }
-/* la línea que respira, entre los botones y los datos: tenue, avanza un ciclo cada 5 s y se infla y desinfla apenas */
-/* lo tenue va en el color y no en opacity, porque la entrada de la portada le pone opacity 1 */
-.breath { display: block; width: min(620px, 100%); height: 28px; margin: 18px 0 0; overflow: hidden; color: rgba(130, 170, 245, .5); -webkit-mask-image: linear-gradient(90deg, transparent, #000 14%, #000 72%, transparent); mask-image: linear-gradient(90deg, transparent, #000 14%, #000 72%, transparent); }
-.breath g { transform-box: fill-box; transform-origin: 50% 50%; animation: alienta 10s ease-in-out infinite alternate; }
-.breath path { fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; vector-effect: non-scaling-stroke; animation: respira 20s linear infinite; }
-@keyframes respira { to { transform: translateX(-1200px); } }
-@keyframes alienta { from { transform: scaleY(.55); } to { transform: scaleY(1); } }
-.breath + .hero4__facts { margin-top: 10px; }
 .hero4__shade { position: absolute; inset: 0; z-index: -1; pointer-events: none; background: linear-gradient(0deg, rgba(7, 15, 38, .75), rgba(7, 15, 38, 0) 28%); }
 .hero4__in { position: relative; }
 .tag { display: inline-flex; align-items: center; gap: 10px; margin: 0 0 30px; padding: 9px 16px 9px 12px; border-radius: 999px; background: rgba(255, 255, 255, .06); border: 1px solid rgba(255, 255, 255, .12); font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--dark-text-2); }
@@ -75,12 +67,7 @@ body { background: transparent; }
 .hero4__l1, .hero4__l2 { display: block; }
 .hero4__l2 { color: #9fc1ff; }
 .hero4__l2 em { font-style: italic; }
-.hero4__lead { margin: 30px 0 0; max-width: 44ch; color: var(--dark-text-2); font-size: clamp(16px, 1.25vw, 18px); }
 .hero4__cta { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 32px; }
-.hero4__facts { display: flex; flex-wrap: wrap; gap: 10px; margin: 40px 0 0; }
-.hero4__facts div { display: flex; align-items: baseline; gap: 10px; padding: 12px 18px; border-radius: 999px; background: rgba(255, 255, 255, .06); border: 1px solid rgba(255, 255, 255, .1); }
-.hero4__facts dt { font-family: var(--f-serif); font-size: 22px; line-height: 1; }
-.hero4__facts dd { margin: 0; font-size: 12.5px; color: var(--dark-text-2); }
 .hero4__down { position: absolute; left: 50%; bottom: 26px; width: 30px; height: 50px; margin-left: -15px; border-radius: 20px; border: 1.5px solid rgba(255, 255, 255, .4); }
 .hero4__down span { position: absolute; left: 50%; top: 10px; width: 4px; height: 8px; margin-left: -2px; border-radius: 2px; background: #fff; animation: rueda 1.8s var(--ease) infinite; }
 @keyframes rueda { 0% { transform: translateY(0); opacity: 1; } 80%, 100% { transform: translateY(16px); opacity: 0; } }
@@ -391,18 +378,16 @@ body { background: transparent; }
   .flips { gap: 12px; }
 }
 @media (max-width: 900px) {
-  /* en el celular las fotos son lo primero y van enteras: una tarjeta entre la barra de arriba y el texto,
-     sin nada encima. --top: donde termina la barra (10 + 62 px) más un respiro; --band: el alto de la foto.
-     Si los botones de la portada quedan más abajo, la barra de abajo (Subir estudios / Pedir turno) ya se ve al abrir */
-  .hero4 { --top: 84px; --band: clamp(220px, 42svh, 440px); align-items: flex-start; padding: calc(var(--top) + var(--band) + 22px) 0 48px; }
-  .slides { top: var(--top); bottom: auto; left: var(--gutter); right: var(--gutter); width: auto; height: var(--band); border-radius: 24px; clip-path: inset(0 round 24px); -webkit-mask-image: none; mask-image: none; }
-  .slides::after { content: ""; position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .12); pointer-events: none; }
-  .hero4__shade { display: none; }
-  .hero4__title { font-size: clamp(60px, 17vw, 100px); }
-  .hero4 .tag { margin-bottom: 16px; }
-  .hero4__lead { margin-top: 16px; }
-  .hero4__cta { margin-top: 22px; }
-  .breath { margin-top: 14px; }
+  /* en el celular las fotos van como en la compu: grandes, de borde a borde y fundiéndose con el fondo, pero sin nada
+     encima: arrancan debajo de la barra de arriba (--top) y el título va debajo de ellas. --band: el alto de la foto,
+     lo que queda de la pantalla después de la barra, el título y la barra de abajo; como mucho, lo justo para
+     mostrar entera una foto vertical (133vw). Los dos botones de la portada ya están en la barra de abajo */
+  .hero4 { --top: 80px; --band: clamp(240px, calc(100svh - 174px - min(26vw, 190px)), 133vw); align-items: flex-start; padding: calc(var(--top) + var(--band) + 12px) 0 82px; }
+  .slides { top: var(--top); bottom: auto; left: 0; right: 0; width: auto; height: var(--band); -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 5%, #000 90%, transparent); mask-image: linear-gradient(180deg, transparent 0, #000 5%, #000 90%, transparent); }
+  /* la foto apaisada del equipo no se estira a todo el alto, así entran todas las caras */
+  .slides .is-wide { inset: auto 0; top: calc(50% - 46vw); height: 92vw; object-position: 47% 30% !important; -webkit-mask-image: linear-gradient(180deg, transparent, #000 7%, #000 93%, transparent); mask-image: linear-gradient(180deg, transparent, #000 7%, #000 93%, transparent); }
+  .hero4__shade, .hero4 .tag, .hero4__cta { display: none; }
+  .hero4__title { max-width: none; font-size: clamp(40px, 13.2vw, 100px); }
   .hero4__down { display: none; }
   .tag { font-size: 10.5px; letter-spacing: .08em; }
   .split__in { grid-template-columns: 1fr; }
@@ -461,27 +446,24 @@ body { background: transparent; }
   .dock a { min-height: 44px; font-size: 13px; }
   .ct4__top .big { font-size: clamp(70px, 22vw, 120px); }
 }
+/* el celular acostado: como en la compu, el título a la izquierda y las fotos a la derecha, entre las dos barras */
+@media (max-width: 900px) and (orientation: landscape) {
+  .hero4 { align-items: center; padding: 84px 0 76px; }
+  .slides { bottom: 72px; left: auto; width: 62%; height: auto; -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 32%); mask-image: linear-gradient(90deg, transparent 0, #000 32%); }
+  .slides .is-wide { inset: 0; height: 100%; -webkit-mask-image: none; mask-image: none; }
+  .hero4__title { max-width: 40vw; font-size: clamp(36px, min(7vw, 15svh), 64px); }
+}
 @media (max-width: 600px) {
-  .hero4__cta .act { flex: 1 1 100%; }
   .act { min-height: 60px; gap: 12px; padding: 7px 22px 7px 7px; }
   .act__i { width: 46px; height: 46px; }
 }
-/* celulares bajos: el título y los espacios se achican un poco para que el botón de turno se vea sin bajar */
-@media (max-width: 600px) and (max-height: 700px) {
-  .hero4__title { font-size: clamp(48px, min(17vw, 9svh), 100px); }
-  .hero4 .tag { margin-bottom: 12px; }
-  .hero4__lead { margin-top: 12px; }
-  .hero4__cta { margin-top: 18px; }
-}
 /* en la compu la portada entra entera en la primera pantalla: en las notebooks (pantallas más bajas)
-   el título y los espacios se achican según el alto, así los botones y los datos no quedan cortados abajo */
+   el título y los espacios se achican según el alto, así los botones no quedan cortados abajo */
 @media (min-width: 901px) {
   .hero4 { padding: clamp(92px, 15svh, 130px) 0 clamp(24px, 6svh, 90px); }
-  .hero4__title { font-size: clamp(46px, min(7.4vw, calc((79svh - 350px) / 2.7)), 132px); }
+  .hero4__title { font-size: clamp(46px, min(6vw, calc((79svh - 170px) / 2.7)), 116px); }
   .hero4 .tag { margin-bottom: clamp(14px, 3svh, 30px); }
-  .hero4__lead { margin-top: clamp(12px, 3svh, 30px); max-width: 56ch; }
   .hero4__cta { margin-top: clamp(16px, 3.2svh, 32px); }
-  .breath { margin-top: clamp(6px, 1.8svh, 18px); }
 }
 @media (min-width: 901px) and (max-height: 960px) { .hero4__down { display: none; } }
 
@@ -588,13 +570,10 @@ body { background: transparent; }
 :root:not([data-theme="dark"]) .hero4__shade { background: linear-gradient(0deg, rgba(228, 234, 243, .85), rgba(228, 234, 243, 0) 24%); }
 /* las fotos, un punto más bajas de brillo y con algo más de contraste para que no encandilen */
 :root:not([data-theme="dark"]) .slides { background: #c9d3e3; }
-:root:not([data-theme="dark"]) .slides::after { box-shadow: inset 0 0 0 1px rgba(10, 23, 51, .1); }
 :root:not([data-theme="dark"]) .slides img { --f: saturate(.92) brightness(.93) contrast(1.05); }
-:root:not([data-theme="dark"]) .breath { color: rgba(47, 104, 216, .42); }
 :root:not([data-theme="dark"]) .tag { background: rgba(255, 255, 255, .55); border-color: rgba(10, 23, 51, .1); }
 :root:not([data-theme="dark"]) .tag__dot { background: #2f68d8; }
 :root:not([data-theme="dark"]) .hero4__l2 { color: #1c4b9e; }
-:root:not([data-theme="dark"]) .hero4__facts div { background: rgba(255, 255, 255, .55); border-color: rgba(10, 23, 51, .1); }
 :root:not([data-theme="dark"]) .hero4__down { border-color: rgba(10, 23, 51, .35); }
 :root:not([data-theme="dark"]) .hero4__down span { background: #0a1733; }
 
@@ -667,10 +646,7 @@ body { background: transparent; }
   .d { font-size: calc(120 * var(--u)); }
   .lead { font-size: calc(19 * var(--t)); }
   .hero4 { padding-top: calc(64px + 66 * var(--t)); }
-  .hero4__title { font-size: clamp(46px, min(calc(132 * var(--u)), calc((79svh - 370 * var(--t)) / 2.7)), calc(132 * var(--u))); }
-  .hero4__lead { font-size: calc(18 * var(--t)); }
-  .hero4__facts dt { font-size: calc(22 * var(--t)); }
-  .hero4__facts dd { font-size: calc(12.5 * var(--t)); }
+  .hero4__title { font-size: clamp(46px, min(calc(116 * var(--u)), calc((79svh - 180 * var(--t)) / 2.7)), calc(116 * var(--u))); }
   .flip { height: calc(660 * var(--u)); }
   .flip__name { font-size: calc(42 * var(--u)); }
   .flip__h { font-size: calc(46 * var(--u)); }
@@ -730,8 +706,6 @@ body { background: transparent; }
   .btn--plain { padding: 0 calc(26 * var(--t)); }
   .btn__i svg { width: calc(16 * var(--t)); height: calc(16 * var(--t)); }
   .hero4 .tag { font-size: calc(12 * var(--t)); padding: calc(9 * var(--t)) calc(16 * var(--t)) calc(9 * var(--t)) calc(12 * var(--t)); }
-  .hero4__facts div { padding: calc(12 * var(--t)) calc(18 * var(--t)); }
-  .breath { width: min(calc(620 * var(--u)), 100%); height: calc(28 * var(--t)); }
   .k, .flip__hint { font-size: calc(12 * var(--t)); }
   .k b { min-width: calc(34 * var(--t)); height: calc(24 * var(--t)); }
   .wa__btn { width: calc(62 * var(--t)); height: calc(62 * var(--t)); }

@@ -19,7 +19,7 @@
   <link rel="preload" href="assets/fonts/instrument-serif-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="assets/css/motor.css?v=13">
-  <link rel="stylesheet" href="assets/css/tema.css?v=36">
+  <link rel="stylesheet" href="assets/css/tema.css?v=37">
   <style>html{background:#070f26}</style>
   <script>(function(d){d.className=d.className.replace('no-js','js');try{if(sessionStorage.getItem('coms-m4-intro'))d.classList.add('seen')}catch(e){}var s=null;try{s=localStorage.getItem('coms-tema')}catch(e){}d.dataset.theme=(s==='dark'||s==='light')?s:(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')})(document.documentElement);if('scrollRestoration' in history)history.scrollRestoration='manual';</script>
 </head>
@@ -107,7 +107,7 @@
            style="object-position": qué parte de la foto queda a la vista (en la compu manda el alto; en el celular, el ancho) -->
       <div class="slides" data-slides data-mouse="-14" aria-hidden="true">
         <img class="is-on" src="assets/img/curso-4.jpg" alt="" style="object-position:50% 30%">
-        <img data-src="assets/img/curso-5.jpg" alt="" style="object-position:52% 30%">
+        <img class="is-wide" data-src="assets/img/curso-5.jpg" alt="" style="object-position:52% 30%">
         <img data-src="assets/img/curso-3.jpg" alt="" style="object-position:50% 45%">
         <img data-src="assets/img/curso-2.jpg" alt="" style="object-position:55% 45%">
         <img data-src="assets/img/curso-1.jpg" alt="" style="object-position:50% 48%">
@@ -116,25 +116,16 @@
       </div>
       <span class="hero4__shade" aria-hidden="true"></span>
       <div class="wrap hero4__in" data-hero-out>
-        <p class="tag" data-hero><span class="tag__dot"></span>COMS · Centro de Otorrinolaringología y Medicina del Sueño</p>
+        <p class="tag" data-hero><span class="tag__dot"></span>Otorrinolaringología y medicina del sueño</p>
         <h1 class="hero4__title" id="hero-title">
           <span class="hero4__l1" data-split="chars">Un equipo</span>
           <span class="hero4__l2" data-split="words"><em>para dormir mejor.</em></span>
         </h1>
-        <p class="hero4__lead" data-hero>Tres médicas otorrinolaringólogas formadas en trastornos respiratorios del sueño, junto a kinesiología y fonoaudiología. Adultos y niños, en Capital, en Tucumán y por videollamada.</p>
+        <!-- en el celular estos dos botones no van acá: están siempre a mano en la barra de abajo -->
         <div class="hero4__cta" data-hero>
-          <a class="act act--turno" href="https://otorrinosdelsueno.com/turno"><span class="act__i"><svg><use href="#i-cal"/></svg></span><span class="act__t"><strong>Pedir turno online</strong><small>Elegí día y horario</small></span><svg class="act__go" width="16" height="16"><use href="#i-arrow"/></svg></a>
-          <a class="act act--est" href="https://otorrinosdelsueno.com/estudios"><span class="act__i"><svg><use href="#i-up"/></svg></span><span class="act__t"><strong>Subir estudios</strong><small>Antes de tu consulta</small></span><svg class="act__go" width="16" height="16"><use href="#i-arrow"/></svg></a>
+          <a class="act act--turno" href="https://otorrinosdelsueno.com/turno"><span class="act__i"><svg><use href="#i-cal"/></svg></span><span class="act__t"><strong>Pedir turno online</strong></span><svg class="act__go" width="16" height="16"><use href="#i-arrow"/></svg></a>
+          <a class="act act--est" href="https://otorrinosdelsueno.com/estudios"><span class="act__i"><svg><use href="#i-up"/></svg></span><span class="act__t"><strong>Subir estudios</strong></span><svg class="act__go" width="16" height="16"><use href="#i-arrow"/></svg></a>
         </div>
-        <!-- una línea que respira: la señal de respiración de un estudio de sueño, a ritmo de reposo (un ciclo cada 5 s) -->
-        <svg class="breath" data-hero viewBox="0 0 1200 80" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-          <g><path d="M0 40C50 22 100 22 150 40C200 58 250 58 300 40C350 22 400 22 450 40C500 58 550 58 600 40C650 22 700 22 750 40C800 58 850 58 900 40C950 22 1000 22 1050 40C1100 58 1150 58 1200 40C1250 22 1300 22 1350 40C1400 58 1450 58 1500 40C1550 22 1600 22 1650 40C1700 58 1750 58 1800 40C1850 22 1900 22 1950 40C2000 58 2050 58 2100 40C2150 22 2200 22 2250 40C2300 58 2350 58 2400 40"/></g>
-        </svg>
-        <dl class="hero4__facts" data-hero>
-          <div><dt>3 médicas</dt><dd>ORL y medicina del sueño</dd></div>
-          <div><dt>2 sedes</dt><dd>Capital y Tucumán</dd></div>
-          <div><dt>Online</dt><dd>turnos y videollamada</dd></div>
-        </dl>
       </div>
       <a class="hero4__down" href="#equipo" aria-label="Bajar" data-hero><span></span></a>
     </section>
@@ -549,7 +540,7 @@
   <script src="assets/js/vendor/gsap.min.js" defer></script>
   <script src="assets/js/vendor/ScrollTrigger.min.js" defer></script>
   <script src="assets/js/vendor/lenis.min.js" defer></script>
-  <script src="assets/js/motor.js?v=16" defer></script>
+  <script src="assets/js/motor.js?v=17" defer></script>
   <script src="assets/js/modelo4.js?v=17" defer></script>
 </body>
 </html>
