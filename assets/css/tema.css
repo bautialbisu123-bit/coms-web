@@ -381,10 +381,10 @@ body { background: transparent; }
      encima: arrancan debajo de la barra de arriba (--top) y el título va debajo de ellas. --band: el alto de la foto,
      lo que queda de la pantalla después de la barra, el título y la barra de abajo; como mucho, lo justo para
      mostrar entera una foto vertical (133vw). Los dos botones de la portada ya están en la barra de abajo */
-  .hero4 { --top: 80px; --band: clamp(240px, calc(100svh - 174px - min(26vw, 190px)), 133vw); align-items: flex-start; padding: calc(var(--top) + var(--band) + 12px) 0 82px; }
-  .slides { top: var(--top); bottom: auto; left: 0; right: 0; height: var(--band); -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 12px, #000 calc(100% - 28px), transparent); mask-image: linear-gradient(180deg, transparent 0, #000 12px, #000 calc(100% - 28px), transparent); }
+  .hero4 { --top: 74px; --band: clamp(240px, calc(100svh - 174px - min(26vw, 190px)), 133vw); align-items: flex-start; padding: calc(var(--top) + var(--band) + 12px) 0 82px; }
+  .slides { --fy: linear-gradient(180deg, rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, .1) 5px, rgba(0, 0, 0, .35) 10px, rgba(0, 0, 0, .65) 15px, rgba(0, 0, 0, .9) 20px, #000 25px, #000 calc(100% - 40px), rgba(0, 0, 0, .9) calc(100% - 32px), rgba(0, 0, 0, .65) calc(100% - 24px), rgba(0, 0, 0, .35) calc(100% - 16px), rgba(0, 0, 0, .1) calc(100% - 8px), rgba(0, 0, 0, 0) 100%); top: var(--top); bottom: auto; left: 0; right: 0; height: var(--band); -webkit-mask-image: var(--fy); mask-image: var(--fy); }
   /* la foto apaisada del equipo no se estira a todo el alto, así entran todas las caras */
-  .slides .is-wide { inset: auto 0; top: calc(50% - 46vw); height: 92vw; object-position: 47% 30% !important; -webkit-mask-image: linear-gradient(180deg, transparent, #000 16px, #000 calc(100% - 16px), transparent); mask-image: linear-gradient(180deg, transparent, #000 16px, #000 calc(100% - 16px), transparent); }
+  .slides .is-wide { inset: auto 0; top: calc(50% - 46vw); height: 92vw; object-position: 47% 30% !important; -webkit-mask-image: var(--fy); mask-image: var(--fy); }
   .hero4 .tag, .hero4__cta { display: none; }
   .hero4__title { max-width: none; font-size: clamp(40px, 13.2vw, 100px); }
   .hero4__down { display: none; }
@@ -448,7 +448,7 @@ body { background: transparent; }
 /* el celular acostado: como en la compu, el título a la izquierda y las fotos a la derecha, entre las dos barras */
 @media (max-width: 900px) and (orientation: landscape) {
   .hero4 { align-items: center; padding: 84px 0 76px; }
-  .slides { bottom: 72px; left: 42%; height: auto; -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 36px); mask-image: linear-gradient(90deg, transparent 0, #000 36px); }
+  .slides { --fx: linear-gradient(90deg, rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, .1) 12px, rgba(0, 0, 0, .35) 24px, rgba(0, 0, 0, .65) 36px, rgba(0, 0, 0, .9) 48px, #000 60px); top: 80px; bottom: 72px; left: 40%; height: auto; -webkit-mask-image: var(--fx); mask-image: var(--fx); }
   .slides .is-wide { inset: 0; height: 100%; -webkit-mask-image: none; mask-image: none; }
   .hero4__title { max-width: 40vw; font-size: clamp(36px, min(7vw, 15svh), 64px); }
 }
@@ -466,10 +466,16 @@ body { background: transparent; }
   .hero4 .tag { max-width: var(--col); margin-bottom: clamp(14px, 3svh, 30px); font-size: 10.5px; letter-spacing: .08em; }
   .hero4__cta { display: inline-grid; margin-top: clamp(16px, 3.2svh, 32px); }
   .hero4__down { left: max(var(--gutter), calc((100vw - var(--max)) / 2)); margin-left: 0; }
-  /* las fotos arrancan debajo de la barra de arriba, así no les tapa nada: la barra termina en 80 px y el respiro
-     cubre lo poco que se mueven con el mouse (7 px). Se funden apenas: hacia el texto, arriba y abajo (abajo les
-     sobran 24 px, que quedan fuera de la portada) */
-  .slides { top: 92px; bottom: -24px; right: -24px; left: calc(max(var(--gutter), calc((100vw - var(--max)) / 2)) + var(--col)); -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 clamp(32px, 4vw, 72px)), linear-gradient(180deg, transparent 0, #000 14px, #000 calc(100% - 60px), transparent calc(100% - 24px)); mask-image: linear-gradient(90deg, transparent 0, #000 clamp(32px, 4vw, 72px)), linear-gradient(180deg, transparent 0, #000 14px, #000 calc(100% - 60px), transparent calc(100% - 24px)); -webkit-mask-composite: source-in; mask-composite: intersect; }
+  /* las fotos arrancan debajo de la barra de arriba, así no les tapa nada. Solo el borde se desvanece, con una curva
+     suave (un degradado recto y corto se ve como un corte): --fade es lo que ocupa hacia el texto, y arranca un poco
+     antes de la columna para no comerle foto. Arriba son 32 px, y abajo 60 (además sobran 24 px fuera de la portada) */
+  .slides {
+    --fade: clamp(90px, 9vw, 170px);
+    --fx: linear-gradient(90deg, rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, .03) calc(var(--fade) * .1), rgba(0, 0, 0, .1) calc(var(--fade) * .2), rgba(0, 0, 0, .22) calc(var(--fade) * .3), rgba(0, 0, 0, .35) calc(var(--fade) * .4), rgba(0, 0, 0, .5) calc(var(--fade) * .5), rgba(0, 0, 0, .65) calc(var(--fade) * .6), rgba(0, 0, 0, .78) calc(var(--fade) * .7), rgba(0, 0, 0, .9) calc(var(--fade) * .8), rgba(0, 0, 0, .97) calc(var(--fade) * .9), #000 var(--fade));
+    --fy: linear-gradient(180deg, rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, .1) 6px, rgba(0, 0, 0, .35) 13px, rgba(0, 0, 0, .65) 19px, rgba(0, 0, 0, .9) 26px, #000 32px, #000 calc(100% - 84px), rgba(0, 0, 0, .9) calc(100% - 72px), rgba(0, 0, 0, .65) calc(100% - 60px), rgba(0, 0, 0, .35) calc(100% - 48px), rgba(0, 0, 0, .1) calc(100% - 36px), rgba(0, 0, 0, 0) calc(100% - 24px));
+    top: 84px; bottom: -24px; right: -24px; left: calc(max(var(--gutter), calc((100vw - var(--max)) / 2)) + var(--col) - .35 * var(--fade));
+    -webkit-mask-image: var(--fx), var(--fy); mask-image: var(--fx), var(--fy); -webkit-mask-composite: source-in; mask-composite: intersect;
+  }
 }
 @media (min-width: 901px) and (max-height: 960px) { .hero4__down { display: none; } }
 
@@ -650,7 +656,7 @@ body { background: transparent; }
   .d { font-size: calc(120 * var(--u)); }
   .lead { font-size: calc(19 * var(--t)); }
   .hero4 { --title: clamp(46px, calc((79svh - 250 * var(--t)) / 2.7), calc(88 * var(--u))); --col: calc(4.4 * var(--title)); padding-top: calc(64px + 66 * var(--t)); }
-  .slides { top: calc(26px + 66 * var(--t)); }
+  .slides { top: calc(18px + 66 * var(--t)); }
   .flip { height: calc(660 * var(--u)); }
   .flip__name { font-size: calc(42 * var(--u)); }
   .flip__h { font-size: calc(46 * var(--u)); }
