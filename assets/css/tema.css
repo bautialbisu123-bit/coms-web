@@ -391,11 +391,12 @@ body { background: transparent; }
   .flips { gap: 12px; }
 }
 @media (max-width: 900px) {
-  /* en el celular la foto es una franja arriba, sin velo, que se funde hacia abajo; el texto va debajo.
-     La franja (--band) se achica en pantallas bajas para que toda la portada entre en la primera pantalla
-     (en el celular, hasta los botones; en la tablet, también los datos). Nunca baja de 170 px */
-  .hero4 { --band: clamp(170px, calc(100svh - 640px), 50svh); align-items: flex-start; padding: var(--band) 0 48px; }
-  .slides { top: 0; bottom: auto; right: 0; width: auto; left: 0; height: calc(var(--band) + 30px); -webkit-mask-image: linear-gradient(180deg, #000 60%, transparent); mask-image: linear-gradient(180deg, #000 60%, transparent); }
+  /* en el celular las fotos son lo primero y van enteras: una tarjeta entre la barra de arriba y el texto,
+     sin nada encima. --top: donde termina la barra (10 + 62 px) más un respiro; --band: el alto de la foto.
+     Si los botones de la portada quedan más abajo, la barra de abajo (Subir estudios / Pedir turno) ya se ve al abrir */
+  .hero4 { --top: 84px; --band: clamp(220px, 42svh, 440px); align-items: flex-start; padding: calc(var(--top) + var(--band) + 22px) 0 48px; }
+  .slides { top: var(--top); bottom: auto; left: var(--gutter); right: var(--gutter); width: auto; height: var(--band); border-radius: 24px; clip-path: inset(0 round 24px); -webkit-mask-image: none; mask-image: none; }
+  .slides::after { content: ""; position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .12); pointer-events: none; }
   .hero4__shade { display: none; }
   .hero4__title { font-size: clamp(60px, 17vw, 100px); }
   .hero4 .tag { margin-bottom: 16px; }
@@ -461,7 +462,6 @@ body { background: transparent; }
   .ct4__top .big { font-size: clamp(70px, 22vw, 120px); }
 }
 @media (max-width: 600px) {
-  .hero4 { --band: clamp(150px, calc(100svh - 540px), 50svh); }
   .hero4__cta .act { flex: 1 1 100%; }
   .act { min-height: 60px; gap: 12px; padding: 7px 22px 7px 7px; }
   .act__i { width: 46px; height: 46px; }
@@ -588,6 +588,7 @@ body { background: transparent; }
 :root:not([data-theme="dark"]) .hero4__shade { background: linear-gradient(0deg, rgba(228, 234, 243, .85), rgba(228, 234, 243, 0) 24%); }
 /* las fotos, un punto más bajas de brillo y con algo más de contraste para que no encandilen */
 :root:not([data-theme="dark"]) .slides { background: #c9d3e3; }
+:root:not([data-theme="dark"]) .slides::after { box-shadow: inset 0 0 0 1px rgba(10, 23, 51, .1); }
 :root:not([data-theme="dark"]) .slides img { --f: saturate(.92) brightness(.93) contrast(1.05); }
 :root:not([data-theme="dark"]) .breath { color: rgba(47, 104, 216, .42); }
 :root:not([data-theme="dark"]) .tag { background: rgba(255, 255, 255, .55); border-color: rgba(10, 23, 51, .1); }

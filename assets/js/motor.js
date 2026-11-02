@@ -40,7 +40,7 @@
 
   /* ---------- nav, barra de progreso, barra del celular ---------- */
   const nav = $('#nav'), dock = $('.dock'), waEl = $('#wa'), prog = $('.prog'), hero = $('#inicio');
-  const burger = $('.burger'), menu = $('#menu');
+  const burger = $('.burger'), menu = $('#menu'), heroCta = $('#inicio .act');
   let lastY = 0, menuOpen = false;
   const onScroll = () => {
     const y = scrollY, h = hero ? hero.offsetHeight : 600;
@@ -50,11 +50,15 @@
       if (y > 240 && y > lastY + 4) nav.classList.add('is-hidden');
       else if (y < lastY - 4 || y < 240) nav.classList.remove('is-hidden');
     }
-    dock && dock.classList.toggle('is-on', y > h * .6);
-    waEl && waEl.classList.toggle('is-on', y > h * .6);
+    // la barra de abajo también se ve mientras el botón de turno de la portada todavía no entró en la pantalla
+    const ctaBelow = !!heroCta && heroCta.getBoundingClientRect().bottom > innerHeight;
+    dock && dock.classList.toggle('is-on', y > h * .6 || ctaBelow);
+    waEl && waEl.classList.toggle('is-on', y > h * .6 || ctaBelow);
     lastY = y;
   };
   addEventListener('scroll', onScroll, { passive: true });
+  addEventListener('resize', onScroll, { passive: true });
+  addEventListener('load', onScroll);
   const links = $$('.nav__links a');
   const spy = new IntersectionObserver(es => es.forEach(e => {
     if (e.isIntersecting) links.forEach(a => a.classList.toggle('is-on', a.getAttribute('href') === '#' + e.target.id));
