@@ -211,7 +211,7 @@
 
   /* ---------- loops que corren sólo mientras se ven ---------- */
   const vis = new IntersectionObserver(es => es.forEach(e => e.target.classList.toggle('is-vis', e.isIntersecting)), { rootMargin: '10% 0px' });
-  $$('.s, .hero, .zoom').forEach(s => vis.observe(s));
+  $$('.s, .hero, .hero4, .zoom').forEach(s => vis.observe(s));
   const once = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('is-in'); once.unobserve(e.target); } }), { threshold: .3 });
   $$('.pill3 li').forEach(li => once.observe(li));
   const drawIO = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('is-on'); drawIO.unobserve(e.target); } }), { threshold: .45 });
