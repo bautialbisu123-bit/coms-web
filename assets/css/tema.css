@@ -87,11 +87,11 @@ body { background: transparent; }
 
 /* ---------- los dos atajos que más se buscan: pedir turno y subir estudios. Cada uno tiene su ícono (el calendario
    y la flecha que sube) y su color, iguales en la portada, la barra de arriba, el menú y la barra de abajo del celular,
-   así se reconocen enseguida. Cada tanto los cruza un brillo, para que el ojo los encuentre ---------- */
+   así se reconocen enseguida ---------- */
 .act {
   --act-bg: var(--accent); --act-fg: var(--on-accent); --act-i-bg: var(--dark); --act-i-fg: #9fc1ff;
-  --act-glow: rgba(47, 104, 216, .5); --act-shine: rgba(255, 255, 255, .5);
-  position: relative; isolation: isolate; overflow: hidden; display: inline-flex; align-items: center; gap: 14px;
+  --act-glow: rgba(47, 104, 216, .5);
+  position: relative; display: inline-flex; align-items: center; gap: 14px;
   min-height: 66px; padding: 8px 24px 8px 8px; border-radius: 999px; background: var(--act-bg); color: var(--act-fg);
   box-shadow: 0 16px 34px -14px var(--act-glow); transition: transform .4s var(--ease), box-shadow .4s var(--ease);
 }
@@ -105,11 +105,8 @@ body { background: transparent; }
 .act__t small { font-size: 12px; font-weight: 500; opacity: .75; white-space: nowrap; }
 .act__go { flex: none; margin-left: auto; transition: transform .45s var(--ease); }
 .act:hover .act__go { transform: translateX(4px); }
-.act::after, .dock a::after { content: ""; position: absolute; z-index: -1; top: 0; bottom: 0; left: 0; width: 45%; pointer-events: none; background: linear-gradient(105deg, transparent 15%, var(--act-shine, rgba(255, 255, 255, .45)) 50%, transparent 85%); transform: translateX(-110%); animation: brillo 7s var(--ease) 2.4s infinite; }
-.act--est::after, .dock .dock__est::after { animation-delay: 3s; }
-@keyframes brillo { 0% { transform: translateX(-110%); } 18%, 100% { transform: translateX(330%); } }
 /* subir estudios va en el color opuesto al fondo: claro sobre la noche, azul marino sobre el día */
-.act--est { --act-bg: var(--text); --act-fg: var(--bg); --act-i-bg: var(--accent); --act-i-fg: var(--on-accent); --act-glow: rgba(2, 6, 20, .4); --act-shine: rgba(130, 170, 245, .45); }
+.act--est { --act-bg: var(--text); --act-fg: var(--bg); --act-i-bg: var(--accent); --act-i-fg: var(--on-accent); --act-glow: rgba(2, 6, 20, .4); }
 .menu .act--est { --act-bg: var(--dark-text); --act-fg: var(--dark); }
 /* en el menú, WhatsApp va con borde nomás, para que los dos atajos se destaquen */
 .menu__foot .btn--l { background: transparent; color: var(--dark-text); border: 1px solid var(--dark-line); }
@@ -130,9 +127,9 @@ body { background: transparent; }
   .nav__links a { padding-left: 10px; padding-right: 10px; }
 }
 /* la barra de abajo del celular: subir estudios en claro y pedir turno en azul, los dos con su ícono */
-.dock a { position: relative; isolation: isolate; overflow: hidden; gap: 7px; }
+.dock a { gap: 7px; }
 .dock svg { flex: none; width: 18px; height: 18px; }
-.dock .dock__est { --act-shine: rgba(47, 104, 216, .25); background: var(--dark-text); color: var(--dark); }
+.dock .dock__est { background: var(--dark-text); color: var(--dark); }
 @media (max-width: 359px) { .dock svg { display: none; } }
 
 /* ---------- manifiesto: texto fijo y fotos que suben ---------- */
