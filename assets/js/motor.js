@@ -78,31 +78,7 @@
   burger && burger.addEventListener('click', () => setMenu(!menuOpen));
   addEventListener('keydown', e => { if (e.key === 'Escape' && menuOpen) { setMenu(false); burger.focus(); } });
 
-  /* ---------- cursor con etiqueta ---------- */
-  const cur = $('.cur');
-  if (cur && fine && !calm) {
-    const dot = $('.cur__dot', cur), ring = $('.cur__ring', cur), lab = $('.cur__label', cur);
-    let x = -100, y = -100, rx = x, ry = y, moving = false;
-    const tick = () => {
-      rx += (x - rx) * .18; ry += (y - ry) * .18;
-      ring.style.transform = `translate3d(${rx}px,${ry}px,0)`;
-      if (Math.abs(x - rx) + Math.abs(y - ry) > .2) requestAnimationFrame(tick); else moving = false;
-    };
-    addEventListener('pointermove', e => {
-      x = e.clientX; y = e.clientY; dot.style.transform = `translate3d(${x}px,${y}px,0)`;
-      if (!moving) { moving = true; requestAnimationFrame(tick); }
-    }, { passive: true });
-    document.addEventListener('pointerover', e => {
-      const l = e.target.closest('[data-cursor]');
-      cur.classList.toggle('has-label', !!l);
-      if (l) lab.textContent = l.dataset.cursor;
-      cur.classList.toggle('is-link', !l && !!e.target.closest('a, button, summary, [role=tab]'));
-    });
-    document.addEventListener('pointerleave', () => cur.classList.add('is-off'));
-    document.addEventListener('pointerenter', () => cur.classList.remove('is-off'));
-  } else if (cur) cur.remove();
-
-  /* ---------- imanes, inclinación y luz que sigue al puntero ---------- */
+  /* ---------- imanes e inclinación ---------- */
   if (fine && !calm) {
     $$('[data-magnetic]').forEach(el => {
       const k = +el.dataset.magnetic || .35;
@@ -121,13 +97,6 @@
       el.addEventListener('pointerleave', () => { el.style.transform = ''; });
     });
   }
-  document.addEventListener('pointermove', e => {
-    const s = e.target.closest && e.target.closest('.spot');
-    if (!s) return;
-    const r = s.getBoundingClientRect();
-    s.style.setProperty('--mx', (e.clientX - r.left) + 'px');
-    s.style.setProperty('--my', (e.clientY - r.top) + 'px');
-  }, { passive: true });
 
   /* ---------- preguntas: acordeón animado, una abierta a la vez ---------- */
   const faqs = $$('.qa details');
