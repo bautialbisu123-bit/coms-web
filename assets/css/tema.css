@@ -18,6 +18,7 @@
   --r: 22px; --r-sm: 14px;
   --art-bg: #0d1b3c; --art-fg: #8fb4f2;
   --pn-gap: clamp(10px, 1.2vw, 16px);
+  --pn-r: clamp(24px, 3vw, 44px);
 }
 body { background: transparent; }
 .d { font-size: clamp(50px, 7vw, 120px); }
@@ -45,10 +46,12 @@ body { background: transparent; }
 .brand__mk svg { width: 32px; height: auto; }
 
 /* ---------- paneles que flotan sobre el cielo ---------- */
-.pn { margin: var(--pn-gap); border-radius: clamp(24px, 3vw, 44px); overflow: clip; }
+.pn { margin: var(--pn-gap); border-radius: var(--pn-r); overflow: clip; }
 .pn--light { background: var(--bg); }
 /* sin desenfoque de lo que queda detrás: con el panel casi opaco no se notaba y le costaba mucho a la placa de video */
 .pn--dark { background: rgba(8, 18, 44, .94); color: var(--dark-text); border: 1px solid rgba(200, 215, 245, .08); }
+/* el panel que sigue a la portada tapa el final de la foto: tiene que ser opaco para que no se transparente */
+.hero4 + .pn--dark { background: #08122c; }
 
 /* ---------- portada ---------- */
 .hero4 { position: relative; isolation: isolate; min-height: 100svh; display: flex; align-items: center; padding: 130px 0 90px; overflow: hidden; color: var(--dark-text); }
@@ -459,20 +462,22 @@ body { background: transparent; }
 /* en la compu la portada entra entera en la primera pantalla: en las notebooks (pantallas más bajas)
    el título y los espacios se achican según el alto, así los botones no quedan cortados abajo.
    El texto va en una columna angosta (--col: lo que ocupa el título, o lo justo para la etiqueta) y las fotos
-   llenan todo el resto, hasta el borde */
+   llenan todo el resto, hasta el borde. La portada se mete abajo del panel que sigue (lo que mide su curva), así
+   la foto llena la pantalla hasta abajo y sigue detrás de las esquinas redondeadas, sin franja vacía */
 @media (min-width: 901px) {
-  .hero4 { --title: clamp(46px, min(5.6vw, calc((79svh - 240px) / 2.7)), 104px); --col: max(calc(4.4 * var(--title)), min(27vw, 345px)); padding: clamp(92px, 15svh, 130px) 0 clamp(24px, 6svh, 90px); }
+  .hero4 { --title: clamp(46px, min(5.6vw, calc((79svh - 240px) / 2.7)), 104px); --col: max(calc(4.4 * var(--title)), min(27vw, 345px)); min-height: calc(100svh + var(--pn-r)); margin-bottom: calc(-1 * var(--pn-r) - var(--pn-gap)); padding: clamp(92px, 15svh, 130px) 0 calc(clamp(24px, 6svh, 90px) + var(--pn-r)); }
   .hero4__title { font-size: var(--title); }
   .hero4 .tag { max-width: var(--col); margin-bottom: clamp(14px, 3svh, 30px); font-size: 10.5px; letter-spacing: .08em; }
   .hero4__cta { display: inline-grid; margin-top: clamp(16px, 3.2svh, 32px); }
-  .hero4__down { left: max(var(--gutter), calc((100vw - var(--max)) / 2)); margin-left: 0; }
+  .hero4__down { left: max(var(--gutter), calc((100vw - var(--max)) / 2)); bottom: calc(26px + var(--pn-r)); margin-left: 0; }
   /* las fotos arrancan debajo de la barra de arriba, así no les tapa nada. Solo el borde se desvanece, con una curva
      suave (un degradado recto y corto se ve como un corte): --fade es lo que ocupa hacia el texto, y arranca un poco
-     antes de la columna para no comerle foto. Arriba son 32 px, y abajo 60 (además sobran 24 px fuera de la portada) */
+     antes de la columna para no comerle foto. Arriba son 32 px; abajo solo se desvanece lo que queda detrás del panel
+     que sigue (fuera de la portada sobran 24 px, y 8 cubren lo que se mueve con el mouse) */
   .slides {
     --fade: clamp(90px, 9vw, 170px);
     --fx: linear-gradient(90deg, rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, .03) calc(var(--fade) * .1), rgba(0, 0, 0, .1) calc(var(--fade) * .2), rgba(0, 0, 0, .22) calc(var(--fade) * .3), rgba(0, 0, 0, .35) calc(var(--fade) * .4), rgba(0, 0, 0, .5) calc(var(--fade) * .5), rgba(0, 0, 0, .65) calc(var(--fade) * .6), rgba(0, 0, 0, .78) calc(var(--fade) * .7), rgba(0, 0, 0, .9) calc(var(--fade) * .8), rgba(0, 0, 0, .97) calc(var(--fade) * .9), #000 var(--fade));
-    --fy: linear-gradient(180deg, rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, .1) 6px, rgba(0, 0, 0, .35) 13px, rgba(0, 0, 0, .65) 19px, rgba(0, 0, 0, .9) 26px, #000 32px, #000 calc(100% - 84px), rgba(0, 0, 0, .9) calc(100% - 72px), rgba(0, 0, 0, .65) calc(100% - 60px), rgba(0, 0, 0, .35) calc(100% - 48px), rgba(0, 0, 0, .1) calc(100% - 36px), rgba(0, 0, 0, 0) calc(100% - 24px));
+    --fy: linear-gradient(180deg, rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, .1) 6px, rgba(0, 0, 0, .35) 13px, rgba(0, 0, 0, .65) 19px, rgba(0, 0, 0, .9) 26px, #000 32px, #000 calc(100% - 16px - var(--pn-r)), rgba(0, 0, 0, 0) calc(100% - 24px));
     top: 84px; bottom: -24px; right: -24px; left: calc(max(var(--gutter), calc((100vw - var(--max)) / 2)) + var(--col) - .35 * var(--fade));
     -webkit-mask-image: var(--fx), var(--fy); mask-image: var(--fx), var(--fy); -webkit-mask-composite: source-in; mask-composite: intersect;
   }
