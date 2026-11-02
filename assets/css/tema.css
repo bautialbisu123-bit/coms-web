@@ -436,10 +436,11 @@ body { background: transparent; }
   .lb__img { max-height: 50vh; }
   .lb figcaption { padding: 24px 22px 90px; }
   .lb__nav--p { left: 18px; right: auto; } .lb__nav--n { left: 76px; right: auto; }
-  .route { height: 120px; }
+  /* el cartel de la videollamada va arriba de la curva: en lo angosto no entra debajo y la curva le cortaba las puntas */
+  .route { height: 150px; }
+  .route svg { top: 36px; bottom: 0; height: calc(100% - 36px); }
   .route__pin { font-size: 20px; }
-  /* el cartel de la videollamada sube hasta el arco, así no tapa los nombres de las sedes */
-  .route__mid { top: 30px; padding: 6px 12px; font-size: 9.5px; letter-spacing: .08em; }
+  .route__mid { top: 0; padding: 6px 12px; font-size: 10px; letter-spacing: .08em; }
   /* sedes: sin huecos vacíos entre los datos y el botón */
   .office { min-height: 0; }
   .office .btn { margin-top: 6px; }
