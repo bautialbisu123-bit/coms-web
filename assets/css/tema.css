@@ -176,7 +176,7 @@ body { background: transparent; }
 .eq__r { display: block; margin-top: 2px; font-size: 13.5px; line-height: 1.3; color: var(--text-2); }
 .eq__a { font-size: 10.5px; font-weight: 600; line-height: 1.3; letter-spacing: .12em; text-transform: uppercase; color: #9fc1ff; }
 .eq__b:focus-visible .eq__foto img { transform: scale(1.04); }
-.eq__info { display: none; }
+.eq__info, .eq__ola { display: none; }
 @media (hover: hover) {
   .eq article:hover .eq__foto img { transform: scale(1.04); }
   button.eq__b:hover .eq__mas { transform: rotate(90deg); }
@@ -188,14 +188,21 @@ body { background: transparent; }
   .eq-g .sh .lead { margin-bottom: 0; }
   .eq-g .d { font-size: clamp(44px, 4.6vw, 76px); }
   .eq { flex: 0 0 min(68.5%, calc(3 * max(230px, (100svh - 228px) / 2) + 24px)); }
-  /* al pie de la columna, a la altura del final de las fotos: dónde se atiende y el botón de turno */
-  .eq__info { display: block; max-width: 540px; margin-top: auto; }
-  .eq__sedes { margin: 0 0 14px; border-top: 1px solid var(--line); }
+  /* debajo del texto, dónde se atiende */
+  .eq__info { display: block; max-width: 540px; }
+  .eq__sedes { margin: 0; border-top: 1px solid var(--line); }
   .eq__sedes div { display: flex; justify-content: space-between; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--line); font-size: 13.5px; line-height: 1.3; }
   .eq__sedes dt { font-weight: 600; white-space: nowrap; }
   .eq__sedes dd { margin: 0; color: var(--text-2); text-align: right; }
-  .eq__info .act { --act-bg: #2f68d8; --act-fg: #fff; --act-i-bg: rgba(255, 255, 255, .18); --act-i-fg: #fff; display: flex; width: 100%; }
+  /* y hasta el final de las fotos, una respiración tranquila: dos líneas que se deslizan despacio. Solo mueven una capa
+     ya dibujada (transform), sin repintar ni usar JS, y se pausan cuando la sección no está a la vista */
+  .eq__ola { position: relative; display: block; flex: 1 1 0; min-height: 52px; max-height: 150px; max-width: 540px; margin-top: auto; overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent); mask-image: linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent); }
+  .eq__ola svg { position: absolute; inset: 0 auto 0 0; width: 200%; max-width: none; height: 100%; overflow: visible; will-change: transform; animation: ola 10s linear infinite; }
+  .eq__ola svg + svg { opacity: .4; animation-duration: 16s; animation-direction: reverse; }
+  .eq__ola path { fill: none; stroke: var(--accent); stroke-width: 1.75px; vector-effect: non-scaling-stroke; }
 }
+@keyframes ola { to { transform: translate3d(-50%, 0, 0); } }
+@media (prefers-reduced-motion: reduce) { .eq__ola svg { animation: none; } }
 /* la ventana del perfil */
 .perfil { width: min(860px, calc(100% - 28px)); max-height: calc(100dvh - 28px); padding: 0; overflow: hidden; border: 1px solid var(--line); border-radius: calc(var(--r) + 6px); background: var(--surface); color: var(--text); box-shadow: 0 40px 90px rgba(2, 6, 20, .45); }
 .perfil[open] { display: flex; animation: lbIn .5s var(--ease); }
@@ -725,8 +732,8 @@ body { background: transparent; }
   .hero4 { --title: clamp(46px, calc((79svh - 308 * var(--t)) / 2.7), calc(88 * var(--u))); --col: calc(4.4 * var(--title)); padding-top: calc(64px + 66 * var(--t)); }
   .slides { top: calc(18px + 66 * var(--t)); }
   .eq-g .d { font-size: calc(76 * var(--u)); }
-  .eq__info { max-width: calc(540 * var(--u)); }
-  .eq__sedes { margin-bottom: calc(14 * var(--u)); }
+  .eq__info, .eq__ola { max-width: calc(540 * var(--u)); }
+  .eq__ola { max-height: calc(150 * var(--u)); }
   .eq__sedes div { padding: calc(11 * var(--u)) 0; font-size: calc(14.5 * var(--u)); }
   .eq { row-gap: calc(26 * var(--t)); }
   .eq__a { font-size: calc(10.5 * var(--t)); }
