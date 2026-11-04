@@ -13,7 +13,7 @@
   --text: #003b36; --text-2: #446863; --line: rgba(0, 59, 54, .12);
   --accent: #12b7a9; --accent-2: #63c7bb; --accent-ink: #006a60; --on-accent: #00221e;
   --dark: #003530; --dark-2: #0f453f; --dark-text: #e6f6f3; --dark-text-2: #90b6b0; --dark-line: rgba(164, 230, 220, .13);
-  --nav-bg: rgba(0, 53, 48, .7); --nav-line: rgba(164, 230, 220, .12); --nav-hover: rgba(255, 255, 255, .08);
+  --nav-bg: #003530; --nav-line: rgba(164, 230, 220, .12); --nav-hover: rgba(255, 255, 255, .08);
   --f-display: var(--f-serif); --d-weight: 400; --d-stretch: 100%; --d-case: none; --d-track: -.025em; --d-lh: .95;
   --r: 22px; --r-sm: 14px;
   --art-bg: #09403b; --art-fg: #12b7a9;
@@ -58,9 +58,10 @@ body { background: transparent; }
 /* las fotos grandes, de a una: ocupan todo lo que deja libre el texto y se funden apenas en los bordes con una
    máscara, sin ningún velo encima, así se ven nítidas. Pasan fundiéndose, con un zoom lento */
 .slides { position: absolute; z-index: -2; overflow: hidden; background: #09403b; }
-/* cada foto entra apenas desenfocada y se aclara mientras aparece (--f: el tono de la foto según el modo) */
-.slides img { --f: saturate(1) brightness(.96); position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: scale(1.1); filter: var(--f) blur(10px); transition: opacity 1.6s var(--ease), transform 8s linear, filter 2s var(--ease); }
-.slides img.is-on { opacity: 1; transform: scale(1); filter: var(--f) blur(0); }
+/* cada foto entra nítida y fundiéndose sobre la anterior, que recién se va cuando la nueva ya está entera: así nunca
+   se transparenta el fondo (--f: el tono de la foto según el modo) */
+.slides img { --f: saturate(1) brightness(.96); position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: scale(1.1); filter: var(--f); transition: opacity .3s linear .8s, transform 8s linear; }
+.slides img.is-on { z-index: 1; opacity: 1; transform: scale(1); transition: opacity .8s var(--ease), transform 8s linear; }
 .hero4__in { position: relative; }
 .tag { display: inline-flex; align-items: center; gap: 10px; margin: 0 0 30px; padding: 9px 16px 9px 12px; border-radius: 999px; background: rgba(255, 255, 255, .06); border: 1px solid rgba(255, 255, 255, .12); font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--dark-text-2); }
 .tag__dot { width: 8px; height: 8px; border-radius: 50%; background: #12b7a9; animation: latido 2.6s infinite; }
@@ -79,7 +80,7 @@ body { background: transparent; }
    así se reconocen enseguida ---------- */
 .act {
   --act-bg: var(--accent); --act-fg: var(--on-accent); --act-i-bg: var(--dark); --act-i-fg: #77d4c8;
-  --act-glow: rgba(18, 183, 169, .45);
+  --act-glow: rgba(0, 20, 18, .28);
   position: relative; display: inline-flex; align-items: center; gap: 14px;
   min-height: 66px; padding: 8px 24px 8px 8px; border-radius: 999px; background: var(--act-bg); color: var(--act-fg);
   box-shadow: 0 16px 34px -14px var(--act-glow); transition: transform .4s var(--ease), box-shadow .4s var(--ease);
@@ -151,7 +152,7 @@ body { background: transparent; }
 .split__txt { position: sticky; top: 140px; padding: 30px 0; }
 .split__q { margin: 0; font-family: var(--f-serif); font-size: clamp(36px, 4.4vw, 76px); line-height: 1.04; letter-spacing: -.02em; }
 .split__q em { font-style: italic; color: var(--accent-ink); }
-.js .split__q .fw { opacity: .14; filter: blur(6px); }
+.js .split__q .fw { opacity: .14; }
 .split__q .fw { display: inline-block; }
 .split .sign { text-align: left; }
 .split__pics { position: relative; min-height: 1100px; }
@@ -247,7 +248,7 @@ body { background: transparent; }
 .cf__stage { position: relative; height: 640px; perspective: 1800px; touch-action: pan-y; user-select: none; }
 .cf__card { --w: min(470px, 82vw); position: absolute; left: 50%; top: 0; width: var(--w); height: 100%; margin-left: calc(var(--w) / -2); display: flex; flex-direction: column; border-radius: 30px; overflow: hidden; background: var(--dark); color: var(--dark-text); box-shadow: 0 30px 70px rgba(0, 53, 48, .3); transition: transform .9s var(--ease), opacity .6s, filter .6s; cursor: pointer; will-change: transform; }
 .cf__card.is-active { cursor: default; }
-.cf__art { position: relative; height: 40%; flex: none; background: radial-gradient(circle at 50% 50%, #125c55, #023b36 75%); color: var(--art-fg); }
+.cf__art { position: relative; height: 40%; flex: none; background: #0a4640; color: var(--art-fg); }
 .cf__art .fig { position: absolute; inset: 8% 18%; width: 64%; height: 84%; overflow: visible; }
 .cf__num { position: absolute; left: 22px; top: 16px; font-family: var(--f-serif); font-size: 46px; line-height: 1; color: rgba(255, 255, 255, .22); }
 .cf__txt { display: flex; flex-direction: column; flex: 1; min-height: 0; padding: 24px 28px 26px; overflow-y: auto; }
@@ -292,7 +293,7 @@ body { background: transparent; }
 .chk__opts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
 .chk__o { position: relative; display: flex; flex-direction: column; gap: 4px; padding: 20px; text-align: left; border-radius: 20px; border: 1.5px solid var(--line); background: var(--bg); transition: border-color .35s, background .35s, transform .5s var(--ease), box-shadow .5s; }
 .chk__o:hover { transform: translateY(-4px); border-color: color-mix(in srgb, var(--accent) 50%, transparent); }
-.chk__o[aria-pressed="true"] { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 8%, var(--surface)); box-shadow: 0 16px 34px rgba(9, 151, 138, .16); }
+.chk__o[aria-pressed="true"] { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 8%, var(--surface)); box-shadow: 0 12px 24px rgba(0, 30, 27, .1); }
 .chk__ico { width: 64px; height: 64px; margin-bottom: 14px; border-radius: 18px; display: grid; place-items: center; background: color-mix(in srgb, var(--accent) 12%, transparent); color: var(--accent); }
 .chk__ico svg { width: 44px; height: 44px; overflow: visible; }
 .chk__ico .t { fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
@@ -364,7 +365,7 @@ body { background: transparent; }
 .phone__sig i:nth-child(1) { height: 4px; } .phone__sig i:nth-child(2) { height: 7px; } .phone__sig i:nth-child(3) { height: 10px; }
 .phone__scr { position: relative; height: 100%; border-radius: 40px; overflow: hidden; background: linear-gradient(180deg, #ffffff, #e6f7f4); }
 .scr { position: absolute; inset: 0; display: flex; flex-direction: column; padding: 92px 26px 70px; }
-.scr__ico { width: 72px; height: 72px; border-radius: 22px; display: grid; place-items: center; background: #09978a; color: #fff; box-shadow: 0 16px 30px rgba(9, 151, 138, .3); }
+.scr__ico { width: 72px; height: 72px; border-radius: 22px; display: grid; place-items: center; background: #09978a; color: #fff; box-shadow: 0 12px 24px rgba(0, 30, 27, .14); }
 .scr__ico svg { width: 36px; height: 36px; }
 .scr__k { margin: 26px 0 6px; font-size: 11px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--text-2); }
 .scr__t { margin: 0; font-family: var(--f-serif); font-weight: 400; font-size: 36px; line-height: 1; letter-spacing: -.02em; }
@@ -384,7 +385,7 @@ body { background: transparent; }
 .gal__it:hover .gal__cap, .gal__it:focus-visible .gal__cap { transform: none; opacity: 1; }
 @media (hover: none) { .gal__cap { transform: none; opacity: 1; } }
 .lb { width: min(1100px, 94vw); max-height: 92vh; padding: 0; border: 0; border-radius: 26px; background: #003530; color: var(--dark-text); overflow: hidden; box-shadow: 0 40px 120px rgba(0, 0, 0, .6); }
-.lb::backdrop { background: rgba(0, 40, 36, .78); backdrop-filter: blur(6px); }
+.lb::backdrop { background: rgba(0, 28, 25, .88); }
 .lb[open] { animation: lbIn .5s var(--ease); }
 @keyframes lbIn { from { opacity: 0; transform: translateY(20px) scale(.97); } }
 .lb__fig { margin: 0; display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); max-height: 92vh; }
@@ -418,7 +419,7 @@ body { background: transparent; }
 .route__base { fill: none; stroke: rgba(164, 230, 220, .14); stroke-width: 2; }
 .route__flow { fill: none; stroke: #12b7a9; stroke-width: 2; stroke-dasharray: 6 12; animation: ruta 1.6s linear infinite; }
 @keyframes ruta { to { stroke-dashoffset: -18; } }
-.route__dot { fill: #fff; filter: drop-shadow(0 0 6px #12b7a9); }
+.route__dot { fill: #fff; }
 .route__pin { position: absolute; bottom: 0; display: flex; align-items: center; gap: 10px; translate: -50% 0; font-family: var(--f-serif); font-size: 26px; }
 .route__pin i { width: 14px; height: 14px; border-radius: 50%; background: #12b7a9; box-shadow: 0 0 0 6px rgba(18, 183, 169, .2); animation: latido 2.6s infinite; }
 .route__pin--a { left: 10%; } .route__pin--b { left: 90%; }
@@ -435,7 +436,7 @@ body { background: transparent; }
      lo que queda de la pantalla después de la barra, el título y los botones; como mucho, lo justo para
      mostrar entera una foto vertical (133vw) */
   .hero4 { --top: 74px; --band: clamp(220px, calc(100svh - 230px - min(26vw, 190px)), 133vw); align-items: flex-start; padding: calc(var(--top) + var(--band) + 12px) 0 26px; }
-  .slides { --fy: linear-gradient(180deg, rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, .1) 5px, rgba(0, 0, 0, .35) 10px, rgba(0, 0, 0, .65) 15px, rgba(0, 0, 0, .9) 20px, #000 25px, #000 calc(100% - 40px), rgba(0, 0, 0, .9) calc(100% - 32px), rgba(0, 0, 0, .65) calc(100% - 24px), rgba(0, 0, 0, .35) calc(100% - 16px), rgba(0, 0, 0, .1) calc(100% - 8px), rgba(0, 0, 0, 0) 100%); top: var(--top); bottom: auto; left: 0; right: 0; height: var(--band); -webkit-mask-image: var(--fy); mask-image: var(--fy); }
+  .slides { --fy: linear-gradient(180deg, rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, .1) 2px, rgba(0, 0, 0, .35) 5px, rgba(0, 0, 0, .65) 7px, rgba(0, 0, 0, .9) 10px, #000 12px, #000 calc(100% - 18px), rgba(0, 0, 0, .9) calc(100% - 14px), rgba(0, 0, 0, .65) calc(100% - 11px), rgba(0, 0, 0, .35) calc(100% - 7px), rgba(0, 0, 0, .1) calc(100% - 4px), rgba(0, 0, 0, 0) 100%); top: var(--top); bottom: auto; left: 0; right: 0; height: var(--band); -webkit-mask-image: var(--fy); mask-image: var(--fy); }
   /* la foto apaisada del equipo no se estira a todo el alto, así entran todas las caras */
   .slides .is-wide { inset: auto 0; top: calc(50% - 46vw); height: 92vw; object-position: 47% 30% !important; -webkit-mask-image: var(--fy); mask-image: var(--fy); }
   .hero4 .tag, .hero4__on, .hero4__cta .act__go { display: none; }
@@ -506,7 +507,7 @@ body { background: transparent; }
 /* el celular acostado: como en la compu, el título a la izquierda y las fotos a la derecha, entre las dos barras */
 @media (max-width: 900px) and (orientation: landscape) {
   .hero4 { align-items: center; padding: 84px 0 22px; }
-  .slides { --fx: linear-gradient(90deg, rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, .1) 12px, rgba(0, 0, 0, .35) 24px, rgba(0, 0, 0, .65) 36px, rgba(0, 0, 0, .9) 48px, #000 60px); top: 80px; bottom: 16px; left: 40%; height: auto; -webkit-mask-image: var(--fx); mask-image: var(--fx); }
+  .slides { --fx: linear-gradient(90deg, rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, .1) 6px, rgba(0, 0, 0, .35) 12px, rgba(0, 0, 0, .65) 18px, rgba(0, 0, 0, .9) 24px, #000 30px); top: 80px; bottom: 16px; left: 40%; height: auto; -webkit-mask-image: var(--fx); mask-image: var(--fx); }
   .slides .is-wide { inset: 0; height: 100%; -webkit-mask-image: none; mask-image: none; }
   .hero4__title { max-width: 40vw; font-size: clamp(32px, min(6vw, 13svh), 56px); }
   .hero4__cta, .hero4__atajos { max-width: 38vw; gap: 6px; margin-top: 6px; }
@@ -547,12 +548,12 @@ body { background: transparent; }
   .hero4__down { left: max(var(--gutter), calc((100vw - var(--max)) / 2)); bottom: calc(26px + var(--pn-r)); margin-left: 0; }
   /* las fotos arrancan debajo de la barra de arriba, así no les tapa nada. Solo el borde se desvanece, con una curva
      suave (un degradado recto y corto se ve como un corte): --fade es lo que ocupa hacia el texto, y arranca un poco
-     antes de la columna para no comerle foto. Arriba son 32 px; abajo solo se desvanece lo que queda detrás del panel
+     antes de la columna para no comerle foto. Arriba son 16 px; abajo solo se desvanece lo que queda detrás del panel
      que sigue (fuera de la portada sobran 24 px, y 8 cubren lo que se mueve con el mouse) */
   .slides {
-    --fade: clamp(90px, 9vw, 170px);
+    --fade: clamp(44px, 4vw, 80px);
     --fx: linear-gradient(90deg, rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, .03) calc(var(--fade) * .1), rgba(0, 0, 0, .1) calc(var(--fade) * .2), rgba(0, 0, 0, .22) calc(var(--fade) * .3), rgba(0, 0, 0, .35) calc(var(--fade) * .4), rgba(0, 0, 0, .5) calc(var(--fade) * .5), rgba(0, 0, 0, .65) calc(var(--fade) * .6), rgba(0, 0, 0, .78) calc(var(--fade) * .7), rgba(0, 0, 0, .9) calc(var(--fade) * .8), rgba(0, 0, 0, .97) calc(var(--fade) * .9), #000 var(--fade));
-    --fy: linear-gradient(180deg, rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, .1) 6px, rgba(0, 0, 0, .35) 13px, rgba(0, 0, 0, .65) 19px, rgba(0, 0, 0, .9) 26px, #000 32px, #000 calc(100% - 16px - var(--pn-r)), rgba(0, 0, 0, 0) calc(100% - 24px));
+    --fy: linear-gradient(180deg, rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, .1) 3px, rgba(0, 0, 0, .35) 6px, rgba(0, 0, 0, .65) 10px, rgba(0, 0, 0, .9) 13px, #000 16px, #000 calc(100% - 16px - var(--pn-r)), rgba(0, 0, 0, 0) calc(100% - 24px));
     top: 84px; bottom: -24px; right: -24px; left: calc(max(var(--gutter), calc((100vw - var(--max)) / 2)) + var(--col) - .35 * var(--fade));
     -webkit-mask-image: var(--fx), var(--fy); mask-image: var(--fx), var(--fy); -webkit-mask-composite: source-in; mask-composite: intersect;
   }
@@ -591,12 +592,11 @@ body { background: transparent; }
   .tool4__tt { padding-right: 0; font-size: 23px; }
   .tool4 .go { top: 50%; margin-top: -23px; right: 16px; }
 }
-/* ---------- pie: el cierre. La luz del amanecer sube desde el horizonte y "COMS" se abre ---------- */
+/* ---------- pie: el cierre. "COMS" se abre ---------- */
 .sign4 { --p: 0; position: relative; isolation: isolate; overflow: hidden; display: flex; flex-direction: column; align-items: center; text-align: center; padding: clamp(80px, 10vw, 150px) 0 clamp(56px, 6vw, 90px); }
-.sign4__glow { position: absolute; z-index: -1; left: 50%; bottom: 0; width: min(1400px, 150%); height: 120%; translate: -50% 0; background: radial-gradient(50% 62% at 50% 100%, rgba(18, 183, 169, .32), rgba(119, 212, 200, .13) 46%, rgba(0, 53, 48, 0) 76%); opacity: calc(.1 + var(--p) * .9); transform: translateY(calc((1 - var(--p)) * 25%)); }
 .sign4__mark { width: 54px; height: auto; margin-bottom: 34px; }
 .sign4__word { margin: 0; display: flex; justify-content: center; font-family: var(--f-sans); font-weight: 200; font-stretch: 100%; text-transform: uppercase; font-size: clamp(72px, 14vw, 230px); line-height: .9; }
-.sign4__word span { display: inline-block; margin: 0 calc(.03em + var(--p) * .09em); color: transparent; background: linear-gradient(180deg, #ffffff 25%, rgba(230, 246, 243, .4) 100%); -webkit-background-clip: text; background-clip: text; }
+.sign4__word span { display: inline-block; margin: 0 calc(.03em + var(--p) * .09em); color: var(--dark-text); }
 .sign4__sub { margin: 30px 0 0; font-family: var(--f-serif); font-size: clamp(20px, 1.8vw, 28px); line-height: 1.2; color: var(--dark-text); }
 .sign4__sub em { font-style: italic; color: #77d4c8; }
 .sign4__hz { position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(119, 212, 200, .75), transparent); transform: scaleX(calc(.2 + var(--p) * .8)); }
@@ -628,7 +628,7 @@ body { background: transparent; }
 :root[data-theme="dark"] .pn--light .d em, :root[data-theme="dark"] .pn--light .em { color: #77d4c8; }
 :root[data-theme="dark"] .chk__res { background: #003530; border: 1px solid rgba(164, 230, 220, .12); }
 :root[data-theme="dark"] .chk__o[aria-pressed="true"] { box-shadow: 0 16px 34px rgba(0, 0, 0, .35); }
-:root[data-theme="dark"] .cf__card { box-shadow: 0 30px 70px rgba(0, 0, 0, .5), 0 0 0 1px rgba(164, 230, 220, .1); }
+:root[data-theme="dark"] .cf__card { box-shadow: 0 14px 30px rgba(0, 0, 0, .25), 0 0 0 1px rgba(164, 230, 220, .1); }
 :root[data-theme="dark"] .cf__dots button:not([aria-current="true"]) { background: rgba(255, 255, 255, .22); }
 
 /* el cambio de modo: un círculo que se abre desde el botón (en navegadores que lo soportan) */
@@ -636,7 +636,7 @@ body { background: transparent; }
 /* ---------- modo claro completo: las 7 secciones claras (en oscuro, todas oscuras).
    Las secciones que eran de noche redefinen sus colores; lo que va sobre fotos queda igual.
    Los claros son grises verdosos apagados, no blanco puro: así el fondo no encandila y las fotos resaltan ---------- */
-:root:not([data-theme="dark"]) { --nav-bg: rgba(240, 249, 247, .86); --nav-line: rgba(0, 59, 54, .08); --nav-hover: rgba(0, 59, 54, .06); }
+:root:not([data-theme="dark"]) { --nav-bg: #f0f9f7; --nav-line: rgba(0, 59, 54, .08); --nav-hover: rgba(0, 59, 54, .06); }
 :root:not([data-theme="dark"]) .pn--dark, :root:not([data-theme="dark"]) .hero4 {
   --bg: #e8f3f2; --bg-2: #d5ebe7; --surface: #f4faf9;
   --text: #003b36; --text-2: #446863; --line: rgba(0, 59, 54, .12);
@@ -682,7 +682,7 @@ body { background: transparent; }
 /* contacto y preguntas */
 :root:not([data-theme="dark"]) .route__base { stroke: rgba(0, 59, 54, .14); }
 :root:not([data-theme="dark"]) .route__flow { stroke: #09978a; }
-:root:not([data-theme="dark"]) .route__dot { fill: #09978a; filter: drop-shadow(0 0 6px rgba(9, 151, 138, .6)); }
+:root:not([data-theme="dark"]) .route__dot { fill: #09978a; }
 :root:not([data-theme="dark"]) .route__pin i { background: #09978a; }
 :root:not([data-theme="dark"]) .route__mid { background: var(--surface); }
 :root:not([data-theme="dark"]) .pn--dark .office:not(.is-hl) { background: var(--surface); }
@@ -692,10 +692,8 @@ body { background: transparent; }
 
 /* pie */
 :root:not([data-theme="dark"]) .foot { background: #d8ebe8; color: #446863; --dark-text: #003b36; --dark-text-2: #446863; --dark-line: rgba(0, 59, 54, .12); }
-:root:not([data-theme="dark"]) .sign4__word span { background: linear-gradient(180deg, #003b36 30%, rgba(0, 59, 54, .35) 100%); -webkit-background-clip: text; background-clip: text; }
 :root:not([data-theme="dark"]) .sign4__sub em { color: #005e56; }
 :root:not([data-theme="dark"]) .sign4__mark .iso-blanco { fill: #003b36; }
-:root:not([data-theme="dark"]) .sign4__glow { background: radial-gradient(50% 62% at 50% 100%, rgba(18, 183, 169, .36), rgba(99, 199, 187, .18) 46%, rgba(226, 244, 241, 0) 76%); }
 
 /* ============ que la página entre bien en cualquier pantalla ============ */
 /* celulares angostos: la barra entra entera (en pantallas de 360 px el botón del menú se salía por la derecha) */
@@ -816,7 +814,7 @@ body { background: transparent; }
    color opuesto al fondo. (Va al final para ganarle al modo claro) */
 .tools4__grid .tool4--hl {
   --hl-bg: linear-gradient(140deg, #2ccabb, #12b7a9 50%, #0a9d90); --hl-fg: #00221e; --hl-d: #00221e;
-  --hl-glow: rgba(18, 183, 169, .7);
+  --hl-glow: rgba(0, 20, 18, .3);
   --ic-bg: rgba(255, 255, 255, .28); --ic-fg: #00221e; --go-bg: #00221e; --go-fg: #fff;
   min-height: 250px; padding: clamp(26px, 2.8vw, 40px); color: var(--hl-fg); border-color: transparent;
   box-shadow: 0 34px 60px -34px var(--hl-glow);

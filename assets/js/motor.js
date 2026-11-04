@@ -296,7 +296,7 @@
       } else if (n.nodeType === 1) { n.classList.add('fw'); units.push(n); }
     });
     const tl = G.timeline({ scrollTrigger: { trigger: el, start: 'top 82%', end: 'bottom 48%', scrub: .6 } });
-    units.forEach((u, i) => tl.to(u, { opacity: 1, filter: 'blur(0px)', duration: .4, ease: 'none' }, i * .22));
+    units.forEach((u, i) => tl.to(u, { opacity: 1, duration: .4, ease: 'none' }, i * .22));
   });
 
   // cinta: corre sola y se acelera / cambia de sentido con el scroll
@@ -407,11 +407,11 @@
     // y el panel sube con el borde inferior curvo, descubriendo la portada
     const panel = $('.pre__panel', pre), inner = $('.pre__in', pre);
     G.set(panel, { '--curve': '0vh' });
-    tl.fromTo($('.pre__mark', pre), { opacity: 0, scale: .82, filter: 'blur(12px)' }, { opacity: 1, scale: 1, filter: 'blur(0px)', duration: 1.2, ease: 'power3.out' }, 0)
-      .fromTo($$('.pre__word span', pre), { opacity: 0, y: 16, filter: 'blur(8px)' }, { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1, stagger: .08, ease: 'power3.out' }, .3)
+    tl.fromTo($('.pre__mark', pre), { opacity: 0, scale: .82 }, { opacity: 1, scale: 1, duration: 1.2, ease: 'power3.out' }, 0)
+      .fromTo($$('.pre__word span', pre), { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 1, stagger: .08, ease: 'power3.out' }, .3)
       .fromTo($('.pre__line', pre), { scaleX: 0 }, { scaleX: 1, duration: 1.1, ease: 'power3.inOut' }, .55)
       .fromTo($('.pre__tag', pre), { opacity: 0, y: 8 }, { opacity: 1, y: 0, duration: .8, ease: 'power2.out' }, .85)
-      .to(inner, { opacity: 0, y: -28, filter: 'blur(6px)', duration: .6, ease: 'power2.in' }, '+=.3')
+      .to(inner, { opacity: 0, y: -28, duration: .6, ease: 'power2.in' }, '+=.3')
       .to(panel, { yPercent: -100, '--curve': '24vh', duration: 1.15, ease: 'power4.inOut' }, '-=.25');
   } else if (!seen && pre) {
     const num = $('.pre__num span', pre), bar = $('.pre__bar i', pre), letters = $$('.pre__brand span:not(.sp)', pre), o = { v: 0 };
