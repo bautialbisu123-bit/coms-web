@@ -108,12 +108,36 @@ body { background: transparent; }
 .act--sm .act__t strong { font-size: 13.5px; }
 .nav .act--turno { --act-i-bg: rgba(255, 255, 255, .18); --act-i-fg: #fff; }
 @media (min-width: 901px) { .nav__cta { display: flex; gap: 8px; } }
-/* sin los links (tablets acostadas y compus chicas), el modo y los dos botones van a la derecha */
-@media (min-width: 901px) and (max-width: 1180px) { .nav .nav__links + .tema { margin-left: auto; } }
-/* con los links, en las pantallas más angostas la barra se aprieta un poco para que entren los dos botones */
-@media (min-width: 1181px) and (max-width: 1320px) {
-  .nav { gap: 12px; }
-  .nav__links a { padding-left: 10px; padding-right: 10px; }
+/* cuestionario y diario de sueño, junto a los dos botones principales: en el mismo lugar, pero más discretos */
+.atajo { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 16px; border-radius: 999px; border: 1px solid color-mix(in srgb, var(--text) 18%, transparent); background: color-mix(in srgb, var(--text) 7%, transparent); color: var(--text); font-size: 13.5px; font-weight: 600; white-space: nowrap; transition: background .3s, transform .4s var(--ease); }
+.atajo:hover { background: color-mix(in srgb, var(--text) 14%, transparent); transform: translateY(-2px); }
+.nav__cta .atajo { min-height: 48px; padding: 0 14px; }
+.hero4__atajos { display: grid; grid-template-columns: auto auto; gap: 8px; width: fit-content; margin-top: 8px; }
+.menu__atajos { --text: var(--dark-text); display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.menu__atajos .atajo { min-height: 52px; }
+/* con cuatro botones, los links de secciones solo entran en pantallas grandes; si no, pasan al menú */
+@media (min-width: 901px) and (max-width: 1319px) {
+  .nav__links { display: none; }
+  .burger { display: block; }
+  .nav .nav__links + .tema { margin-left: auto; }
+  .tema ~ .burger { margin-left: 0; }
+  .nav { gap: 8px; padding-left: 16px; }
+  .brand__s { display: none; }
+}
+@media (min-width: 901px) and (max-width: 1040px) {
+  .nav__cta .act--sm .act__i { display: none; }
+  .nav__cta .act--sm { padding: 0 14px; }
+}
+@media (min-width: 1320px) and (max-width: 1699px) {
+  .nav { gap: 8px; padding-left: 16px; }
+  .brand { gap: 8px; }
+  .brand__s { display: none; }
+  .nav__links { gap: 0; }
+  .nav__links a { padding-left: 7px; padding-right: 7px; font-size: 13.5px; }
+  .nav__cta { gap: 6px; }
+  .nav__cta .atajo { padding: 0 12px; font-size: 13px; }
+  .nav__cta .act--sm { padding-right: 13px; gap: 7px; }
+  .nav__cta .act--sm .act__t strong { font-size: 13px; }
 }
 /* la barra de abajo del celular: subir estudios en claro y pedir turno en azul, los dos con su ícono */
 .dock a { gap: 7px; }
@@ -381,11 +405,12 @@ button.eq__b:hover .eq__v { gap: 11px; color: var(--text); }
      encima: arrancan debajo de la barra de arriba (--top) y el título va debajo de ellas. --band: el alto de la foto,
      lo que queda de la pantalla después de la barra, el título y la barra de abajo; como mucho, lo justo para
      mostrar entera una foto vertical (133vw). Los dos botones de la portada ya están en la barra de abajo */
-  .hero4 { --top: 74px; --band: clamp(240px, calc(100svh - 174px - min(26vw, 190px)), 133vw); align-items: flex-start; padding: calc(var(--top) + var(--band) + 12px) 0 82px; }
+  .hero4 { --top: 74px; --band: clamp(220px, calc(100svh - 230px - min(26vw, 190px)), 133vw); align-items: flex-start; padding: calc(var(--top) + var(--band) + 12px) 0 82px; }
   .slides { --fy: linear-gradient(180deg, rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, .1) 5px, rgba(0, 0, 0, .35) 10px, rgba(0, 0, 0, .65) 15px, rgba(0, 0, 0, .9) 20px, #000 25px, #000 calc(100% - 40px), rgba(0, 0, 0, .9) calc(100% - 32px), rgba(0, 0, 0, .65) calc(100% - 24px), rgba(0, 0, 0, .35) calc(100% - 16px), rgba(0, 0, 0, .1) calc(100% - 8px), rgba(0, 0, 0, 0) 100%); top: var(--top); bottom: auto; left: 0; right: 0; height: var(--band); -webkit-mask-image: var(--fy); mask-image: var(--fy); }
   /* la foto apaisada del equipo no se estira a todo el alto, así entran todas las caras */
   .slides .is-wide { inset: auto 0; top: calc(50% - 46vw); height: 92vw; object-position: 47% 30% !important; -webkit-mask-image: var(--fy); mask-image: var(--fy); }
   .hero4 .tag, .hero4__cta { display: none; }
+  .hero4__atajos { grid-template-columns: repeat(2, minmax(0, 1fr)); width: auto; max-width: 460px; margin-top: 12px; }
   .hero4__title { max-width: none; font-size: clamp(40px, 13.2vw, 100px); }
   .hero4__down { display: none; }
   .tag { font-size: 10.5px; letter-spacing: .08em; }
@@ -444,14 +469,16 @@ button.eq__b:hover .eq__v { gap: 11px; color: var(--text); }
   .hero4 { align-items: center; padding: 84px 0 76px; }
   .slides { --fx: linear-gradient(90deg, rgba(0, 0, 0, 0) 0, rgba(0, 0, 0, .1) 12px, rgba(0, 0, 0, .35) 24px, rgba(0, 0, 0, .65) 36px, rgba(0, 0, 0, .9) 48px, #000 60px); top: 80px; bottom: 72px; left: 40%; height: auto; -webkit-mask-image: var(--fx); mask-image: var(--fx); }
   .slides .is-wide { inset: 0; height: 100%; -webkit-mask-image: none; mask-image: none; }
-  .hero4__title { max-width: 40vw; font-size: clamp(36px, min(7vw, 15svh), 64px); }
+  .hero4__title { max-width: 40vw; font-size: clamp(32px, min(6vw, 13svh), 56px); }
+  .hero4__atajos { max-width: 38vw; }
+  .hero4__atajos .atajo { padding: 0 8px; font-size: 12.5px; }
 }
 @media (max-width: 600px) {
   .eq { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 12px; }
   .eq__n { font-size: 23px; }
   .eq__a { font-size: 10px; letter-spacing: .07em; }
   .perfil[open] { flex-direction: column; }
-  .perfil__f { flex: 0 0 auto; width: 100%; height: min(34dvh, 82vw); object-position: 50% 18%; }
+  .perfil__f { flex: 0 0 auto; width: 100%; height: 70vw; object-position: 50% 20%; }
   .perfil__t { padding: 20px 22px 24px; }
   .perfil__n { font-size: 32px; margin-right: 0; }
   .perfil__r { font-size: 15px; }
@@ -462,7 +489,7 @@ button.eq__b:hover .eq__v { gap: 11px; color: var(--text); }
   .act__i { width: 46px; height: 46px; }
 }
 /* celulares bajos o muy angostos: menos foto en la ventana del perfil, y lugar para que la etiqueta ocupe dos renglones sin desalinear */
-@media (max-width: 600px) and (max-height: 720px) { .perfil__f { height: 31dvh; object-position: 50% 8%; } }
+@media (max-width: 600px) and (max-height: 720px) { .perfil__f { width: 126px; height: 168px; margin: 16px 0 0 22px; border-radius: var(--r); object-position: 50% 50%; } }
 @media (max-width: 359px) { .eq__a { min-height: 2.6em; } .perfil__t { padding: 16px 18px 20px; } .perfil__n { font-size: 28px; } }
 /* en la compu la portada entra entera en la primera pantalla: en las notebooks (pantallas más bajas)
    el título y los espacios se achican según el alto, así los botones no quedan cortados abajo.
@@ -470,7 +497,7 @@ button.eq__b:hover .eq__v { gap: 11px; color: var(--text); }
    llenan todo el resto, hasta el borde. La portada se mete abajo del panel que sigue (lo que mide su curva), así
    la foto llena la pantalla hasta abajo y sigue detrás de las esquinas redondeadas, sin franja vacía */
 @media (min-width: 901px) {
-  .hero4 { --title: clamp(46px, min(5.6vw, calc((79svh - 240px) / 2.7)), 104px); --col: max(calc(4.4 * var(--title)), min(27vw, 345px)); min-height: calc(100svh + var(--pn-r)); margin-bottom: calc(-1 * var(--pn-r) - var(--pn-gap)); padding: clamp(92px, 15svh, 130px) 0 calc(clamp(24px, 6svh, 90px) + var(--pn-r)); }
+  .hero4 { --title: clamp(46px, min(5.6vw, calc((79svh - 296px) / 2.7)), 104px); --col: max(calc(4.4 * var(--title)), min(27vw, 345px)); min-height: calc(100svh + var(--pn-r)); margin-bottom: calc(-1 * var(--pn-r) - var(--pn-gap)); padding: clamp(92px, 15svh, 130px) 0 calc(clamp(24px, 6svh, 90px) + var(--pn-r)); }
   .hero4__title { font-size: var(--title); }
   .hero4 .tag { max-width: var(--col); margin-bottom: clamp(14px, 3svh, 30px); font-size: 10.5px; letter-spacing: .08em; }
   .hero4__cta { display: inline-grid; margin-top: clamp(16px, 3.2svh, 32px); }
@@ -656,10 +683,10 @@ button.eq__b:hover .eq__v { gap: 11px; color: var(--text); }
    bajo, las tarjetas no quedan más altas que la pantalla). --t crece a la mitad de ese ritmo: es para los textos corridos */
 @media (min-width: 1700px) {
   :root { --u: max(1px, min(calc(80vw / 1360), calc(100svh / 850))); --t: calc(.5px + var(--u) / 2); --max: 80vw; --gutter: calc(64 * var(--u)); --sec: calc(176 * var(--t)); }
-  .nav { width: min(calc(100% - 24px), calc(var(--max) - 100 * var(--u))); }
+  .nav { width: min(calc(100% - 24px), calc(var(--max) + 120 * var(--u))); }
   .d { font-size: calc(120 * var(--u)); }
   .lead { font-size: calc(19 * var(--t)); }
-  .hero4 { --title: clamp(46px, calc((79svh - 250 * var(--t)) / 2.7), calc(88 * var(--u))); --col: calc(4.4 * var(--title)); padding-top: calc(64px + 66 * var(--t)); }
+  .hero4 { --title: clamp(46px, calc((79svh - 308 * var(--t)) / 2.7), calc(88 * var(--u))); --col: calc(4.4 * var(--title)); padding-top: calc(64px + 66 * var(--t)); }
   .slides { top: calc(18px + 66 * var(--t)); }
   .eq__a { font-size: calc(10.5 * var(--t)); }
   .eq__n { font-size: calc(30 * var(--u)); }
@@ -732,6 +759,8 @@ button.eq__b:hover .eq__v { gap: 11px; color: var(--text); }
   .act--sm .act__i { width: calc(38 * var(--t)); height: calc(38 * var(--t)); }
   .act--sm .act__i svg { width: calc(18 * var(--t)); height: calc(18 * var(--t)); }
   .act--sm .act__t strong { font-size: calc(13.5 * var(--t)); }
+  .atajo { min-height: calc(44 * var(--t)); padding: 0 calc(16 * var(--t)); font-size: calc(13.5 * var(--t)); }
+  .nav__cta .atajo { min-height: calc(48 * var(--t)); padding: 0 calc(14 * var(--t)); }
 }
 
 /* ============ herramientas online: que se note ============ */
