@@ -161,17 +161,32 @@ body { background: transparent; }
 .split__ph--3 { width: 60%; aspect-ratio: 4 / 3; right: 4%; top: 70%; }
 
 /* ---------- equipo ---------- */
-/* las seis en una misma fila, del mismo tamaño y con el mismo encuadre; el perfil completo se abre en una ventana */
-.eq { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: clamp(12px, 1.4vw, 22px); }
+/* las seis iguales, como una galería de retratos. En blanco y negro, para que fotos tan distintas se vean de una misma serie; el color aparece al pasar el mouse y en el perfil */
+.eq-g .d em { display: block; }
+.eq { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 26px 12px; }
 .eq article { min-width: 0; }
-.eq__b { display: flex; flex-direction: column; width: 100%; height: 100%; text-align: left; color: inherit; }
-.eq__foto { display: block; aspect-ratio: 3 / 4; margin-bottom: 14px; overflow: hidden; border-radius: var(--r); background: var(--surface); }
-.eq__foto img { display: block; width: 100%; height: 100%; object-fit: cover; transition: transform 1s var(--ease); }
-button.eq__b:hover .eq__foto img { transform: scale(1.05); }
+.eq__b { display: block; width: 100%; text-align: left; color: inherit; }
+.eq__foto { position: relative; display: block; aspect-ratio: 1 / 1; margin-bottom: 11px; overflow: hidden; border-radius: 4px; background: var(--surface); }
+.eq__foto img { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 4%; filter: grayscale(1) contrast(1.03); transition: filter .6s var(--ease); }
+.eq__mas { position: absolute; right: 8px; bottom: 8px; width: 30px; height: 30px; border-radius: 50%; background: #fff; box-shadow: 0 0 0 1px rgba(13, 27, 60, .18); transition: transform .5s var(--ease); }
+.eq__mas::before, .eq__mas::after { content: ""; position: absolute; left: 30%; right: 30%; top: 50%; height: 1.5px; margin-top: -.75px; background: #0d1b3c; }
+.eq__mas::after { transform: rotate(90deg); }
+.eq__n { display: block; font-size: 15px; font-weight: 600; line-height: 1.25; }
+.eq__r { display: block; margin-top: 2px; font-size: 13.5px; line-height: 1.3; color: var(--text-2); }
 .eq__a { font-size: 10.5px; font-weight: 600; line-height: 1.3; letter-spacing: .12em; text-transform: uppercase; color: #9fc1ff; }
-.eq__n { margin-top: 6px; font-family: var(--f-serif); font-size: clamp(22px, 1.75vw, 30px); line-height: 1.03; letter-spacing: -.015em; text-wrap: balance; }
-.eq__v { display: inline-flex; align-items: center; gap: 7px; margin-top: auto; padding-top: 10px; font-size: 13px; font-weight: 600; color: var(--text-2); transition: color .3s, gap .3s; }
-button.eq__b:hover .eq__v { gap: 11px; color: var(--text); }
+.eq__b:focus-visible .eq__foto img { filter: none; }
+@media (hover: hover) {
+  .eq article:hover .eq__foto img { filter: none; }
+  button.eq__b:hover .eq__mas { transform: rotate(90deg); }
+}
+/* en la compu, el título a la izquierda y las dos filas de tres a la derecha, sin pasarse de una pantalla */
+@media (min-width: 1181px) {
+  .eq-g { display: flex; gap: clamp(32px, 4vw, 72px); }
+  .eq-g .sh { flex: 1 1 0; display: flex; flex-direction: column; justify-content: space-between; min-width: 0; margin: 0; }
+  .eq-g .sh .lead { margin-bottom: 0; }
+  .eq-g .d { font-size: clamp(44px, 4.6vw, 76px); }
+  .eq { flex: 0 0 min(68.5%, calc(3 * max(230px, (100svh - 228px) / 2) + 24px)); }
+}
 /* la ventana del perfil */
 .perfil { width: min(860px, calc(100% - 28px)); max-height: calc(100dvh - 28px); padding: 0; overflow: hidden; border: 1px solid var(--line); border-radius: calc(var(--r) + 6px); background: var(--surface); color: var(--text); box-shadow: 0 40px 90px rgba(2, 6, 20, .45); }
 .perfil[open] { display: flex; animation: lbIn .5s var(--ease); }
@@ -397,8 +412,6 @@ button.eq__b:hover .eq__v { gap: 11px; color: var(--text); }
 
 /* ============ responsive ============ */
 @media (max-width: 1180px) {
-  .eq { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px 14px; }
-  .eq__n { font-size: 26px; }
 }
 @media (max-width: 900px) {
   /* en el celular las fotos van como en la compu: grandes, de borde a borde y fundiéndose con el fondo, pero sin nada
@@ -474,9 +487,10 @@ button.eq__b:hover .eq__v { gap: 11px; color: var(--text); }
   .hero4__atajos .atajo { padding: 0 8px; font-size: 12.5px; }
 }
 @media (max-width: 600px) {
-  .eq { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 12px; }
-  .eq__n { font-size: 23px; }
-  .eq__a { font-size: 10px; letter-spacing: .07em; }
+  .eq { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 8px; }
+  .eq__n { font-size: 14.5px; }
+  .eq__r { font-size: 12.5px; }
+  .eq__mas { right: 6px; bottom: 6px; width: 26px; height: 26px; }
   .perfil[open] { flex-direction: column; }
   .perfil__f { flex: 0 0 auto; width: 100%; height: 70vw; object-position: 50% 20%; }
   .perfil__t { padding: 20px 22px 24px; }
@@ -490,7 +504,7 @@ button.eq__b:hover .eq__v { gap: 11px; color: var(--text); }
 }
 /* celulares bajos o muy angostos: menos foto en la ventana del perfil, y lugar para que la etiqueta ocupe dos renglones sin desalinear */
 @media (max-width: 600px) and (max-height: 720px) { .perfil__f { width: 126px; height: 168px; margin: 16px 0 0 22px; border-radius: var(--r); object-position: 50% 50%; } }
-@media (max-width: 359px) { .eq__a { min-height: 2.6em; } .perfil__t { padding: 16px 18px 20px; } .perfil__n { font-size: 28px; } }
+@media (max-width: 359px) { .eq__n { min-height: 2.5em; } .perfil__t { padding: 16px 18px 20px; } .perfil__n { font-size: 28px; } }
 /* en la compu la portada entra entera en la primera pantalla: en las notebooks (pantallas más bajas)
    el título y los espacios se achican según el alto, así los botones no quedan cortados abajo.
    El texto va en una columna angosta (--col: lo que ocupa el título, o lo justo para la etiqueta) y las fotos
@@ -688,9 +702,12 @@ button.eq__b:hover .eq__v { gap: 11px; color: var(--text); }
   .lead { font-size: calc(19 * var(--t)); }
   .hero4 { --title: clamp(46px, calc((79svh - 308 * var(--t)) / 2.7), calc(88 * var(--u))); --col: calc(4.4 * var(--title)); padding-top: calc(64px + 66 * var(--t)); }
   .slides { top: calc(18px + 66 * var(--t)); }
+  .eq-g .d { font-size: calc(76 * var(--u)); }
+  .eq { row-gap: calc(26 * var(--t)); }
   .eq__a { font-size: calc(10.5 * var(--t)); }
-  .eq__n { font-size: calc(30 * var(--u)); }
-  .eq__v { font-size: calc(13 * var(--t)); }
+  .eq__n { font-size: calc(15 * var(--t)); }
+  .eq__r { font-size: calc(13.5 * var(--t)); }
+  .eq__mas { width: calc(30 * var(--t)); height: calc(30 * var(--t)); }
   .tr__t { font-size: calc(64 * var(--u)); }
   .tr__col li strong { font-size: calc(15.5 * var(--t)); }
   .tr__col li span { font-size: calc(13.5 * var(--t)); }
