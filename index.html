@@ -19,7 +19,7 @@
   <link rel="preload" href="assets/fonts/instrument-serif-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="assets/css/motor.css?v=13">
-  <link rel="stylesheet" href="assets/css/tema.css?v=59">
+  <link rel="stylesheet" href="assets/css/tema.css?v=60">
   <style>html{background:#070f26}</style>
   <script>(function(d){d.className=d.className.replace('no-js','js');try{if(sessionStorage.getItem('coms-m4-intro'))d.classList.add('seen')}catch(e){}var s=null;try{s=localStorage.getItem('coms-tema')}catch(e){}d.dataset.theme=(s==='dark'||s==='light')?s:(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')})(document.documentElement);if('scrollRestoration' in history)history.scrollRestoration='manual';</script>
 </head>
@@ -39,6 +39,8 @@
     <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M15.5 15.5 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></symbol>
     <symbol id="i-cal" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4m-7 8.2 2 2 4-4"/></g></symbol>
     <symbol id="i-up" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V4M7.5 8.5 12 4l4.5 4.5"/><path d="M4 14v3.5A2.5 2.5 0 0 0 6.5 20h11a2.5 2.5 0 0 0 2.5-2.5V14"/></g></symbol>
+    <symbol id="i-cues" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="4.5" width="14" height="16.5" rx="2.5"/><path d="M9 4.5V4a1.5 1.5 0 0 1 1.5-1.5h3A1.5 1.5 0 0 1 15 4v.5M9 11h6M9 15.5h4"/></g></symbol>
+    <symbol id="i-luna" viewBox="0 0 24 24"><path d="M20 14.2A8.2 8.2 0 0 1 9.8 4a8.2 8.2 0 1 0 10.2 10.2Z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
   </svg>
 
   <a class="skip" href="#main">Saltar al contenido</a>
@@ -123,10 +125,10 @@
         </h1>
         <!-- en el celular estos dos botones no van acá: están siempre a mano en la barra de abajo -->
         <div class="hero4__cta" data-hero>
-          <a class="act act--turno" href="https://otorrinosdelsueno.com/turno"><span class="act__i"><svg><use href="#i-cal"/></svg></span><span class="act__t"><strong>Pedir turno online</strong></span><svg class="act__go" width="16" height="16"><use href="#i-arrow"/></svg></a>
+          <a class="act act--turno" href="https://otorrinosdelsueno.com/turno"><span class="act__i"><svg><use href="#i-cal"/></svg></span><span class="act__t"><strong>Pedir turno<span class="hero4__on"> online</span></strong></span><svg class="act__go" width="16" height="16"><use href="#i-arrow"/></svg></a>
           <a class="act act--est" href="https://otorrinosdelsueno.com/estudios"><span class="act__i"><svg><use href="#i-up"/></svg></span><span class="act__t"><strong>Subir estudios</strong></span><svg class="act__go" width="16" height="16"><use href="#i-arrow"/></svg></a>
         </div>
-        <div class="hero4__atajos" data-hero><a class="atajo" href="https://otorrinosdelsueno.com/cuestionario">Cuestionario</a><a class="atajo" href="https://otorrinosdelsueno.com/diario">Diario de sueño</a></div>
+        <div class="hero4__atajos" data-hero><a class="atajo" href="https://otorrinosdelsueno.com/cuestionario"><svg aria-hidden="true"><use href="#i-cues"/></svg>Cuestionario</a><a class="atajo" href="https://otorrinosdelsueno.com/diario"><svg aria-hidden="true"><use href="#i-luna"/></svg>Diario de sueño</a></div>
       </div>
       <a class="hero4__down" href="#equipo" aria-label="Bajar" data-hero><span></span></a>
     </section>

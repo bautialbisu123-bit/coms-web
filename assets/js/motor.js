@@ -51,7 +51,6 @@
       else if (y < lastY - 4 || y < 240) nav.classList.remove('is-hidden');
     }
     // la barra de abajo también se ve mientras el botón de turno de la portada no está a la vista
-    // (en el celular ese botón no se muestra, así que la barra queda siempre)
     const cta = heroCta && heroCta.getBoundingClientRect(), ctaOff = !!cta && (!cta.width || cta.bottom > innerHeight);
     dock && dock.classList.toggle('is-on', y > h * .6 || ctaOff);
     waEl && waEl.classList.toggle('is-on', y > h * .6 || ctaOff);
