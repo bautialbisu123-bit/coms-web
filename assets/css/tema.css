@@ -182,7 +182,7 @@ body { background: transparent; }
 /* en la compu, el título a la izquierda y las dos filas de tres a la derecha, sin pasarse de una pantalla */
 @media (min-width: 1181px) {
   .eq-g { display: flex; gap: clamp(32px, 4vw, 72px); }
-  .eq-g .sh { flex: 1 1 0; display: flex; flex-direction: column; justify-content: space-between; min-width: 0; margin: 0; }
+  .eq-g .sh { flex: 1 1 0; display: flex; flex-direction: column; justify-content: flex-start; gap: clamp(18px, 1.8vw, 28px); min-width: 0; margin: 0; }
   .eq-g .sh .lead { margin-bottom: 0; }
   .eq-g .d { font-size: clamp(44px, 4.6vw, 76px); }
   .eq { flex: 0 0 min(68.5%, calc(3 * max(230px, (100svh - 228px) / 2) + 24px)); }
