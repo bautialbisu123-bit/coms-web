@@ -12,11 +12,11 @@
 @font-face { font-family: "Instrument Serif"; font-style: italic; font-weight: 400; font-display: swap; src: url("../fonts/instrument-serif-italic-latin.woff2") format("woff2"); }
 
 :root {
-  --bg: #f4f5f8; --bg-2: #e9ecf2; --surface: #ffffff;
-  --text: #10131c; --text-2: #5a6070; --line: rgba(16, 19, 28, .12);
-  --accent: #39c; --accent-2: #96c; --accent-ink: #1d6f99; --on-accent: #fff;
-  --dark: #0d1020; --dark-2: #171b30; --dark-text: #f3f4f8; --dark-text-2: #a6abbd; --dark-line: rgba(255, 255, 255, .12);
-  --nav-bg: rgba(255, 255, 255, .72); --nav-line: rgba(16, 19, 28, .08); --nav-hover: rgba(16, 19, 28, .06);
+  --bg: #f1f7f6; --bg-2: #e3efed; --surface: #ffffff;
+  --text: #00211e; --text-2: #516562; --line: rgba(0, 33, 30, .12);
+  --accent: #12b7a9; --accent-2: #05978b; --accent-ink: #02786e; --on-accent: #fff;
+  --dark: #001f1c; --dark-2: #002c28; --dark-text: #eff6f5; --dark-text-2: #9bb1ae; --dark-line: rgba(255, 255, 255, .12);
+  --nav-bg: rgba(255, 255, 255, .72); --nav-line: rgba(0, 33, 30, .08); --nav-hover: rgba(0, 33, 30, .06);
 
   --f-sans: "Archivo", "Helvetica Neue", Arial, sans-serif;
   --f-serif: "Instrument Serif", "Times New Roman", serif;
@@ -119,12 +119,12 @@ em { font-style: normal; }
 .pre__bar { position: absolute; left: var(--gutter); right: var(--gutter); bottom: 0; height: 2px; background: rgba(255, 255, 255, .12); }
 .pre__bar i { display: block; height: 100%; background: var(--accent); transform-origin: 0 50%; transform: scaleX(0); }
 /* intro sobria (variante "logo"): isotipo, nombre, una línea y el panel que sube con borde curvo */
-.pre--logo .pre__panel { position: absolute; inset: 0; background: radial-gradient(60% 55% at 50% 46%, color-mix(in srgb, var(--dark) 72%, #2a4a8f), var(--dark) 72%); border-bottom-left-radius: 50% var(--curve, 0px); border-bottom-right-radius: 50% var(--curve, 0px); will-change: transform; }
+.pre--logo .pre__panel { position: absolute; inset: 0; background: radial-gradient(60% 55% at 50% 46%, color-mix(in srgb, var(--dark) 72%, #015b53), var(--dark) 72%); border-bottom-left-radius: 50% var(--curve, 0px); border-bottom-right-radius: 50% var(--curve, 0px); will-change: transform; }
 .pre--logo .pre__in { display: flex; flex-direction: column; align-items: center; justify-content: center; }
-.pre__mark { width: clamp(70px, 7vw, 96px); height: auto; margin-bottom: 28px; filter: drop-shadow(0 10px 30px rgba(130, 170, 245, .25)); }
+.pre__mark { width: clamp(70px, 7vw, 96px); height: auto; margin-bottom: 28px; filter: drop-shadow(0 10px 30px rgba(18, 183, 169, .25)); }
 .pre__word { margin: 0; display: flex; font-family: var(--f-sans); font-weight: 250; font-stretch: 100%; text-transform: uppercase; font-size: clamp(34px, 4.4vw, 60px); line-height: 1; color: var(--dark-text); }
 .pre__word span { display: inline-block; margin: 0 .22em; }
-.pre__line { display: block; width: clamp(120px, 14vw, 200px); height: 1px; margin: 28px 0 18px; background: linear-gradient(90deg, transparent, rgba(159, 193, 255, .9), transparent); }
+.pre__line { display: block; width: clamp(120px, 14vw, 200px); height: 1px; margin: 28px 0 18px; background: linear-gradient(90deg, transparent, rgba(119, 212, 200, .9), transparent); }
 .pre__tag { margin: 0; font-family: var(--f-serif); font-style: italic; font-size: clamp(16px, 1.4vw, 20px); color: var(--dark-text-2); }/* si el JS fallara, la portada aparece igual */
 .js [data-hero] { opacity: 0; animation: heroFb 0s 5s forwards; }
 .js.ready [data-hero] { animation: none; }
