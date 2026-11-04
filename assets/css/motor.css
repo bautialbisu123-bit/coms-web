@@ -13,10 +13,10 @@
 
 :root {
   --bg: #f1f7f6; --bg-2: #e3efed; --surface: #ffffff;
-  --text: #00211e; --text-2: #516562; --line: rgba(0, 33, 30, .12);
+  --text: #003430; --text-2: #516562; --line: rgba(0, 52, 48, .12);
   --accent: #12b7a9; --accent-2: #05978b; --accent-ink: #02786e; --on-accent: #fff;
-  --dark: #001f1c; --dark-2: #002c28; --dark-text: #eff6f5; --dark-text-2: #9bb1ae; --dark-line: rgba(255, 255, 255, .12);
-  --nav-bg: rgba(255, 255, 255, .72); --nav-line: rgba(0, 33, 30, .08); --nav-hover: rgba(0, 33, 30, .06);
+  --dark: #00322e; --dark-2: #073f3a; --dark-text: #eff6f5; --dark-text-2: #9bb1ae; --dark-line: rgba(255, 255, 255, .12);
+  --nav-bg: rgba(255, 255, 255, .72); --nav-line: rgba(0, 52, 48, .08); --nav-hover: rgba(0, 52, 48, .06);
 
   --f-sans: "Archivo", "Helvetica Neue", Arial, sans-serif;
   --f-serif: "Instrument Serif", "Times New Roman", serif;
@@ -419,7 +419,7 @@ a:hover .go, .tile:hover .go { transform: rotate(-45deg); background: var(--acce
 .office__addr { margin: 0 0 8px; color: var(--text-2); font-size: 15px; }
 .office__map { align-self: flex-start; margin-bottom: 26px; font-size: 13.5px; text-decoration: underline; text-underline-offset: 3px; opacity: .85; }
 .office .btn { margin-top: auto; align-self: flex-start; }
-.office.is-hl { background: var(--accent); color: var(--on-accent); border-color: var(--accent); --text-2: color-mix(in srgb, var(--on-accent) 70%, transparent); --line: color-mix(in srgb, var(--on-accent) 20%, transparent); }
+.office.is-hl { background: var(--accent); color: var(--on-accent); border-color: var(--accent); --text-2: color-mix(in srgb, var(--on-accent) 85%, transparent); --line: color-mix(in srgb, var(--on-accent) 20%, transparent); }
 .office.is-hl .btn--p { background: var(--on-accent); color: var(--accent); --ico-bg: var(--accent); --ico-fg: var(--on-accent); }
 
 /* ---------- pie ---------- */
