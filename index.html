@@ -19,7 +19,7 @@
   <link rel="preload" href="assets/fonts/instrument-serif-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="assets/fonts/archivo-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="assets/css/motor.css?v=13">
-  <link rel="stylesheet" href="assets/css/tema.css?v=50">
+  <link rel="stylesheet" href="assets/css/tema.css?v=52">
   <style>html{background:#070f26}</style>
   <script>(function(d){d.className=d.className.replace('no-js','js');try{if(sessionStorage.getItem('coms-m4-intro'))d.classList.add('seen')}catch(e){}var s=null;try{s=localStorage.getItem('coms-tema')}catch(e){}d.dataset.theme=(s==='dark'||s==='light')?s:(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')})(document.documentElement);if('scrollRestoration' in history)history.scrollRestoration='manual';</script>
 </head>
@@ -136,92 +136,129 @@
             <p class="k"><b>01</b> El equipo</p>
             <h2 class="d" id="team-title" data-split="words">Un equipo, <em>una misma mirada.</em></h2>
           </div>
-          <p class="lead" data-reveal>Tres otorrinolaringólogas formadas en trastornos respiratorios del sueño, cada una con su recorrido y todas con el mismo criterio. Al pedir el turno elegís con quién atenderte.</p>
+          <p class="lead" data-reveal>Tres otorrinolaringólogas formadas en trastornos respiratorios del sueño, una kinesióloga, una secretaria y una enfermera. Cada una con su recorrido, todas con el mismo criterio. Al pedir el turno elegís con quién atenderte.</p>
         </header>
-        <p class="eq__desliza">Deslizá para ver a las tres</p>
-        <div class="eq__medicas" data-stagger>
-          <article class="eq__m">
-            <div class="eq__foto"><img src="assets/img/equipo-armijos.jpg" alt="Retrato de la Dra. Karla Armijos" loading="lazy" style="object-position:50% 22%"></div>
+        <div class="eq" data-stagger>
+          <article>
+            <button class="eq__b" type="button" data-perfil="p-armijos" aria-haspopup="dialog">
+              <span class="eq__foto"><img src="assets/img/retrato-armijos.jpg" alt="" loading="lazy"></span>
+              <span class="eq__a">Rinología y sueño</span>
+              <span class="eq__n">Dra. Karla Armijos</span>
+              <span class="eq__v">Ver perfil<svg width="13" height="13" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+            </button>
+          </article>
+          <article>
+            <button class="eq__b" type="button" data-perfil="p-orquera" aria-haspopup="dialog">
+              <span class="eq__foto"><img src="assets/img/retrato-orquera.jpg" alt="" loading="lazy"></span>
+              <span class="eq__a">Trastornos del sueño</span>
+              <span class="eq__n">Dra. Lourdes Orquera</span>
+              <span class="eq__v">Ver perfil<svg width="13" height="13" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+            </button>
+          </article>
+          <article>
+            <button class="eq__b" type="button" data-perfil="p-sartori" aria-haspopup="dialog">
+              <span class="eq__foto"><img src="assets/img/retrato-sartori.jpg" alt="" loading="lazy"></span>
+              <span class="eq__a">Medicina del sueño</span>
+              <span class="eq__n">Dra. Verónica Sartori</span>
+              <span class="eq__v">Ver perfil<svg width="13" height="13" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+            </button>
+          </article>
+          <article>
+            <button class="eq__b" type="button" data-perfil="p-jaritos" aria-haspopup="dialog">
+              <span class="eq__foto"><img src="assets/img/retrato-jaritos.jpg" alt="" loading="lazy"></span>
+              <span class="eq__a">Kinesiología · CPAP</span>
+              <span class="eq__n">Verónica Jaritos</span>
+              <span class="eq__v">Ver perfil<svg width="13" height="13" aria-hidden="true"><use href="#i-arrow"/></svg></span>
+            </button>
+          </article>
+          <article>
+            <div class="eq__b">
+              <span class="eq__foto"><img src="assets/img/retrato-garcia.jpg" alt="" loading="lazy"></span>
+              <span class="eq__a">Secretaría</span>
+              <span class="eq__n">Guillermina García</span>
+            </div>
+          </article>
+          <article>
+            <div class="eq__b">
+              <span class="eq__foto"><img src="assets/img/retrato-nusinovich.jpg" alt="" loading="lazy"></span>
+              <span class="eq__a">Enfermería</span>
+              <span class="eq__n">Rita Beatriz Nusinovich</span>
+            </div>
+          </article>
+        </div>
+
+        <!-- los perfiles completos: se abren al tocar cada foto -->
+        <dialog class="perfil" id="p-armijos" aria-labelledby="p-armijos-t" data-lenis-prevent>
+          <button class="perfil__x" type="button" aria-label="Cerrar"><span></span><span></span></button>
+          <img class="perfil__f" src="assets/img/retrato-armijos.jpg" alt="Retrato de la Dra. Karla Armijos" loading="lazy">
+          <div class="perfil__t">
             <span class="eq__a">Rinología y sueño</span>
-            <h3 class="eq__n">Dra. Karla Armijos</h3>
-            <p class="eq__r">Otorrinolaringóloga especializada en Rinología y Trastornos Respiratorios del Sueño. Adultos y niños.</p>
-            <ul class="eq__l">
+            <h3 class="perfil__n" id="p-armijos-t">Dra. Karla Armijos</h3>
+            <p class="perfil__r">Otorrinolaringóloga especializada en Rinología y Trastornos Respiratorios del Sueño. Adultos y niños.</p>
+            <ul class="perfil__l">
               <li>Sector Ronquidos y Apnea del Sueño · <strong>Hospital Británico</strong></li>
               <li>Atiende también en <strong>CEMIC</strong></li>
               <li>Disertante en el 40° Congreso Panamericano de Otorrinolaringología</li>
             </ul>
-            <div class="eq__pie">
-              <div class="chips"><span>Sede Capital</span></div>
-              <div class="eq__acts">
-                <a class="btn btn--a btn--sm" href="https://otorrinosdelsueno.com/turno"><span>Pedir turno</span><span class="btn__i"><svg width="14" height="14"><use href="#i-arrow"/></svg></span></a>
-                <a class="eq__ig" href="https://www.instagram.com/dra.karmijos/" target="_blank" rel="noopener"><svg width="15" height="15" aria-hidden="true"><use href="#i-ig"/></svg>@dra.karmijos</a>
-              </div>
+            <div class="chips"><span>Sede Capital</span></div>
+            <div class="perfil__a">
+              <a class="btn btn--a btn--sm" href="https://otorrinosdelsueno.com/turno"><span>Pedir turno</span><span class="btn__i"><svg width="14" height="14"><use href="#i-arrow"/></svg></span></a>
+              <a class="perfil__ig" href="https://www.instagram.com/dra.karmijos/" target="_blank" rel="noopener"><svg width="15" height="15" aria-hidden="true"><use href="#i-ig"/></svg>@dra.karmijos</a>
             </div>
-          </article>
-          <article class="eq__m">
-            <div class="eq__foto"><img src="assets/img/retrato-orquera.jpg" alt="Retrato de la Dra. Lourdes Orquera" loading="lazy"></div>
+          </div>
+        </dialog>
+        <dialog class="perfil" id="p-orquera" aria-labelledby="p-orquera-t" data-lenis-prevent>
+          <button class="perfil__x" type="button" aria-label="Cerrar"><span></span><span></span></button>
+          <img class="perfil__f" src="assets/img/retrato-orquera.jpg" alt="Retrato de la Dra. Lourdes Orquera" loading="lazy">
+          <div class="perfil__t">
             <span class="eq__a">Trastornos del sueño</span>
-            <h3 class="eq__n">Dra. Lourdes Orquera</h3>
-            <p class="eq__r">Otorrinolaringóloga dedicada a los trastornos respiratorios del sueño. Adultos y niños.</p>
-            <ul class="eq__l">
+            <h3 class="perfil__n" id="p-orquera-t">Dra. Lourdes Orquera</h3>
+            <p class="perfil__r">Otorrinolaringóloga dedicada a los trastornos respiratorios del sueño. Adultos y niños.</p>
+            <ul class="perfil__l">
               <li>Fellowship en Trastornos Respiratorios del Sueño · <strong>Hospital Italiano de Buenos Aires</strong></li>
               <li>Diplomado en Medicina del Sueño</li>
               <li>Consultas presenciales en Tucumán y teleconsultas</li>
             </ul>
-            <div class="eq__pie">
-              <div class="chips"><span>Sede Tucumán</span><span>Videollamada</span></div>
-              <div class="eq__acts">
-                <a class="btn btn--a btn--sm" href="https://otorrinosdelsueno.com/turno"><span>Pedir turno</span><span class="btn__i"><svg width="14" height="14"><use href="#i-arrow"/></svg></span></a>
-                <a class="eq__ig" href="https://www.instagram.com/draorqueraorl/" target="_blank" rel="noopener"><svg width="15" height="15" aria-hidden="true"><use href="#i-ig"/></svg>@draorqueraorl</a>
-              </div>
+            <div class="chips"><span>Sede Tucumán</span><span>Videollamada</span></div>
+            <div class="perfil__a">
+              <a class="btn btn--a btn--sm" href="https://otorrinosdelsueno.com/turno"><span>Pedir turno</span><span class="btn__i"><svg width="14" height="14"><use href="#i-arrow"/></svg></span></a>
+              <a class="perfil__ig" href="https://www.instagram.com/draorqueraorl/" target="_blank" rel="noopener"><svg width="15" height="15" aria-hidden="true"><use href="#i-ig"/></svg>@draorqueraorl</a>
             </div>
-          </article>
-          <article class="eq__m">
-            <div class="eq__foto"><img src="assets/img/equipo-sartori.jpg?v=2" alt="Retrato de la Dra. Verónica Sartori" loading="lazy" style="object-position:50% 27%"></div>
+          </div>
+        </dialog>
+        <dialog class="perfil" id="p-sartori" aria-labelledby="p-sartori-t" data-lenis-prevent>
+          <button class="perfil__x" type="button" aria-label="Cerrar"><span></span><span></span></button>
+          <img class="perfil__f" src="assets/img/retrato-sartori.jpg" alt="Retrato de la Dra. Verónica Sartori" loading="lazy">
+          <div class="perfil__t">
             <span class="eq__a">Medicina del sueño</span>
-            <h3 class="eq__n">Dra. Verónica Sartori</h3>
-            <p class="eq__r">Otorrinolaringóloga con certificación en Medicina del Sueño.</p>
-            <ul class="eq__l">
+            <h3 class="perfil__n" id="p-sartori-t">Dra. Verónica Sartori</h3>
+            <p class="perfil__r">Otorrinolaringóloga con certificación en Medicina del Sueño.</p>
+            <ul class="perfil__l">
               <li>Jefa del Sector Ronquidos y Apneas del Sueño · <strong>Hospital Italiano de Buenos Aires</strong></li>
               <li>Directora de la Beca de Perfeccionamiento en Trastornos Respiratorios del Sueño</li>
               <li>Secretaria de FASO y de la Asociación Argentina de Medicina del Sueño</li>
             </ul>
-            <div class="eq__pie">
-              <div class="chips"><span>Sede Capital</span></div>
-              <div class="eq__acts">
-                <a class="btn btn--a btn--sm" href="https://otorrinosdelsueno.com/turno"><span>Pedir turno</span><span class="btn__i"><svg width="14" height="14"><use href="#i-arrow"/></svg></span></a>
-                <a class="eq__ig" href="https://www.instagram.com/dra.veronicasartori/" target="_blank" rel="noopener"><svg width="15" height="15" aria-hidden="true"><use href="#i-ig"/></svg>@dra.veronicasartori</a>
-              </div>
+            <div class="chips"><span>Sede Capital</span></div>
+            <div class="perfil__a">
+              <a class="btn btn--a btn--sm" href="https://otorrinosdelsueno.com/turno"><span>Pedir turno</span><span class="btn__i"><svg width="14" height="14"><use href="#i-arrow"/></svg></span></a>
+              <a class="perfil__ig" href="https://www.instagram.com/dra.veronicasartori/" target="_blank" rel="noopener"><svg width="15" height="15" aria-hidden="true"><use href="#i-ig"/></svg>@dra.veronicasartori</a>
             </div>
-          </article>
-        </div>
-        <div class="eq__apoyo">
-          <h3 class="eq__tt" data-reveal>Las acompañan</h3>
-          <div class="eq__lista" data-stagger>
-            <article class="eq__p">
-              <img src="assets/img/avatar-jaritos.jpg" alt="Retrato de Verónica Jaritos" loading="lazy">
-              <div>
-                <span class="eq__a">Kinesiología · CPAP</span>
-                <h4 class="eq__pn">Verónica Jaritos</h4>
-                <p>Adaptación y seguimiento del CPAP: la máscara, los ajustes y los controles.</p>
-              </div>
-            </article>
-            <article class="eq__p">
-              <img src="assets/img/avatar-garcia.jpg" alt="Retrato de Guillermina García" loading="lazy">
-              <div>
-                <span class="eq__a">Secretaría</span>
-                <h4 class="eq__pn">Guillermina García</h4>
-              </div>
-            </article>
-            <article class="eq__p">
-              <img src="assets/img/avatar-enfermera.jpg" alt="Retrato de la enfermera del equipo" loading="lazy">
-              <div>
-                <span class="eq__a">Enfermería</span>
-                <h4 class="eq__pn">Enfermera</h4>
-              </div>
-            </article>
           </div>
-        </div>
+        </dialog>
+        <dialog class="perfil" id="p-jaritos" aria-labelledby="p-jaritos-t" data-lenis-prevent>
+          <button class="perfil__x" type="button" aria-label="Cerrar"><span></span><span></span></button>
+          <img class="perfil__f" src="assets/img/retrato-jaritos.jpg" alt="Retrato de Verónica Jaritos" loading="lazy">
+          <div class="perfil__t">
+            <span class="eq__a">Kinesiología · CPAP</span>
+            <h3 class="perfil__n" id="p-jaritos-t">Verónica Jaritos</h3>
+            <p class="perfil__r">Kinesióloga dedicada a la adaptación a CPAP.</p>
+            <ul class="perfil__l">
+              <li>Adaptación y seguimiento del <strong>CPAP</strong></li>
+              <li>La máscara, los ajustes y los controles para que el tratamiento se use todas las noches</li>
+              <li>Junto a la médica que indica el tratamiento</li>
+            </ul>
+          </div>
+        </dialog>
       </div>
     </section>
 
@@ -517,7 +554,7 @@
   <footer class="foot">
     <div class="wrap">
       <div class="foot__cols">
-        <p><b>COMS</b>Centro de Otorrinolaringología y Medicina del Sueño<br>Dra. Karla Armijos · Dra. Lourdes Orquera · Dra. Verónica Sartori · Verónica Jaritos, kinesióloga · Guillermina García, secretaria</p>
+        <p><b>COMS</b>Centro de Otorrinolaringología y Medicina del Sueño<br>Dra. Karla Armijos · Dra. Lourdes Orquera · Dra. Verónica Sartori · Verónica Jaritos, kinesióloga · Guillermina García, secretaria · Rita Beatriz Nusinovich, enfermera</p>
         <p><b>Instagram</b><a href="https://www.instagram.com/dra.karmijos/" target="_blank" rel="noopener">@dra.karmijos</a><br><a href="https://www.instagram.com/draorqueraorl/" target="_blank" rel="noopener">@draorqueraorl</a><br><a href="https://www.instagram.com/dra.veronicasartori/" target="_blank" rel="noopener">@dra.veronicasartori</a></p>
         <p><b>Sedes</b>José E. Uriburu 1252, Depto 2B, CABA<br>Sanatorio 9 de Julio, Córdoba 445, San Miguel de Tucumán</p>
         <p><b>Pacientes</b><a href="https://otorrinosdelsueno.com/turno">Turno online</a><br><a href="https://otorrinosdelsueno.com/cuestionario">Cuestionario del sueño</a><br><a href="https://otorrinosdelsueno.com/indicaciones">Indicaciones post operatorio</a></p>
@@ -548,6 +585,6 @@
   <script src="assets/js/vendor/ScrollTrigger.min.js" defer></script>
   <script src="assets/js/vendor/lenis.min.js" defer></script>
   <script src="assets/js/motor.js?v=17" defer></script>
-  <script src="assets/js/modelo4.js?v=18" defer></script>
+  <script src="assets/js/modelo4.js?v=19" defer></script>
 </body>
 </html>

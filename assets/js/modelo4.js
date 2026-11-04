@@ -101,6 +101,15 @@
     setInterval(() => { if (onScreen && !document.hidden) show(cur + 1); }, DWELL);
     new IntersectionObserver(([e]) => { onScreen = e.isIntersecting; }).observe(hero4);
   }
+  /* ---------- equipo: el perfil completo se abre en una ventana ---------- */
+  $$('[data-perfil]').forEach(b => {
+    const d = document.getElementById(b.dataset.perfil);
+    if (!d) return;
+    b.addEventListener('click', () => { d.showModal(); d.scrollTop = 0; lenis() && lenis().stop(); document.body.style.overflow = 'hidden'; });
+    d.addEventListener('close', () => { lenis() && lenis().start(); document.body.style.overflow = ''; b.focus({ preventScroll: true }); });
+    d.addEventListener('click', e => { if (e.target === d || e.target.closest('.perfil__x')) d.close(); });
+  });
+
   /* ---------- trayectoria: se iluminan los antecedentes de la médica elegida ---------- */
   $$('[data-tr]').forEach(box => {
     const btns = $$('[data-who]', box), items = $$('[data-w]', box);
