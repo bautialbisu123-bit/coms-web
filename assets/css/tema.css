@@ -140,8 +140,11 @@ body { background: transparent; }
 .flip__hint { display: flex; align-items: center; gap: 10px; margin: 0 0 20px; font-size: 12px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--dark-text-2); }
 .flip__hint svg { animation: giro 6s linear infinite; }
 .flip__swipe { display: none; }
-.flips { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(14px, 1.8vw, 24px); }
-.flip { perspective: 1600px; height: clamp(600px, 46vw, 660px); }
+.flips { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(14px, 1.8vw, 24px); }
+.flip { perspective: 1600px; }
+/* .flipf: la tarjeta sin perfil al dorso (solo foto y puesto) */
+.flipf { position: relative; }
+.flip, .flipf { height: clamp(560px, 42vw, 600px); }
 .flip__in { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 1s var(--ease); }
 .flip.is-flipped .flip__in { transform: rotateY(180deg); }
 /* la cara que queda de espaldas no recibe clics (si no, la foto tapaba los botones del perfil) */
@@ -155,14 +158,14 @@ body { background: transparent; }
 .flip__cap { position: absolute; z-index: 1; left: 24px; right: 24px; bottom: 24px; display: flex; flex-direction: column; gap: 4px; }
 .flip__n { font-size: 12px; font-weight: 600; letter-spacing: .14em; color: rgba(255, 255, 255, .7); }
 .flip__area { font-size: 11.5px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: #9fc1ff; }
-.flip__name { font-family: var(--f-serif); font-size: clamp(26px, 2vw, 40px); line-height: 1; letter-spacing: -.02em; }
+.flip__name { font-family: var(--f-serif); font-size: clamp(30px, 2.6vw, 42px); line-height: 1; letter-spacing: -.02em; }
 .flip__go { display: inline-flex; align-items: center; gap: 8px; align-self: flex-start; margin-top: 12px; height: 36px; padding: 0 14px; border-radius: 999px; background: rgba(255, 255, 255, .14); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); font-size: 12.5px; font-weight: 600; transition: background .3s, color .3s; }
 .flip__front:hover .flip__go { background: #fff; color: #08122c; }
 .flip__back { transform: rotateY(180deg); display: flex; flex-direction: column; padding: clamp(22px, 2.4vw, 34px); background: linear-gradient(160deg, #15295a, #0a1532); border: 1px solid rgba(200, 215, 245, .14); overflow-y: auto; }
 .flip__close { position: absolute; top: 16px; right: 16px; width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center; border: 1px solid rgba(255, 255, 255, .2); color: #fff; transition: background .3s, transform .6s var(--ease); }
 .flip__close:hover { background: rgba(255, 255, 255, .12); transform: rotate(-180deg); }
 .flip__back .flip__area { margin-top: 6px; }
-.flip__h { margin: 10px 0 0; font-family: var(--f-serif); font-weight: 400; font-size: clamp(28px, 2.2vw, 38px); line-height: 1; letter-spacing: -.02em; padding-right: 40px; }
+.flip__h { margin: 10px 0 0; font-family: var(--f-serif); font-weight: 400; font-size: clamp(32px, 2.8vw, 46px); line-height: 1; letter-spacing: -.02em; padding-right: 40px; }
 .flip__role { margin: 14px 0 0; font-size: 15.5px; line-height: 1.45; color: var(--dark-text); }
 .flip__list { list-style: none; margin: 16px 0 14px; padding: 0; border-top: 1px solid var(--dark-line); }
 .flip__list li { padding: 10px 0; border-bottom: 1px solid var(--dark-line); font-size: 14px; line-height: 1.4; color: var(--dark-text-2); }
@@ -375,22 +378,9 @@ body { background: transparent; }
 .office h3 { font-family: var(--f-serif); font-weight: 400; letter-spacing: -.02em; }
 
 /* ============ responsive ============ */
-/* con cuatro tarjetas en fila, en las notebooks son angostas: el dorso va más compacto para que el perfil entre sin scroll */
-@media (min-width: 1181px) and (max-width: 1500px) {
-  .flip { height: 650px; }
-  .flip__back { padding: 20px; }
-  .flip__close { top: 12px; right: 12px; }
-  .flip__h { margin-top: 8px; }
-  .flip__role { margin-top: 10px; font-size: 14px; line-height: 1.4; }
-  .flip__list { margin: 10px 0 8px; }
-  .flip__list li { padding: 7px 0; font-size: 13px; line-height: 1.35; }
-  .flip__acts { gap: 6px; padding-top: 10px; }
-}
 @media (max-width: 1180px) {
-  .flip { height: 620px; }
-  .flips { gap: 12px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .flip__name { font-size: 30px; }
-  .flip__h { font-size: 32px; }
+  .flip, .flipf { height: 650px; }
+  .flips { gap: 12px; }
 }
 @media (max-width: 900px) {
   /* en el celular las fotos van como en la compu: grandes, de borde a borde y fundiéndose con el fondo, pero sin nada
@@ -414,7 +404,7 @@ body { background: transparent; }
      y de las vecinas se asoma un poco a cada lado */
   .flips { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; overscroll-behavior-x: contain; margin: 0 calc(-1 * var(--gutter)); padding: 6px 9vw 10px; }
   .flips::-webkit-scrollbar { display: none; }
-  .flip { flex: 0 0 82vw; height: 590px; scroll-snap-align: center; }
+  .flip, .flipf { flex: 0 0 82vw; height: 590px; scroll-snap-align: center; }
   .flip__hint { flex-wrap: wrap; row-gap: 4px; }
   .flip__swipe { display: block; flex-basis: 100%; padding-left: 26px; }
   .tr__cols { grid-template-columns: 1fr; }
@@ -676,9 +666,9 @@ body { background: transparent; }
   .lead { font-size: calc(19 * var(--t)); }
   .hero4 { --title: clamp(46px, calc((79svh - 250 * var(--t)) / 2.7), calc(88 * var(--u))); --col: calc(4.4 * var(--title)); padding-top: calc(64px + 66 * var(--t)); }
   .slides { top: calc(18px + 66 * var(--t)); }
-  .flip { height: calc(660 * var(--u)); }
-  .flip__name { font-size: calc(32 * var(--u)); }
-  .flip__h { font-size: calc(36 * var(--u)); }
+  .flip, .flipf { height: calc(590 * var(--u)); }
+  .flip__name { font-size: calc(42 * var(--u)); }
+  .flip__h { font-size: calc(46 * var(--u)); }
   .flip__role { font-size: calc(15.5 * var(--t)); }
   .flip__list li { font-size: calc(14 * var(--t)); }
   .tr__t { font-size: calc(64 * var(--u)); }
