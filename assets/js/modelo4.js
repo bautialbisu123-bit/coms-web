@@ -1,5 +1,5 @@
 /* COMS · modelo 4 — interacciones propias (se carga después de motor.js).
-   El cielo, las fotos de fondo de la portada, las tarjetas que se dan vuelta, la trayectoria,
+   El cielo, las fotos de fondo de la portada, la trayectoria,
    el carrusel 3D, los círculos, la autoevaluación, los pasos, el celular, la galería
    y el buscador de preguntas. Cada bloque se fija si existe en la página. */
 (() => {
@@ -101,23 +101,6 @@
     setInterval(() => { if (onScreen && !document.hidden) show(cur + 1); }, DWELL);
     new IntersectionObserver(([e]) => { onScreen = e.isIntersecting; }).observe(hero4);
   }
-  /* ---------- equipo: tarjetas que se dan vuelta ---------- */
-  const flips = $$('.flip');
-  flips.forEach(f => {
-    const front = $('.flip__front', f), back = $('.flip__back', f);
-    const set = on => {
-      f.classList.toggle('is-flipped', on); front.setAttribute('aria-expanded', on);
-      back.inert = !on; front.tabIndex = on ? -1 : 0;
-      if (on) setTimeout(() => $('.flip__close', f).focus({ preventScroll: true }), 450);
-    };
-    back.inert = true;
-    front.addEventListener('click', () => set(true));
-    $('.flip__close', f).addEventListener('click', () => { set(false); front.focus({ preventScroll: true }); });
-    f.addEventListener('keydown', e => { if (e.key === 'Escape' && f.classList.contains('is-flipped')) { set(false); front.focus(); } });
-    // con el mouse: se vuelve a la foto al salir de la tarjeta
-    f.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse' && f.classList.contains('is-flipped')) set(false); });
-  });
-
   /* ---------- trayectoria: se iluminan los antecedentes de la médica elegida ---------- */
   $$('[data-tr]').forEach(box => {
     const btns = $$('[data-who]', box), items = $$('[data-w]', box);
