@@ -161,22 +161,22 @@ body { background: transparent; }
 .split__ph--3 { width: 60%; aspect-ratio: 4 / 3; right: 4%; top: 70%; }
 
 /* ---------- equipo ---------- */
-/* las seis iguales, como una galería de retratos. En blanco y negro, para que fotos tan distintas se vean de una misma serie; el color aparece al pasar el mouse y en el perfil */
+/* las seis iguales, como una galería de retratos. Las fotos tienen la luz y el tono de piel emparejados en el archivo, para que se vean de una misma serie */
 .eq-g .d em { display: block; }
 .eq { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 26px 12px; }
 .eq article { min-width: 0; }
 .eq__b { display: block; width: 100%; text-align: left; color: inherit; }
 .eq__foto { position: relative; display: block; aspect-ratio: 1 / 1; margin-bottom: 11px; overflow: hidden; border-radius: 4px; background: var(--surface); }
-.eq__foto img { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 4%; filter: grayscale(1) contrast(1.03); transition: filter .6s var(--ease); }
+.eq__foto img { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 4%; transition: transform 1s var(--ease); }
 .eq__mas { position: absolute; right: 8px; bottom: 8px; width: 30px; height: 30px; border-radius: 50%; background: #fff; box-shadow: 0 0 0 1px rgba(13, 27, 60, .18); transition: transform .5s var(--ease); }
 .eq__mas::before, .eq__mas::after { content: ""; position: absolute; left: 30%; right: 30%; top: 50%; height: 1.5px; margin-top: -.75px; background: #0d1b3c; }
 .eq__mas::after { transform: rotate(90deg); }
 .eq__n { display: block; font-size: 15px; font-weight: 600; line-height: 1.25; }
 .eq__r { display: block; margin-top: 2px; font-size: 13.5px; line-height: 1.3; color: var(--text-2); }
 .eq__a { font-size: 10.5px; font-weight: 600; line-height: 1.3; letter-spacing: .12em; text-transform: uppercase; color: #9fc1ff; }
-.eq__b:focus-visible .eq__foto img { filter: none; }
+.eq__b:focus-visible .eq__foto img { transform: scale(1.04); }
 @media (hover: hover) {
-  .eq article:hover .eq__foto img { filter: none; }
+  .eq article:hover .eq__foto img { transform: scale(1.04); }
   button.eq__b:hover .eq__mas { transform: rotate(90deg); }
 }
 /* en la compu, el título a la izquierda y las dos filas de tres a la derecha, sin pasarse de una pantalla */
