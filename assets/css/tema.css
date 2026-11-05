@@ -197,7 +197,7 @@ body { background: transparent; }
   .eq__sedes dd { margin: 0; color: var(--text-2); text-align: right; }
   /* y hasta el final de las fotos, una respiración tranquila: dos líneas que se deslizan despacio. Solo mueven una capa
      ya dibujada (transform), sin repintar ni usar JS, y se pausan cuando la sección no está a la vista */
-  .eq__ola { position: relative; display: block; flex: 1 1 0; min-height: 52px; max-height: 150px; max-width: 540px; margin-top: auto; overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent); mask-image: linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent); }
+  .eq__ola { position: relative; display: block; flex: 1 1 0; min-height: 30px; max-height: 150px; max-width: 540px; margin-top: auto; overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent); mask-image: linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent); }
   .eq__ola svg { position: absolute; inset: 0 auto 0 0; width: 200%; max-width: none; height: 100%; overflow: visible; will-change: transform; animation: ola 10s linear infinite; }
   .eq__ola svg + svg { opacity: .4; animation-duration: 16s; animation-direction: reverse; }
   .eq__ola path { fill: none; stroke: var(--accent); stroke-width: 1.75px; vector-effect: non-scaling-stroke; }
@@ -427,6 +427,16 @@ body { background: transparent; }
 .route__mid { position: absolute; left: 50%; top: 74px; translate: -50% 0; padding: 8px 16px; border-radius: 999px; background: rgba(255, 255, 255, .06); border: 1px solid var(--dark-line); font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--dark-text-2); white-space: nowrap; }
 .pn--dark .office:not(.is-hl) { background: rgba(255, 255, 255, .04); }
 .office h3 { font-family: var(--f-serif); font-weight: 400; letter-spacing: -.02em; }
+/* las tres sedes y el turno online: de a cuatro en la compu y de a dos en pantallas medianas */
+@media (min-width: 901px) { .offices { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1181px) {
+  .offices { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .office h3 { font-size: clamp(30px, 2.6vw, 44px); }
+  /* la etiqueta de Capital ocupa dos renglones: así los títulos quedan alineados */
+  .office__k { min-height: 2.8em; line-height: 1.4; }
+}
+/* que el botón de WhatsApp no tape el pie */
+.foot__bot { padding-right: 104px; }
 
 /* ============ responsive ============ */
 @media (max-width: 1180px) {
@@ -773,7 +783,7 @@ body { background: transparent; }
   .route { height: calc(170 * var(--u)); }
   .route__pin { font-size: calc(26 * var(--u)); }
   .office { min-height: calc(320 * var(--u)); }
-  .office h3 { font-size: calc(54 * var(--u)); }
+  .office h3 { font-size: calc(44 * var(--u)); }
   .sign4__word { font-size: calc(230 * var(--u)); }
   .sign4__sub { font-size: calc(28 * var(--u)); }
 }/* en pantallas grandes también crecen la barra, los botones y las etiquetas (si no, al lado de los títulos
