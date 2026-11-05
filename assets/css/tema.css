@@ -165,8 +165,9 @@ body { background: transparent; }
 /* ---------- equipo ---------- */
 /* las seis iguales, como una galería de retratos. Las fotos tienen la luz y el tono de piel emparejados en el archivo, para que se vean de una misma serie */
 .eq-g .d em { display: block; }
-.eq { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 26px 12px; }
-.eq article { min-width: 0; }
+/* --n por fila; si la última fila queda incompleta, se centra */
+.eq { --n: 4; --gap: 12px; display: flex; flex-wrap: wrap; justify-content: center; gap: 26px var(--gap); }
+.eq article { flex: 0 0 calc((100% - (var(--n) - 1) * var(--gap)) / var(--n)); min-width: 0; }
 .eq__b { display: block; width: 100%; text-align: left; color: inherit; }
 .eq__foto { position: relative; display: block; aspect-ratio: 1 / 1; margin-bottom: 11px; overflow: hidden; border-radius: 4px; background: var(--surface); }
 .eq__foto img { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 4%; transition: transform 1s var(--ease); }
@@ -177,7 +178,7 @@ body { background: transparent; }
 .eq__r { display: block; margin-top: 2px; font-size: 13.5px; line-height: 1.3; color: var(--text-2); }
 .eq__a { font-size: 10.5px; font-weight: 600; line-height: 1.3; letter-spacing: .12em; text-transform: uppercase; color: #77d4c8; }
 .eq__b:focus-visible .eq__foto img { transform: scale(1.04); }
-.eq__info, .eq__ola { display: none; }
+.eq__ola { display: none; }
 @media (hover: hover) {
   .eq article:hover .eq__foto img { transform: scale(1.04); }
   button.eq__b:hover .eq__mas { transform: rotate(90deg); }
@@ -188,13 +189,7 @@ body { background: transparent; }
   .eq-g .sh { flex: 1 1 0; display: flex; flex-direction: column; align-items: stretch; justify-content: flex-start; gap: clamp(18px, 1.8vw, 28px); min-width: 0; margin: 0; }
   .eq-g .sh .lead { margin-bottom: 0; }
   .eq-g .d { font-size: clamp(44px, 4.6vw, 76px); }
-  .eq { flex: 0 0 min(68.5%, calc(3 * max(230px, (100svh - 228px) / 2) + 24px)); }
-  /* debajo del texto, dónde se atiende */
-  .eq__info { display: block; max-width: 540px; }
-  .eq__sedes { margin: 0; border-top: 1px solid var(--line); }
-  .eq__sedes div { display: flex; justify-content: space-between; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--line); font-size: 13.5px; line-height: 1.3; }
-  .eq__sedes dt { font-weight: 600; white-space: nowrap; }
-  .eq__sedes dd { margin: 0; color: var(--text-2); text-align: right; }
+  .eq { flex: 0 0 min(72%, calc(4 * max(190px, (100svh - 240px) / 2) + 36px)); align-self: flex-start; }
   /* y hasta el final de las fotos, una respiración tranquila: dos líneas que se deslizan despacio. Solo mueven una capa
      ya dibujada (transform), sin repintar ni usar JS, y se pausan cuando la sección no está a la vista */
   .eq__ola { position: relative; display: block; flex: 1 1 0; min-height: 30px; max-height: 150px; max-width: 540px; margin-top: auto; overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent); mask-image: linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent); }
@@ -528,7 +523,7 @@ body { background: transparent; }
   .hero4__cta .act__i, .hero4__atajos .atajo svg { display: none; }
 }
 @media (max-width: 600px) {
-  .eq { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px 8px; }
+  .eq { --n: 2; --gap: 8px; row-gap: 20px; }
   .eq__n { font-size: 14.5px; }
   .eq__r { font-size: 12.5px; }
   .eq__mas { right: 6px; bottom: 6px; width: 26px; height: 26px; }
@@ -740,9 +735,7 @@ body { background: transparent; }
   .hero4 { --title: clamp(46px, calc((79svh - 308 * var(--t)) / 2.7), calc(88 * var(--u))); --col: calc(4.4 * var(--title)); padding-top: calc(64px + 66 * var(--t)); }
   .slides { top: calc(18px + 66 * var(--t)); }
   .eq-g .d { font-size: calc(76 * var(--u)); }
-  .eq__info, .eq__ola { max-width: calc(540 * var(--u)); }
-  .eq__ola { max-height: calc(150 * var(--u)); }
-  .eq__sedes div { padding: calc(11 * var(--u)) 0; font-size: calc(14.5 * var(--u)); }
+  .eq__ola { max-width: calc(540 * var(--u)); max-height: calc(150 * var(--u)); }
   .eq { row-gap: calc(26 * var(--t)); }
   .eq__a { font-size: calc(10.5 * var(--t)); }
   .eq__n { font-size: calc(15 * var(--t)); }
