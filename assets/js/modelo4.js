@@ -207,39 +207,42 @@
     upd();
   });
 
-  /* ---------- recorrido: los pasos avanzan solos mientras se ven ---------- */
+  /* ---------- recorrido: los pasos avanzan solos mientras se ven ----------
+     El avance se cuenta en tiempo transcurrido, no desde una hora de inicio: al salir de la pantalla o cambiar de pestaña
+     queda donde estaba y sigue sin saltos. La barra nunca pasa del último paso y vuelve al primero sin animarse para
+     atrás. No se pausa con el mouse encima (parecía trabado); si se elige un paso, queda el doble de tiempo. */
   $$('[data-stp]').forEach(box => {
-    const tabs = $$('[role=tab]', box), panels = $$('[role=tabpanel]', box), line = $('.stp__line', box);
-    const STEP = 4200;
-    let cur = 0, t0 = 0, raf = 0, hold = false, vis = false;
-    const show = (i, focus) => {
-      cur = (i + tabs.length) % tabs.length;
+    const tabs = $$('[role=tab]', box), panels = $$('[role=tabpanel]', box), line = $('.stp__line', box), n = tabs.length;
+    const STEP = 4600;
+    let cur = 0, el = 0, dur = STEP, last = 0, raf = 0, vis = false;
+    const bar = () => line.style.setProperty('--p', Math.min(1, (cur + Math.min(1, el / dur)) / (n - 1)).toFixed(4));
+    const show = (i, focus, manual) => {
+      cur = (i + n) % n; el = 0; dur = manual ? STEP * 2 : STEP;
       tabs.forEach((t, k) => { t.setAttribute('aria-selected', k === cur); t.tabIndex = k === cur ? 0 : -1; t.classList.toggle('is-done', k < cur); });
       panels.forEach((p, k) => { p.hidden = k !== cur; });
       if (G && !calm) G.fromTo(panels[cur].children, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: .7, stagger: .08, ease: 'power3.out' });
       if (focus) tabs[cur].focus();
-      t0 = performance.now();
+      bar();
     };
     const tick = now => {
-      if (vis && !hold && !document.hidden) {
-        const f = Math.min(1, (now - t0) / STEP);
-        line.style.setProperty('--p', ((cur + f) / (tabs.length - 1)).toFixed(4));
-        if (f >= 1) show(cur + 1);
-      } else t0 = now - (Number(line.dataset.f || 0) * STEP);
+      raf = 0;
+      if (!vis || document.hidden) return;
+      el += Math.min(100, now - last); last = now;
+      if (el >= dur) show(cur + 1); else bar();
       raf = requestAnimationFrame(tick);
     };
+    const run = () => { if (!raf && vis && !document.hidden && !calm) { last = performance.now(); raf = requestAnimationFrame(tick); } };
     tabs.forEach((t, i) => {
-      t.addEventListener('click', () => show(i));
+      t.addEventListener('click', () => show(i, false, true));
       t.addEventListener('keydown', e => {
-        if (e.key === 'ArrowRight') { e.preventDefault(); show(cur + 1, true); }
-        if (e.key === 'ArrowLeft') { e.preventDefault(); show(cur - 1, true); }
+        if (e.key === 'ArrowRight') { e.preventDefault(); show(cur + 1, true, true); }
+        if (e.key === 'ArrowLeft') { e.preventDefault(); show(cur - 1, true, true); }
       });
     });
-    box.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') { hold = true; line.dataset.f = Math.min(1, (performance.now() - t0) / STEP); } });
-    box.addEventListener('pointerleave', () => { hold = false; });
-    new IntersectionObserver(([e]) => { vis = e.isIntersecting; if (vis) t0 = performance.now(); }, { threshold: .4 }).observe(box);
+    new IntersectionObserver(([e]) => { vis = e.isIntersecting; run(); }, { threshold: .25 }).observe(box);
+    document.addEventListener('visibilitychange', run);
     show(0);
-    if (!calm) raf = requestAnimationFrame(tick); else line.style.setProperty('--p', 1);
+    if (calm) line.style.setProperty('--p', 1);
   });
 
   /* ---------- pacientes: el celular muestra la herramienta elegida ---------- */
